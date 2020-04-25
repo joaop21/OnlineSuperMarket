@@ -1,0 +1,14 @@
+# IDE files
+.idea
+
+# iml
+*.iml
+
+# compiled files
+target/
+
+# DS_Store
+.DS_Store
+
+# databases folder, where the standalone databases are kept
+databases
