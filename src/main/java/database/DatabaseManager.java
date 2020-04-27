@@ -9,12 +9,11 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    public static boolean createDatabase(String url){
+    public static void createDatabase(String url){
         try {
             Connection conn = DriverManager.getConnection(url+"ifexists=true", "SA", "");
             conn.close();
             System.out.println("DB already exists. You cannot create a new one with the same name.");
-            return false;
         } catch (SQLException | HsqlException e1){
             try {
                 Connection conn = DriverManager.getConnection(url, "SA", "");
@@ -28,13 +27,11 @@ public class DatabaseManager {
                                 "PRIMARY KEY (id));");
                 pstat.executeUpdate();
                 conn.close();
-                return true;
             } catch (SQLException e2) {
                 System.out.println("Cannot create DB due to an error.");
                 e2.printStackTrace();
             }
         }
-        return false;
     }
 
     public static Connection getConnection(String url){
