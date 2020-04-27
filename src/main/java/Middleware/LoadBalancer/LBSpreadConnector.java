@@ -17,7 +17,7 @@ public class LBSpreadConnector {
         this.connName = UUID.randomUUID().toString();
         this.conn.connect(InetAddress.getByName("localhost"), 4803, this.connName, false, true);
 
-        this.conn.add(new LBListener());
+        this.conn.add(new LBMessageListener());
 
         SpreadGroup g = new SpreadGroup();
         g.join(this.conn, "LoadBalancing");
