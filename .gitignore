@@ -12,3 +12,6 @@ target/
 
 # databases folder, where the standalone databases are kept
 databases
+
+# dependencies folder
+dependencies
