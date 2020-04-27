@@ -1,4 +1,4 @@
-package Middleware;
+package Middleware.LoadBalancer;
 
 import spread.SpreadConnection;
 import spread.SpreadException;
@@ -17,7 +17,7 @@ public class LBSpreadConnector {
         this.connName = UUID.randomUUID().toString();
         this.conn.connect(InetAddress.getByName("localhost"), 4803, this.connName, false, true);
 
-        //this.conn.add(new AdvListener());
+        this.conn.add(new LBListener());
 
         SpreadGroup g = new SpreadGroup();
         g.join(this.conn, "LoadBalancing");
