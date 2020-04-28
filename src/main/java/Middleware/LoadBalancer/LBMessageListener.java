@@ -7,11 +7,21 @@ import spread.SpreadMessage;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
 public class LBMessageListener implements AdvancedMessageListener  {
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
     private boolean first_message = true;
+    private boolean primary = false;
+    private final Lock l;
+    private final Condition cond;
+
+    public LBMessageListener(Lock l, Condition cond) {
+        this.l = l;
+        this.cond = cond;
+    }
 
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
@@ -39,19 +49,14 @@ public class LBMessageListener implements AdvancedMessageListener  {
         else if (info.isCausedByLeave())
             this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
 
-        for(int i = 0 ; i < this.leader_fifo.size() ; i++) {
-            if (this.leader_fifo.get(i).equals(this.myself) && i == 0) {
-                System.out.println("I'm Primary Server");
-                break;
-            }
-            else if (!this.leader_fifo.get(i).equals(this.myself) && i==0)
-                System.out.print("Before me: "+this.leader_fifo.get(i));
-            else if (!this.leader_fifo.get(i).equals(this.myself) && i!=0)
-                System.out.print(" , "+this.leader_fifo.get(i));
-            else if (this.leader_fifo.get(i).equals(this.myself) && i!=0) {
-                System.out.println("");
-                break;
-            }
+        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
+            this.primary = true;
+            // notify load balancer that i'm primary
+            l.lock();
+            this.cond.signal();
+            l.unlock();
         }
     }
+
+    public boolean getPrimary(){ return this.primary;}
 }
