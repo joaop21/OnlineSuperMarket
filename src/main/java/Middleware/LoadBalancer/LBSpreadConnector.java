@@ -11,34 +11,40 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Singleton class
+ * Only one instance of this class in runtime
+ * */
 public class LBSpreadConnector {
-    private final String connName;
-    private SpreadConnection conn;
-    private LBMessageListener lbml;
-    private final Lock l = new ReentrantLock();
-    private final Condition primaryCond = l.newCondition();
+    private static SpreadConnection spreadConn = null;
+    private static String connName = null;
+    private static LBMessageListener lbml = null;
+    private static final Lock lock = new ReentrantLock();
+    private static final Condition primaryCond = lock.newCondition();
 
-    public LBSpreadConnector() throws UnknownHostException, SpreadException {
-        this.conn = new SpreadConnection();
-        this.connName = UUID.randomUUID().toString();
-        this.conn.connect(InetAddress.getByName("localhost"), 4803, this.connName, false, true);
+    public static void initializeConnector() throws UnknownHostException, SpreadException {
+        if (spreadConn == null && connName == null) {
+            spreadConn = new SpreadConnection();
+            connName = UUID.randomUUID().toString();
+            spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
 
-        this.lbml = new LBMessageListener(this.l, this.primaryCond);
-        this.conn.add(this.lbml);
+            lbml = new LBMessageListener(lock, primaryCond);
+            spreadConn.add(lbml);
 
-        SpreadGroup g = new SpreadGroup();
-        g.join(this.conn, "LoadBalancing");
+            SpreadGroup loadBalancersGroup = new SpreadGroup();
+            loadBalancersGroup.join(spreadConn, "LoadBalancing");
+        }
     }
 
-    public void waitToBePrimary(){
+    public static void waitToBePrimary(){
         try {
-            this.l.lock();
-            while(!this.lbml.getPrimary())
-                this.primaryCond.await();
+            lock.lock();
+            while(!lbml.getPrimary())
+                primaryCond.await();
         } catch(InterruptedException e){
             e.printStackTrace();
         } finally {
-            this.l.unlock();
+            lock.unlock();
         }
     }
 }
