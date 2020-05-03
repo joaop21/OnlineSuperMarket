@@ -9,20 +9,23 @@ import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class ServerSpreadConnector {
-    final String connName;
-    SpreadConnection conn;
+    private static SpreadConnection spreadConn = null;
+    private static String connName = null;
 
-    public ServerSpreadConnector() throws UnknownHostException, SpreadException {
-        this.conn = new SpreadConnection();
-        this.connName = UUID.randomUUID().toString();
-        this.conn.connect(InetAddress.getByName("localhost"), 4803, this.connName, false, true);
+    public static void initializeConnector() throws UnknownHostException, SpreadException {
+        if(spreadConn == null || connName == null) {
+            spreadConn = new SpreadConnection();
+            connName = UUID.randomUUID().toString();
+            spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
 
-        this.conn.add(new ServerMessageListener());
+            spreadConn.add(new ServerMessageListener());
 
-        SpreadGroup g = new SpreadGroup();
-        // Group for application servers only
-        g.join(this.conn, "Servers");
-        // Group for all servers in system (includes Load Balancers)
-        g.join(this.conn, "System");
+            // Group for application servers only
+            SpreadGroup serversGroup = new SpreadGroup();
+            serversGroup.join(spreadConn, "Servers");
+            // Group for all servers in system (includes Load Balancers)
+            SpreadGroup systemGroup = new SpreadGroup();
+            systemGroup.join(spreadConn, "System");
+        }
     }
 }
