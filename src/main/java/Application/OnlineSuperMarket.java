@@ -8,8 +8,7 @@ public interface OnlineSuperMarket {
     Item getItem(String itemName);
     boolean addItemToCart(String username, int itemId);
     void removeItemFromCart(String username, int itemId);
-    List<Item> getCart(String username);
-    boolean createOrder(String username);
-    List<Order> getOrders(String username);
+    List<Item> getCartItems(String username);
+    boolean order(String username);
     boolean login(String username, String password);
 }
