@@ -10,22 +10,19 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class LBMessageListener implements AdvancedMessageListener  {
+public class LoadBalancerMessageListener implements AdvancedMessageListener  {
+
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
     private boolean first_message = true;
     private boolean primary = false;
-    private final Lock l;
-    private final Condition cond;
-
-    public LBMessageListener(Lock l, Condition cond) {
-        this.l = l;
-        this.cond = cond;
-    }
 
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
-        // do nothing for now
+
+        if (this.primary) System.out.println("I'm primary so I can do stuff");
+        else System.out.println("I'm useless");
+
     }
 
     @Override
@@ -50,12 +47,14 @@ public class LBMessageListener implements AdvancedMessageListener  {
             this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
 
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
+
+            // Setting myself as primary
             this.primary = true;
-            // notify load balancer that i'm primary
-            l.lock();
-            this.cond.signal();
-            l.unlock();
+
         }
+
+        if (this.primary) System.out.println("I'm primary so I can do stuff");
+        else System.out.println("I'm useless");
     }
 
     public boolean getPrimary(){ return this.primary;}
