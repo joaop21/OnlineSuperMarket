@@ -23,7 +23,7 @@ public class DatabaseManager {
                                 "name VARCHAR(255) NOT NULL, " +
                                 "description VARCHAR(255), " +
                                 "price FLOAT NOT NULL, " +
-                                "quantity INT NOT NULL, " +
+                                "stock INT NOT NULL, " +
                                 "PRIMARY KEY (id));");
                 pstat.executeUpdate();
                 conn.close();
