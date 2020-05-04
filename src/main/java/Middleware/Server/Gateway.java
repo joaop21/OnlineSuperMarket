@@ -1,4 +1,4 @@
-package Middleware.Server;
+package middleware.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
