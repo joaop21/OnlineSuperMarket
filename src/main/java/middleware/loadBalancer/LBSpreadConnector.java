@@ -1,4 +1,4 @@
-package Middleware.LoadBalancer;
+package middleware.loadBalancer;
 
 import spread.SpreadConnection;
 import spread.SpreadException;

@@ -1,6 +1,6 @@
-package Server;
+package server;
 
-import Middleware.Server.ServerSpreadConnector;
+import middleware.server.ServerSpreadConnector;
 import spread.SpreadException;
 
 import java.net.UnknownHostException;

@@ -1,4 +1,4 @@
-package Middleware.Server;
+package middleware.server;
 
 import spread.SpreadConnection;
 import spread.SpreadException;
