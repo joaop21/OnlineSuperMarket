@@ -1,6 +1,6 @@
-package Middleware;
+package middleware;
 
-import Middleware.LoadBalancer.LBSpreadConnector;
+import middleware.loadBalancer.LBSpreadConnector;
 import spread.SpreadException;
 
 import java.net.UnknownHostException;
