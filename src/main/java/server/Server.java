@@ -1,5 +1,6 @@
 package server;
 
+import middleware.server.Gateway;
 import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
@@ -17,6 +18,7 @@ public class Server {
         spreadConnector = new SpreadConnector(Set.of("Servers", "System"), new ServerMessageListener());
         // Initializing connector
         spreadConnector.initializeConnector();
+        // new Gateway(9999, Sample.class);
         // Sleeping
         while(true) Thread.sleep(10000);
     }
