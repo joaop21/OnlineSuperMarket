@@ -13,11 +13,12 @@ public class Server {
     private static SpreadConnector spreadConnector;
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
+        int port = Integer.parseInt(args[0]);
         // Creating connector
         spreadConnector = new SpreadConnector(Set.of("Servers", "System"), new ServerMessageListener());
         // Initializing connector
         spreadConnector.initializeConnector();
-        new Gateway(9999, OnlineSuperMarketSkeleton.class);
+        new Gateway(port, OnlineSuperMarketSkeleton.class);
         // Sleeping
         while(true) Thread.sleep(10000);
     }
