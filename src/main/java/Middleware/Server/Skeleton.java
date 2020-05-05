@@ -2,7 +2,7 @@ package middleware.server;
 
 import java.net.Socket;
 
-public abstract class Skeleton {
+public abstract class Skeleton implements Runnable {
     protected Socket socket;
 
     public Skeleton(Socket sock){
