@@ -15,7 +15,7 @@ public class LoadBalancer {
 
         System.out.println("Creating Connector!");
         // Creating connector
-        spreadConnector = new SpreadConnector(Set.of("LoadBalancing"), new LoadBalancerMessageListener());
+        spreadConnector = new SpreadConnector(Set.of("LoadBalancing", "System"), new LoadBalancerMessageListener());
         System.out.println("Initializing Connector!");
         // Initializing connector
         spreadConnector.initializeConnector();
