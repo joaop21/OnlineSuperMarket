@@ -1,4 +1,4 @@
-package middleware.server;
+package middleware.gateway;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;

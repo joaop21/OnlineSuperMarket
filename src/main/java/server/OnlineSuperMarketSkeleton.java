@@ -2,7 +2,7 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
-import middleware.server.Skeleton;
+import middleware.gateway.Skeleton;
 
 import java.net.Socket;
 import java.util.List;

@@ -1,6 +1,6 @@
 package server;
 
-import middleware.server.Gateway;
+import middleware.gateway.Gateway;
 import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
