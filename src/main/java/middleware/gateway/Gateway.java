@@ -21,7 +21,7 @@ public class Gateway implements Runnable {
             }
             new Thread(this).start();
         } else {
-            System.out.println("The passed parameter class must extend "+Skeleton.class);
+            System.out.println("The passed parameter class must extend " + Skeleton.class);
             System.exit(1);
         }
     }
@@ -39,7 +39,7 @@ public class Gateway implements Runnable {
             try {
                 assert ss != null;
                 s = ss.accept();
-                System.out.println("[SERVER - "+this.port+"]: Received new Connection");
+                System.out.println("["+this.port+"]: Received new Connection");
                 new Thread((Runnable) this.skeletonConstructer.newInstance(s)).start();
             } catch (IOException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

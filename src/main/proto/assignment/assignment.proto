@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package middleware.proto;
+
+message Assignment {
+
+    int32 port = 1;
+
+}

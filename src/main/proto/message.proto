@@ -4,7 +4,7 @@ import "assignment/assignment.proto";
 import "request/request.proto";
 import "replication/replication.proto";
 
-package middleware.protos;
+package middleware.proto;
 
 message Message {
 

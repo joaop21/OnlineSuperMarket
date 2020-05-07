@@ -1,5 +1,7 @@
-package middleware.loadBalancer;
+package middleware.loadbalancer;
 
+import loadbalancer.LoadBalancerSkeleton;
+import middleware.gateway.Gateway;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
@@ -7,8 +9,7 @@ import spread.SpreadMessage;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
+import java.util.Map;
 
 public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
@@ -16,6 +17,11 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
     private String myself;
     private boolean first_message = true;
     private boolean primary = false;
+
+    private int port;
+    private Map<Integer, Integer> server_ports;
+
+    public LoadBalancerMessageListener (int port) { this.port = port; }
 
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
@@ -52,11 +58,10 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                 this.first_message = false;
                 this.myself = info.getJoined().toString();
 
-                if (info.getMembers().length > 1) {
-                    for(SpreadGroup g : info.getMembers())
-                        if(!g.toString().equals(myself))
-                            this.leader_fifo.add(g.toString());
-                }
+                for (SpreadGroup g : info.getMembers())
+                    if (!g.toString().equals(myself))
+                        this.leader_fifo.add(g.toString());
+
             }
 
             leader_fifo.add(info.getJoined().toString());
@@ -76,7 +81,8 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
             this.primary = true;
 
             // Starting acceptor of client connections
-            (new LoadManagerSocketAcceptor()).run();
+            //(new LoadBalancerSocketAcceptor()).run();
+            new Gateway(this.port, LoadBalancerSkeleton.class);
 
         }
 

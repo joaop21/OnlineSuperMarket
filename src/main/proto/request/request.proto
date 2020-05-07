@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package middleware.protos;
+package middleware.proto;
 
 message Request {
 

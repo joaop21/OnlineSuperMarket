@@ -1,6 +1,6 @@
-package loadBalancer;
+package loadbalancer;
 
-import middleware.loadBalancer.LoadBalancerMessageListener;
+import middleware.loadbalancer.LoadBalancerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -13,9 +13,12 @@ public class LoadBalancer {
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
 
+        // Getting own port
+        int port = Integer.parseInt(args[0]);
+
         System.out.println("Creating Connector!");
         // Creating connector
-        spreadConnector = new SpreadConnector(Set.of("LoadBalancing", "System"), new LoadBalancerMessageListener());
+        spreadConnector = new SpreadConnector(Set.of("LoadBalancing", "System"), new LoadBalancerMessageListener(port));
         System.out.println("Initializing Connector!");
         // Initializing connector
         spreadConnector.initializeConnector();
