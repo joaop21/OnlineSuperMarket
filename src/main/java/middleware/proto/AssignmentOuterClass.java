@@ -19,10 +19,36 @@ public final class AssignmentOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 port = 1;</code>
-     * @return The port.
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
-    int getPort();
+    boolean hasServerInfo();
+    /**
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
+     */
+    middleware.proto.AssignmentOuterClass.ServerInfo getServerInfo();
+    /**
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     */
+    middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder getServerInfoOrBuilder();
+
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     * @return Whether the clientInfo field is set.
+     */
+    boolean hasClientInfo();
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     * @return The clientInfo.
+     */
+    middleware.proto.AssignmentOuterClass.ClientInfo getClientInfo();
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     */
+    middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder getClientInfoOrBuilder();
+
+    public middleware.proto.AssignmentOuterClass.Assignment.TypeCase getTypeCase();
   }
   /**
    * Protobuf type {@code middleware.proto.Assignment}
@@ -69,9 +95,32 @@ public final class AssignmentOuterClass {
             case 0:
               done = true;
               break;
-            case 8: {
-
-              port_ = input.readInt32();
+            case 10: {
+              middleware.proto.AssignmentOuterClass.ServerInfo.Builder subBuilder = null;
+              if (typeCase_ == 1) {
+                subBuilder = ((middleware.proto.AssignmentOuterClass.ServerInfo) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.AssignmentOuterClass.ServerInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.AssignmentOuterClass.ServerInfo) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 1;
+              break;
+            }
+            case 18: {
+              middleware.proto.AssignmentOuterClass.ClientInfo.Builder subBuilder = null;
+              if (typeCase_ == 2) {
+                subBuilder = ((middleware.proto.AssignmentOuterClass.ClientInfo) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.AssignmentOuterClass.ClientInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.AssignmentOuterClass.ClientInfo) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 2;
               break;
             }
             default: {
@@ -106,14 +155,101 @@ public final class AssignmentOuterClass {
               middleware.proto.AssignmentOuterClass.Assignment.class, middleware.proto.AssignmentOuterClass.Assignment.Builder.class);
     }
 
-    public static final int PORT_FIELD_NUMBER = 1;
-    private int port_;
+    private int typeCase_ = 0;
+    private java.lang.Object type_;
+    public enum TypeCase
+        implements com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      SERVERINFO(1),
+      CLIENTINFO(2),
+      TYPE_NOT_SET(0);
+      private final int value;
+      private TypeCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static TypeCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static TypeCase forNumber(int value) {
+        switch (value) {
+          case 1: return SERVERINFO;
+          case 2: return CLIENTINFO;
+          case 0: return TYPE_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public TypeCase
+    getTypeCase() {
+      return TypeCase.forNumber(
+          typeCase_);
+    }
+
+    public static final int SERVERINFO_FIELD_NUMBER = 1;
     /**
-     * <code>int32 port = 1;</code>
-     * @return The port.
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     * @return Whether the serverInfo field is set.
      */
-    public int getPort() {
-      return port_;
+    public boolean hasServerInfo() {
+      return typeCase_ == 1;
+    }
+    /**
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     * @return The serverInfo.
+     */
+    public middleware.proto.AssignmentOuterClass.ServerInfo getServerInfo() {
+      if (typeCase_ == 1) {
+         return (middleware.proto.AssignmentOuterClass.ServerInfo) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+     */
+    public middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder getServerInfoOrBuilder() {
+      if (typeCase_ == 1) {
+         return (middleware.proto.AssignmentOuterClass.ServerInfo) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+    }
+
+    public static final int CLIENTINFO_FIELD_NUMBER = 2;
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     * @return Whether the clientInfo field is set.
+     */
+    public boolean hasClientInfo() {
+      return typeCase_ == 2;
+    }
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     * @return The clientInfo.
+     */
+    public middleware.proto.AssignmentOuterClass.ClientInfo getClientInfo() {
+      if (typeCase_ == 2) {
+         return (middleware.proto.AssignmentOuterClass.ClientInfo) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+     */
+    public middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder getClientInfoOrBuilder() {
+      if (typeCase_ == 2) {
+         return (middleware.proto.AssignmentOuterClass.ClientInfo) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -130,8 +266,11 @@ public final class AssignmentOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (port_ != 0) {
-        output.writeInt32(1, port_);
+      if (typeCase_ == 1) {
+        output.writeMessage(1, (middleware.proto.AssignmentOuterClass.ServerInfo) type_);
+      }
+      if (typeCase_ == 2) {
+        output.writeMessage(2, (middleware.proto.AssignmentOuterClass.ClientInfo) type_);
       }
       unknownFields.writeTo(output);
     }
@@ -142,9 +281,13 @@ public final class AssignmentOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (port_ != 0) {
+      if (typeCase_ == 1) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, port_);
+          .computeMessageSize(1, (middleware.proto.AssignmentOuterClass.ServerInfo) type_);
+      }
+      if (typeCase_ == 2) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, (middleware.proto.AssignmentOuterClass.ClientInfo) type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -161,8 +304,19 @@ public final class AssignmentOuterClass {
       }
       middleware.proto.AssignmentOuterClass.Assignment other = (middleware.proto.AssignmentOuterClass.Assignment) obj;
 
-      if (getPort()
-          != other.getPort()) return false;
+      if (!getTypeCase().equals(other.getTypeCase())) return false;
+      switch (typeCase_) {
+        case 1:
+          if (!getServerInfo()
+              .equals(other.getServerInfo())) return false;
+          break;
+        case 2:
+          if (!getClientInfo()
+              .equals(other.getClientInfo())) return false;
+          break;
+        case 0:
+        default:
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -174,8 +328,18 @@ public final class AssignmentOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + PORT_FIELD_NUMBER;
-      hash = (53 * hash) + getPort();
+      switch (typeCase_) {
+        case 1:
+          hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
+          hash = (53 * hash) + getServerInfo().hashCode();
+          break;
+        case 2:
+          hash = (37 * hash) + CLIENTINFO_FIELD_NUMBER;
+          hash = (53 * hash) + getClientInfo().hashCode();
+          break;
+        case 0:
+        default:
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -309,8 +473,8 @@ public final class AssignmentOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        port_ = 0;
-
+        typeCase_ = 0;
+        type_ = null;
         return this;
       }
 
@@ -337,7 +501,21 @@ public final class AssignmentOuterClass {
       @java.lang.Override
       public middleware.proto.AssignmentOuterClass.Assignment buildPartial() {
         middleware.proto.AssignmentOuterClass.Assignment result = new middleware.proto.AssignmentOuterClass.Assignment(this);
-        result.port_ = port_;
+        if (typeCase_ == 1) {
+          if (serverInfoBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = serverInfoBuilder_.build();
+          }
+        }
+        if (typeCase_ == 2) {
+          if (clientInfoBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = clientInfoBuilder_.build();
+          }
+        }
+        result.typeCase_ = typeCase_;
         onBuilt();
         return result;
       }
@@ -386,8 +564,18 @@ public final class AssignmentOuterClass {
 
       public Builder mergeFrom(middleware.proto.AssignmentOuterClass.Assignment other) {
         if (other == middleware.proto.AssignmentOuterClass.Assignment.getDefaultInstance()) return this;
-        if (other.getPort() != 0) {
-          setPort(other.getPort());
+        switch (other.getTypeCase()) {
+          case SERVERINFO: {
+            mergeServerInfo(other.getServerInfo());
+            break;
+          }
+          case CLIENTINFO: {
+            mergeClientInfo(other.getClientInfo());
+            break;
+          }
+          case TYPE_NOT_SET: {
+            break;
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -417,35 +605,296 @@ public final class AssignmentOuterClass {
         }
         return this;
       }
+      private int typeCase_ = 0;
+      private java.lang.Object type_;
+      public TypeCase
+          getTypeCase() {
+        return TypeCase.forNumber(
+            typeCase_);
+      }
 
-      private int port_ ;
-      /**
-       * <code>int32 port = 1;</code>
-       * @return The port.
-       */
-      public int getPort() {
-        return port_;
-      }
-      /**
-       * <code>int32 port = 1;</code>
-       * @param value The port to set.
-       * @return This builder for chaining.
-       */
-      public Builder setPort(int value) {
-        
-        port_ = value;
+      public Builder clearType() {
+        typeCase_ = 0;
+        type_ = null;
         onChanged();
         return this;
       }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.ServerInfo, middleware.proto.AssignmentOuterClass.ServerInfo.Builder, middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder> serverInfoBuilder_;
       /**
-       * <code>int32 port = 1;</code>
-       * @return This builder for chaining.
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       * @return Whether the serverInfo field is set.
        */
-      public Builder clearPort() {
-        
-        port_ = 0;
-        onChanged();
+      public boolean hasServerInfo() {
+        return typeCase_ == 1;
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       * @return The serverInfo.
+       */
+      public middleware.proto.AssignmentOuterClass.ServerInfo getServerInfo() {
+        if (serverInfoBuilder_ == null) {
+          if (typeCase_ == 1) {
+            return (middleware.proto.AssignmentOuterClass.ServerInfo) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+        } else {
+          if (typeCase_ == 1) {
+            return serverInfoBuilder_.getMessage();
+          }
+          return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public Builder setServerInfo(middleware.proto.AssignmentOuterClass.ServerInfo value) {
+        if (serverInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          serverInfoBuilder_.setMessage(value);
+        }
+        typeCase_ = 1;
         return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public Builder setServerInfo(
+          middleware.proto.AssignmentOuterClass.ServerInfo.Builder builderForValue) {
+        if (serverInfoBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          serverInfoBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public Builder mergeServerInfo(middleware.proto.AssignmentOuterClass.ServerInfo value) {
+        if (serverInfoBuilder_ == null) {
+          if (typeCase_ == 1 &&
+              type_ != middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance()) {
+            type_ = middleware.proto.AssignmentOuterClass.ServerInfo.newBuilder((middleware.proto.AssignmentOuterClass.ServerInfo) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 1) {
+            serverInfoBuilder_.mergeFrom(value);
+          }
+          serverInfoBuilder_.setMessage(value);
+        }
+        typeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public Builder clearServerInfo() {
+        if (serverInfoBuilder_ == null) {
+          if (typeCase_ == 1) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 1) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          serverInfoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.ServerInfo.Builder getServerInfoBuilder() {
+        return getServerInfoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder getServerInfoOrBuilder() {
+        if ((typeCase_ == 1) && (serverInfoBuilder_ != null)) {
+          return serverInfoBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 1) {
+            return (middleware.proto.AssignmentOuterClass.ServerInfo) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ServerInfo serverInfo = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.ServerInfo, middleware.proto.AssignmentOuterClass.ServerInfo.Builder, middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder> 
+          getServerInfoFieldBuilder() {
+        if (serverInfoBuilder_ == null) {
+          if (!(typeCase_ == 1)) {
+            type_ = middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+          }
+          serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.AssignmentOuterClass.ServerInfo, middleware.proto.AssignmentOuterClass.ServerInfo.Builder, middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder>(
+                  (middleware.proto.AssignmentOuterClass.ServerInfo) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 1;
+        onChanged();;
+        return serverInfoBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.ClientInfo, middleware.proto.AssignmentOuterClass.ClientInfo.Builder, middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder> clientInfoBuilder_;
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       * @return Whether the clientInfo field is set.
+       */
+      public boolean hasClientInfo() {
+        return typeCase_ == 2;
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       * @return The clientInfo.
+       */
+      public middleware.proto.AssignmentOuterClass.ClientInfo getClientInfo() {
+        if (clientInfoBuilder_ == null) {
+          if (typeCase_ == 2) {
+            return (middleware.proto.AssignmentOuterClass.ClientInfo) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+        } else {
+          if (typeCase_ == 2) {
+            return clientInfoBuilder_.getMessage();
+          }
+          return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public Builder setClientInfo(middleware.proto.AssignmentOuterClass.ClientInfo value) {
+        if (clientInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          clientInfoBuilder_.setMessage(value);
+        }
+        typeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public Builder setClientInfo(
+          middleware.proto.AssignmentOuterClass.ClientInfo.Builder builderForValue) {
+        if (clientInfoBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          clientInfoBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public Builder mergeClientInfo(middleware.proto.AssignmentOuterClass.ClientInfo value) {
+        if (clientInfoBuilder_ == null) {
+          if (typeCase_ == 2 &&
+              type_ != middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance()) {
+            type_ = middleware.proto.AssignmentOuterClass.ClientInfo.newBuilder((middleware.proto.AssignmentOuterClass.ClientInfo) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 2) {
+            clientInfoBuilder_.mergeFrom(value);
+          }
+          clientInfoBuilder_.setMessage(value);
+        }
+        typeCase_ = 2;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public Builder clearClientInfo() {
+        if (clientInfoBuilder_ == null) {
+          if (typeCase_ == 2) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 2) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          clientInfoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.ClientInfo.Builder getClientInfoBuilder() {
+        return getClientInfoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder getClientInfoOrBuilder() {
+        if ((typeCase_ == 2) && (clientInfoBuilder_ != null)) {
+          return clientInfoBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 2) {
+            return (middleware.proto.AssignmentOuterClass.ClientInfo) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ClientInfo clientInfo = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.ClientInfo, middleware.proto.AssignmentOuterClass.ClientInfo.Builder, middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder> 
+          getClientInfoFieldBuilder() {
+        if (clientInfoBuilder_ == null) {
+          if (!(typeCase_ == 2)) {
+            type_ = middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+          }
+          clientInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.AssignmentOuterClass.ClientInfo, middleware.proto.AssignmentOuterClass.ClientInfo.Builder, middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder>(
+                  (middleware.proto.AssignmentOuterClass.ClientInfo) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 2;
+        onChanged();;
+        return clientInfoBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -500,11 +949,1289 @@ public final class AssignmentOuterClass {
 
   }
 
+  public interface ServerInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:middleware.proto.ServerInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string address = 1;</code>
+     * @return The address.
+     */
+    java.lang.String getAddress();
+    /**
+     * <code>string address = 1;</code>
+     * @return The bytes for address.
+     */
+    com.google.protobuf.ByteString
+        getAddressBytes();
+
+    /**
+     * <code>int32 port = 2;</code>
+     * @return The port.
+     */
+    int getPort();
+  }
+  /**
+   * Protobuf type {@code middleware.proto.ServerInfo}
+   */
+  public  static final class ServerInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:middleware.proto.ServerInfo)
+      ServerInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ServerInfo.newBuilder() to construct.
+    private ServerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ServerInfo() {
+      address_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ServerInfo();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ServerInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              address_ = s;
+              break;
+            }
+            case 16: {
+
+              port_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ServerInfo_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ServerInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              middleware.proto.AssignmentOuterClass.ServerInfo.class, middleware.proto.AssignmentOuterClass.ServerInfo.Builder.class);
+    }
+
+    public static final int ADDRESS_FIELD_NUMBER = 1;
+    private volatile java.lang.Object address_;
+    /**
+     * <code>string address = 1;</code>
+     * @return The address.
+     */
+    public java.lang.String getAddress() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        address_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string address = 1;</code>
+     * @return The bytes for address.
+     */
+    public com.google.protobuf.ByteString
+        getAddressBytes() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        address_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PORT_FIELD_NUMBER = 2;
+    private int port_;
+    /**
+     * <code>int32 port = 2;</code>
+     * @return The port.
+     */
+    public int getPort() {
+      return port_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getAddressBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, address_);
+      }
+      if (port_ != 0) {
+        output.writeInt32(2, port_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getAddressBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, address_);
+      }
+      if (port_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, port_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof middleware.proto.AssignmentOuterClass.ServerInfo)) {
+        return super.equals(obj);
+      }
+      middleware.proto.AssignmentOuterClass.ServerInfo other = (middleware.proto.AssignmentOuterClass.ServerInfo) obj;
+
+      if (!getAddress()
+          .equals(other.getAddress())) return false;
+      if (getPort()
+          != other.getPort()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getAddress().hashCode();
+      hash = (37 * hash) + PORT_FIELD_NUMBER;
+      hash = (53 * hash) + getPort();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ServerInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(middleware.proto.AssignmentOuterClass.ServerInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code middleware.proto.ServerInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:middleware.proto.ServerInfo)
+        middleware.proto.AssignmentOuterClass.ServerInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ServerInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ServerInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.AssignmentOuterClass.ServerInfo.class, middleware.proto.AssignmentOuterClass.ServerInfo.Builder.class);
+      }
+
+      // Construct using middleware.proto.AssignmentOuterClass.ServerInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        address_ = "";
+
+        port_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ServerInfo_descriptor;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ServerInfo getDefaultInstanceForType() {
+        return middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ServerInfo build() {
+        middleware.proto.AssignmentOuterClass.ServerInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ServerInfo buildPartial() {
+        middleware.proto.AssignmentOuterClass.ServerInfo result = new middleware.proto.AssignmentOuterClass.ServerInfo(this);
+        result.address_ = address_;
+        result.port_ = port_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof middleware.proto.AssignmentOuterClass.ServerInfo) {
+          return mergeFrom((middleware.proto.AssignmentOuterClass.ServerInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(middleware.proto.AssignmentOuterClass.ServerInfo other) {
+        if (other == middleware.proto.AssignmentOuterClass.ServerInfo.getDefaultInstance()) return this;
+        if (!other.getAddress().isEmpty()) {
+          address_ = other.address_;
+          onChanged();
+        }
+        if (other.getPort() != 0) {
+          setPort(other.getPort());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        middleware.proto.AssignmentOuterClass.ServerInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (middleware.proto.AssignmentOuterClass.ServerInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object address_ = "";
+      /**
+       * <code>string address = 1;</code>
+       * @return The address.
+       */
+      public java.lang.String getAddress() {
+        java.lang.Object ref = address_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          address_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @return The bytes for address.
+       */
+      public com.google.protobuf.ByteString
+          getAddressBytes() {
+        java.lang.Object ref = address_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          address_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @param value The address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        address_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddress() {
+        
+        address_ = getDefaultInstance().getAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @param value The bytes for address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        address_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int port_ ;
+      /**
+       * <code>int32 port = 2;</code>
+       * @return The port.
+       */
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>int32 port = 2;</code>
+       * @param value The port to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPort(int value) {
+        
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 port = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPort() {
+        
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:middleware.proto.ServerInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:middleware.proto.ServerInfo)
+    private static final middleware.proto.AssignmentOuterClass.ServerInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new middleware.proto.AssignmentOuterClass.ServerInfo();
+    }
+
+    public static middleware.proto.AssignmentOuterClass.ServerInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ServerInfo>
+        PARSER = new com.google.protobuf.AbstractParser<ServerInfo>() {
+      @java.lang.Override
+      public ServerInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ServerInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ServerInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ServerInfo> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public middleware.proto.AssignmentOuterClass.ServerInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClientInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:middleware.proto.ClientInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string address = 1;</code>
+     * @return The address.
+     */
+    java.lang.String getAddress();
+    /**
+     * <code>string address = 1;</code>
+     * @return The bytes for address.
+     */
+    com.google.protobuf.ByteString
+        getAddressBytes();
+
+    /**
+     * <code>int32 port = 2;</code>
+     * @return The port.
+     */
+    int getPort();
+  }
+  /**
+   * Protobuf type {@code middleware.proto.ClientInfo}
+   */
+  public  static final class ClientInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:middleware.proto.ClientInfo)
+      ClientInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClientInfo.newBuilder() to construct.
+    private ClientInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClientInfo() {
+      address_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ClientInfo();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ClientInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              address_ = s;
+              break;
+            }
+            case 16: {
+
+              port_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ClientInfo_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ClientInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              middleware.proto.AssignmentOuterClass.ClientInfo.class, middleware.proto.AssignmentOuterClass.ClientInfo.Builder.class);
+    }
+
+    public static final int ADDRESS_FIELD_NUMBER = 1;
+    private volatile java.lang.Object address_;
+    /**
+     * <code>string address = 1;</code>
+     * @return The address.
+     */
+    public java.lang.String getAddress() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        address_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string address = 1;</code>
+     * @return The bytes for address.
+     */
+    public com.google.protobuf.ByteString
+        getAddressBytes() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        address_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PORT_FIELD_NUMBER = 2;
+    private int port_;
+    /**
+     * <code>int32 port = 2;</code>
+     * @return The port.
+     */
+    public int getPort() {
+      return port_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getAddressBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, address_);
+      }
+      if (port_ != 0) {
+        output.writeInt32(2, port_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getAddressBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, address_);
+      }
+      if (port_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, port_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof middleware.proto.AssignmentOuterClass.ClientInfo)) {
+        return super.equals(obj);
+      }
+      middleware.proto.AssignmentOuterClass.ClientInfo other = (middleware.proto.AssignmentOuterClass.ClientInfo) obj;
+
+      if (!getAddress()
+          .equals(other.getAddress())) return false;
+      if (getPort()
+          != other.getPort()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getAddress().hashCode();
+      hash = (37 * hash) + PORT_FIELD_NUMBER;
+      hash = (53 * hash) + getPort();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.ClientInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(middleware.proto.AssignmentOuterClass.ClientInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code middleware.proto.ClientInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:middleware.proto.ClientInfo)
+        middleware.proto.AssignmentOuterClass.ClientInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ClientInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ClientInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.AssignmentOuterClass.ClientInfo.class, middleware.proto.AssignmentOuterClass.ClientInfo.Builder.class);
+      }
+
+      // Construct using middleware.proto.AssignmentOuterClass.ClientInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        address_ = "";
+
+        port_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_ClientInfo_descriptor;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ClientInfo getDefaultInstanceForType() {
+        return middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ClientInfo build() {
+        middleware.proto.AssignmentOuterClass.ClientInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.ClientInfo buildPartial() {
+        middleware.proto.AssignmentOuterClass.ClientInfo result = new middleware.proto.AssignmentOuterClass.ClientInfo(this);
+        result.address_ = address_;
+        result.port_ = port_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof middleware.proto.AssignmentOuterClass.ClientInfo) {
+          return mergeFrom((middleware.proto.AssignmentOuterClass.ClientInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(middleware.proto.AssignmentOuterClass.ClientInfo other) {
+        if (other == middleware.proto.AssignmentOuterClass.ClientInfo.getDefaultInstance()) return this;
+        if (!other.getAddress().isEmpty()) {
+          address_ = other.address_;
+          onChanged();
+        }
+        if (other.getPort() != 0) {
+          setPort(other.getPort());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        middleware.proto.AssignmentOuterClass.ClientInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (middleware.proto.AssignmentOuterClass.ClientInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object address_ = "";
+      /**
+       * <code>string address = 1;</code>
+       * @return The address.
+       */
+      public java.lang.String getAddress() {
+        java.lang.Object ref = address_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          address_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @return The bytes for address.
+       */
+      public com.google.protobuf.ByteString
+          getAddressBytes() {
+        java.lang.Object ref = address_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          address_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @param value The address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        address_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddress() {
+        
+        address_ = getDefaultInstance().getAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 1;</code>
+       * @param value The bytes for address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        address_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int port_ ;
+      /**
+       * <code>int32 port = 2;</code>
+       * @return The port.
+       */
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>int32 port = 2;</code>
+       * @param value The port to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPort(int value) {
+        
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 port = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPort() {
+        
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:middleware.proto.ClientInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:middleware.proto.ClientInfo)
+    private static final middleware.proto.AssignmentOuterClass.ClientInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new middleware.proto.AssignmentOuterClass.ClientInfo();
+    }
+
+    public static middleware.proto.AssignmentOuterClass.ClientInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClientInfo>
+        PARSER = new com.google.protobuf.AbstractParser<ClientInfo>() {
+      @java.lang.Override
+      public ClientInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ClientInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClientInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClientInfo> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public middleware.proto.AssignmentOuterClass.ClientInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_middleware_proto_Assignment_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_middleware_proto_Assignment_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_ServerInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_ServerInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_ClientInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_ClientInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -515,8 +2242,12 @@ public final class AssignmentOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\033assignment/assignment.proto\022\020middlewar" +
-      "e.proto\"\032\n\nAssignment\022\014\n\004port\030\001 \001(\005b\006pro" +
-      "to3"
+      "e.proto\"|\n\nAssignment\0222\n\nserverInfo\030\001 \001(" +
+      "\0132\034.middleware.proto.ServerInfoH\000\0222\n\ncli" +
+      "entInfo\030\002 \001(\0132\034.middleware.proto.ClientI" +
+      "nfoH\000B\006\n\004type\"+\n\nServerInfo\022\017\n\007address\030\001" +
+      " \001(\t\022\014\n\004port\030\002 \001(\005\"+\n\nClientInfo\022\017\n\007addr" +
+      "ess\030\001 \001(\t\022\014\n\004port\030\002 \001(\005b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -527,7 +2258,19 @@ public final class AssignmentOuterClass {
     internal_static_middleware_proto_Assignment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Assignment_descriptor,
-        new java.lang.String[] { "Port", });
+        new java.lang.String[] { "ServerInfo", "ClientInfo", "Type", });
+    internal_static_middleware_proto_ServerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_middleware_proto_ServerInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_ServerInfo_descriptor,
+        new java.lang.String[] { "Address", "Port", });
+    internal_static_middleware_proto_ClientInfo_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_middleware_proto_ClientInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_ClientInfo_descriptor,
+        new java.lang.String[] { "Address", "Port", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

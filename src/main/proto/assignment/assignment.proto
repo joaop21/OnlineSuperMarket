@@ -4,6 +4,25 @@ package middleware.proto;
 
 message Assignment {
 
-    int32 port = 1;
+    oneof type {
+
+        ServerInfo serverInfo = 1;
+        ClientInfo clientInfo = 2;
+
+    }
+
+}
+
+message ServerInfo {
+
+    string address = 1;
+    int32 port = 2;
+
+}
+
+message ClientInfo {
+
+    string address = 1;
+    int32 port = 2;
 
 }

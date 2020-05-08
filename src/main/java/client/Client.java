@@ -1,37 +1,36 @@
 package client;
 
-import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketIO;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 public class Client {
 
     private static Socket socket = null;
     private static SocketIO socketIO = null;
 
-    private static int getPortFromLoadBalancer () throws IOException {
-
-
-        Message message = Message.newBuilder()
-                .setAssignment(
-                        Assignment.newBuilder().build()
-                ).build();
-
-        Client.socketIO.write(message.toByteArray());
-
-        System.out.println("Sent message to Load Balancer!");
+    private static void getServer () throws IOException {
 
         // Receiving message
-        message = Message.parseFrom(Client.socketIO.read());
+        Message message = Message.parseFrom(Client.socketIO.read());
 
         System.out.println("Received message from Load Balancer!");
 
-        // Returning assigned server port
-        return message.getAssignment().getPort();
+        System.out.println("Server Info -> Address : " + message.getAssignment().getServerInfo().getAddress() +
+                           " ; Port : " + message.getAssignment().getServerInfo().getPort() + " ;");
+
+        // Creating socket with server
+        Socket serverSocket = new Socket(message.getAssignment().getServerInfo().getAddress(),
+                                         message.getAssignment().getServerInfo().getPort());
+
+        // Closing Load Balancer Socket
+        socket.close();
+
+        // Updating Socket info
+        Client.socket = serverSocket;
+        Client.socketIO = new SocketIO(Client.socket);
 
     }
 
@@ -44,14 +43,10 @@ public class Client {
         Client.socket = new Socket("localhost", load_balancer_port);
         Client.socketIO = new SocketIO(Client.socket);
 
-        // Getting server port
-        int server_port = getPortFromLoadBalancer();
+        // Connecting to Server
+        Client.getServer();
 
-        System.out.println("Server port: " + server_port);
-
-        //System.out.println(InetAddress.getLocalHost());
-        //System.out.println(InetAddress.getLoopbackAddress());
-
+        // Closing socket
         Client.socket.close();
     }
 }

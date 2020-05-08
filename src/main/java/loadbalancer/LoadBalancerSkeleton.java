@@ -4,11 +4,10 @@ import middleware.gateway.Skeleton;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketIO;
-import middleware.spread.SpreadConnector;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Set;
 
 public class LoadBalancerSkeleton extends Skeleton {
 
@@ -19,40 +18,25 @@ public class LoadBalancerSkeleton extends Skeleton {
     @Override
     public void run() {
 
-        while (!this.socket.isClosed()) {
-
             try {
 
-                // Message from client
-                Message message = Message.parseFrom(this.socketIO.read());
-
-                System.out.println("Received message from client!");
-
                 // Choosing a port
-                int port = PortManager.PortManager().getServerPort();
+                ServerInfo server_info = (ServerInfo) Balancer.Balancer().get();
 
-                // Marshalling the port
-                message = message.toBuilder().
-                        setAssignment(
-                                message.getAssignment().toBuilder().
-                                        setPort(port).
-                                        build()).
-                        build();
-
+                // Marshalling the server info
+                Message message = Message.newBuilder()
+                        .setAssignment(Assignment.newBuilder()
+                                .setServerInfo(server_info)
+                                .build())
+                        .build();
 
                 System.out.println("Sending message to Client!");
 
-                // Sending port back
+                // Sending info to the client
                 this.socketIO.write(message.toByteArray());
 
                 // Closing connection
                 this.socket.close();
-
-                System.out.println("Sending message to other Load Balancers!");
-
-                System.out.println("Socket: " + this.socket.toString());
-
-                SpreadConnector.cast(message.toByteArray(), Set.of("LoadBalancing"));
 
             } catch (IOException e) {
 
@@ -60,9 +44,7 @@ public class LoadBalancerSkeleton extends Skeleton {
 
             }
 
-
         }
 
-    }
 
 }
