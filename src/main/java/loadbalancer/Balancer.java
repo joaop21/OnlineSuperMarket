@@ -1,5 +1,6 @@
 package loadbalancer;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,8 +44,7 @@ public class Balancer {
 
     }
 
-
-    public Object get () {
+    public Object min () {
 
         Map.Entry<Object, Integer> chosen_entry = null;
         for (Map.Entry<Object, Integer> entry: counters.entrySet())
@@ -55,4 +55,7 @@ public class Balancer {
 
     }
 
+    public Map<Object, Integer> get () { return new ConcurrentHashMap<>(counters); }
+
+    public void set (Map<Object, Integer> counters) { this.counters = new ConcurrentHashMap<>(counters); }
 }

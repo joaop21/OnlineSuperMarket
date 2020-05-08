@@ -6,12 +6,11 @@ import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketIO;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class LoadBalancerSkeleton extends Skeleton {
 
-    private SocketIO socketIO = null;
+    private SocketIO socketIO;
 
     public LoadBalancerSkeleton (Socket sock) { super (sock); this.socketIO = new SocketIO(sock); }
 
@@ -21,7 +20,7 @@ public class LoadBalancerSkeleton extends Skeleton {
             try {
 
                 // Choosing a port
-                ServerInfo server_info = (ServerInfo) Balancer.Balancer().get();
+                ServerInfo server_info = (ServerInfo) Balancer.Balancer().min();
 
                 // Marshalling the server info
                 Message message = Message.newBuilder()

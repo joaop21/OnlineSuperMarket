@@ -1,8 +1,8 @@
 package server;
 
 import middleware.gateway.Gateway;
-import middleware.proto.AssignmentOuterClass;
-import middleware.proto.MessageOuterClass;
+import middleware.proto.AssignmentOuterClass.*;
+import middleware.proto.MessageOuterClass.*;
 import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
@@ -17,25 +17,18 @@ public class Server {
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
 
+        // Setting server info
+        ServerInfo serverInfo = ServerInfo.newBuilder()
+                .setAddress("localhost")
+                .setPort(port)
+                .build();
+
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("Servers", "System"));
         // Adding listener to connector
-        SpreadConnector.addListener(new ServerMessageListener());
+        SpreadConnector.addListener(new ServerMessageListener(serverInfo));
         // Initializing connector
         SpreadConnector.initialize();
-
-        // Creating message with own info to send to laod balancer
-        MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
-                .setAssignment(AssignmentOuterClass.Assignment.newBuilder()
-                        .setServerInfo(AssignmentOuterClass.ServerInfo.newBuilder()
-                                .setAddress("localhost")
-                                .setPort(port)
-                                .build())
-                        .build())
-                .build();
-
-        // Sending own info throughout the system
-        SpreadConnector.cast(message.toByteArray(), Set.of("System"));
 
         new Gateway(port, OnlineSuperMarketSkeleton.class);
 

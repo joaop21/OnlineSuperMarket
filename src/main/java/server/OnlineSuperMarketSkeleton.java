@@ -67,6 +67,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                         .setClientInfo(ClientInfo.newBuilder()
                                 .setAddress(((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().getHostAddress())
                                 .setPort(((InetSocketAddress) socket.getRemoteSocketAddress()).getPort())
+                                .setState(ClientInfo.State.CONNECTED)
                                 .build())
                         .build())
                 .build();
