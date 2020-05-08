@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-//import "somesome/somesome.proto";
-
-package middleware.protos;
+package middleware.proto;
 
 message Replication {
 

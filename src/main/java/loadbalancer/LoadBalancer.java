@@ -1,6 +1,7 @@
-package loadBalancer;
+package loadbalancer;
 
-import middleware.loadBalancer.LoadBalancerMessageListener;
+import middleware.loadbalancer.LoadBalancerMessageListener;
+import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -13,12 +14,20 @@ public class LoadBalancer {
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
 
-        System.out.println("Creating Connector!");
-        // Creating connector
-        spreadConnector = new SpreadConnector(Set.of("LoadBalancing"), new LoadBalancerMessageListener());
+        // Getting own port
+        int port = Integer.parseInt(args[0]);
+
+        System.out.println("Configuring Connector!");
+
+        // Adding groups to connector
+        SpreadConnector.addGroups(Set.of("LoadBalancing", "System"));
+        // Adding listener to connector
+        SpreadConnector.addListener(new LoadBalancerMessageListener(port));
+
         System.out.println("Initializing Connector!");
         // Initializing connector
-        spreadConnector.initializeConnector();
+        SpreadConnector.initialize();
+
         System.out.println("Initialized Connector!");
 
         // Because I'm primary now I can make the server selection

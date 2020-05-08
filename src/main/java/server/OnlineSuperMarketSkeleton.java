@@ -3,11 +3,17 @@ package server;
 import application.Item;
 import application.OnlineSuperMarket;
 import middleware.gateway.Skeleton;
+import middleware.proto.MessageOuterClass.*;
+import middleware.proto.AssignmentOuterClass.*;
+import middleware.spread.SpreadConnector;
 
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
+import java.util.Set;
 
 public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMarket {
+
     public OnlineSuperMarketSkeleton(Socket sock) {
         super(sock);
     }
@@ -54,6 +60,20 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
     @Override
     public void run() {
+
+        // Creating client-server info message
+        Message message = Message.newBuilder()
+                .setAssignment(Assignment.newBuilder()
+                        .setClientInfo(ClientInfo.newBuilder()
+                                .setAddress(((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().getHostAddress())
+                                .setPort(((InetSocketAddress) socket.getRemoteSocketAddress()).getPort())
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println("Sending message to other Load Balancers!");
+
+        SpreadConnector.cast(message.toByteArray(), Set.of("System"));
 
     }
 }
