@@ -1,45 +1,65 @@
 package loadbalancer;
 
 import middleware.gateway.Skeleton;
-import middleware.proto.AssignmentOuterClass;
-import middleware.proto.MessageOuterClass;
+import middleware.proto.AssignmentOuterClass.*;
+import middleware.proto.MessageOuterClass.*;
+import middleware.socket.SocketIO;
+import middleware.spread.SpreadConnector;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Set;
 
 public class LoadBalancerSkeleton extends Skeleton {
 
-    public LoadBalancerSkeleton (Socket sock) { super (sock);}
+    private SocketIO socketIO = null;
+
+    public LoadBalancerSkeleton (Socket sock) { super (sock); this.socketIO = new SocketIO(sock); }
 
     @Override
     public void run() {
 
-        // Choosing a port
-        int port = PortManager.PortManager().getServerPort();
+        while (!this.socket.isClosed()) {
 
-        // Marshalling the port
-        MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
-                .setAssignment(
-                        AssignmentOuterClass.Assignment.newBuilder()
-                                .setPort(port)
-                                .build()
-                )
-                .build();
+            try {
 
-        try {
+                // Message from client
+                Message message = Message.parseFrom(this.socketIO.read());
 
-            System.out.println("Sending message!");
+                System.out.println("Received message from client!");
 
-            // Sending port back
-            this.socket.getOutputStream().write(message.toByteArray());
-            this.socket.getOutputStream().flush();
+                // Choosing a port
+                int port = PortManager.PortManager().getServerPort();
 
-            // Closing connection
-            this.socket.close();
+                // Marshalling the port
+                message = message.toBuilder().
+                        setAssignment(
+                                message.getAssignment().toBuilder().
+                                        setPort(port).
+                                        build()).
+                        build();
 
-        } catch (IOException e) {
 
-            e.printStackTrace();
+                System.out.println("Sending message to Client!");
+
+                // Sending port back
+                this.socketIO.write(message.toByteArray());
+
+                // Closing connection
+                this.socket.close();
+
+                System.out.println("Sending message to other Load Balancers!");
+
+                System.out.println("Socket: " + this.socket.toString());
+
+                SpreadConnector.cast(message.toByteArray(), Set.of("LoadBalancing"));
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
 
         }
 

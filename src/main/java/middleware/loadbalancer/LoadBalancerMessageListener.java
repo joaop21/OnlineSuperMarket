@@ -1,7 +1,9 @@
 package middleware.loadbalancer;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import loadbalancer.LoadBalancerSkeleton;
 import middleware.gateway.Gateway;
+import middleware.proto.MessageOuterClass.Message;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
@@ -26,8 +28,17 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
 
-        if (this.primary) System.out.println("I'm primary!");
-        else System.out.println("I'm useless!");
+        try {
+
+            Message message = Message.parseFrom(spreadMessage.getData());
+
+            //System.out.println();
+
+        } catch (InvalidProtocolBufferException e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
