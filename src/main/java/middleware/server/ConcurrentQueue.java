@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class ConcurrentQueue<T> {
-    Queue<T> queue = new LinkedList<>();
+    private final Queue<T> queue = new LinkedList<>();
 
     /**
      * Blocking method that consumes the head of the queue when its available.
