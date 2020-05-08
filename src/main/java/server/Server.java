@@ -10,14 +10,18 @@ import java.util.Set;
 
 public class Server {
 
-    private static SpreadConnector spreadConnector;
-
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
+
+        // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
-        // Creating connector
-        spreadConnector = SpreadConnector.SpreadConnector(Set.of("Servers", "System"), new ServerMessageListener());
+
+        // Adding groups to connector
+        SpreadConnector.addGroups(Set.of("Servers", "System"));
+        // Adding listener to connector
+        SpreadConnector.addListener(new ServerMessageListener());
         // Initializing connector
-        spreadConnector.initializeConnector();
+        SpreadConnector.initialize();
+
         new Gateway(port, OnlineSuperMarketSkeleton.class);
         // Sleeping
         while(true) Thread.sleep(10000);

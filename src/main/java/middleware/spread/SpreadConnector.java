@@ -4,66 +4,121 @@ import spread.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class SpreadConnector {
 
-    private static SpreadConnector spreadConnectorInstance = null;
+    private static SpreadConnection spreadConn = null;
+    private static String connName = null;
 
-    private SpreadConnection spreadConn = null;
-    private String connName = null;
+    private static HashSet<String> groups = new HashSet<>();
+    private static AdvancedMessageListener messageListener = null;
 
-    private Set<String> groups;
-    private AdvancedMessageListener messageListener;
+    public static void addGroup(String group) throws SpreadException {
 
-    private SpreadConnector (Set<String> groups, AdvancedMessageListener messageListener) {
+        if (!SpreadConnector.groups.contains(group)) {
 
-        this.groups = groups;
-        this.messageListener = messageListener;
+            // Storing group
+            SpreadConnector.groups.add(group);
 
-    }
+            // If connected join group
+            if (spreadConn != null && connName != null) {
 
-    // Returns the SpreadConnector instance
-    public static SpreadConnector SpreadConnector (Set<String> groups, AdvancedMessageListener messageListener) {
-
-        if (spreadConnectorInstance == null)
-            spreadConnectorInstance = new SpreadConnector(groups, messageListener);
-
-        return spreadConnectorInstance;
-
-    }
-
-    // Returns null if SpreadConnector hasn't been started with groups and a AdvancedMessageListener
-    public static SpreadConnector SpreadConnector () {
-
-        return spreadConnectorInstance;
-
-    }
-
-    public void initializeConnector() throws UnknownHostException, SpreadException {
-
-        if (spreadConn == null || connName == null) {
-
-            spreadConn = new SpreadConnection();
-            connName = UUID.randomUUID().toString();
-            spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
-
-            // Setting what to do when info from spread is received
-            spreadConn.add(this.messageListener);
-
-            // Joining groups
-            for (String group: this.groups) {
-
-                SpreadGroup spreadGroup = new SpreadGroup();
-                spreadGroup.join(spreadConn, group);
+                // Joining group
+                new SpreadGroup().join(spreadConn, group);
 
             }
+
         }
 
     }
 
-    public void cast (byte[] message, Set<String> groups){
+    public static void addGroups (Set<String> groups) throws SpreadException {
+
+        // Joining groups
+        for (String group: groups)
+
+            if (!SpreadConnector.groups.contains(group)) {
+
+                // Storing group
+                SpreadConnector.groups.add(group);
+
+                // If connected join group
+                if (spreadConn != null && connName != null) {
+
+                    // Joining group
+                    new SpreadGroup().join(spreadConn, group);
+
+                }
+
+            }
+
+    }
+
+    public static void addListener (AdvancedMessageListener messageListener) {
+
+        if (spreadConn != null && connName != null) {
+
+            // Adding new message listener
+            spreadConn.add(messageListener);
+
+            // Removing old message listener
+            spreadConn.remove(SpreadConnector.messageListener);
+
+            // Changing stored message listener
+            SpreadConnector.messageListener = messageListener;
+
+
+        } else SpreadConnector.messageListener = messageListener;
+
+    }
+
+    public static void initialize() throws UnknownHostException, SpreadException {
+
+        if (SpreadConnector.spreadConn == null || SpreadConnector.connName == null) {
+
+            // Creating connection
+            SpreadConnector.spreadConn = new SpreadConnection();
+            // Getting unique ID for the connection
+            SpreadConnector.connName = UUID.randomUUID().toString();
+            // Connecting
+            SpreadConnector.spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
+
+            // Adding message listener
+            SpreadConnector.spreadConn.add(SpreadConnector.messageListener);
+
+            // Joining groups
+            for (String group: SpreadConnector.groups) new SpreadGroup().join(SpreadConnector.spreadConn, group);
+
+        }
+
+    }
+
+    // Cast to every joined group
+    public static void cast (byte[] message) {
+
+        SpreadMessage m = new SpreadMessage();
+        m.addGroups(SpreadConnector.groups.toArray(new String[groups.size()]));
+        m.setData(message);
+        m.setSafe();
+
+        try {
+
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            SpreadConnector.spreadConn.multicast(m);
+
+        } catch (SpreadException | UnknownHostException e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    // Cast to specific groups
+    public static void cast (byte[] message, Set<String> groups){
 
         SpreadMessage m = new SpreadMessage();
         m.addGroups(groups.toArray(new String[groups.size()]));
@@ -72,8 +127,8 @@ public class SpreadConnector {
 
         try {
 
-            if(spreadConn == null) initializeConnector();
-            spreadConn.multicast(m);
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            SpreadConnector.spreadConn.multicast(m);
 
         } catch (SpreadException | UnknownHostException e) {
 

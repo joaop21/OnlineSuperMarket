@@ -1,6 +1,7 @@
 package loadbalancer;
 
 import middleware.loadbalancer.LoadBalancerMessageListener;
+import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -16,12 +17,17 @@ public class LoadBalancer {
         // Getting own port
         int port = Integer.parseInt(args[0]);
 
-        System.out.println("Creating Connector!");
-        // Creating connector
-        spreadConnector = SpreadConnector.SpreadConnector(Set.of("LoadBalancing", "System"), new LoadBalancerMessageListener(port));
+        System.out.println("Configuring Connector!");
+
+        // Adding groups to connector
+        SpreadConnector.addGroups(Set.of("LoadBalancing", "System"));
+        // Adding listener to connector
+        SpreadConnector.addListener(new LoadBalancerMessageListener(port));
+
         System.out.println("Initializing Connector!");
         // Initializing connector
-        spreadConnector.initializeConnector();
+        SpreadConnector.initialize();
+
         System.out.println("Initialized Connector!");
 
         // Because I'm primary now I can make the server selection
