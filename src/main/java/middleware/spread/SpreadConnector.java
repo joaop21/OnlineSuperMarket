@@ -9,22 +9,41 @@ import java.util.UUID;
 
 public class SpreadConnector {
 
+    private static SpreadConnector spreadConnectorInstance = null;
+
     private SpreadConnection spreadConn = null;
     private String connName = null;
 
     private Set<String> groups;
     private AdvancedMessageListener messageListener;
 
-    public SpreadConnector (Set<String> groups, AdvancedMessageListener messageListener) {
+    private SpreadConnector (Set<String> groups, AdvancedMessageListener messageListener) {
 
         this.groups = groups;
         this.messageListener = messageListener;
 
     }
 
+    // Returns the SpreadConnector instance
+    public static SpreadConnector SpreadConnector (Set<String> groups, AdvancedMessageListener messageListener) {
+
+        if (spreadConnectorInstance == null)
+            spreadConnectorInstance = new SpreadConnector(groups, messageListener);
+
+        return spreadConnectorInstance;
+
+    }
+
+    // Returns null if SpreadConnector hasn't been started with groups and a AdvancedMessageListener
+    public static SpreadConnector SpreadConnector () {
+
+        return spreadConnectorInstance;
+
+    }
+
     public void initializeConnector() throws UnknownHostException, SpreadException {
 
-        if(spreadConn == null || connName == null) {
+        if (spreadConn == null || connName == null) {
 
             spreadConn = new SpreadConnection();
             connName = UUID.randomUUID().toString();

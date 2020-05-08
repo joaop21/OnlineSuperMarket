@@ -15,7 +15,7 @@ public class Server {
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
         int port = Integer.parseInt(args[0]);
         // Creating connector
-        spreadConnector = new SpreadConnector(Set.of("Servers", "System"), new ServerMessageListener());
+        spreadConnector = SpreadConnector.SpreadConnector(Set.of("Servers", "System"), new ServerMessageListener());
         // Initializing connector
         spreadConnector.initializeConnector();
         new Gateway(port, OnlineSuperMarketSkeleton.class);
