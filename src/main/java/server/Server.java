@@ -24,7 +24,7 @@ public class Server {
         // Initializing connector
         SpreadConnector.initialize();
 
-        // Creating message with own info to send to laod balancer
+        // Creating message with own info to send to load balancer
         MessageOuterClass.Message message = MessageOuterClass.Message.newBuilder()
                 .setAssignment(AssignmentOuterClass.Assignment.newBuilder()
                         .setServerInfo(AssignmentOuterClass.ServerInfo.newBuilder()
