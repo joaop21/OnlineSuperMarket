@@ -20,7 +20,8 @@ public class Server {
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("Servers", "System"));
         // Adding listener to connector
-        SpreadConnector.addListener(new ServerMessageListener());
+        ServerMessageListener sml = new ServerMessageListener();
+        SpreadConnector.addListener(sml);
         // Initializing connector
         SpreadConnector.initialize();
 
@@ -36,6 +37,8 @@ public class Server {
 
         // Sending own info throughout the system
         SpreadConnector.cast(message.toByteArray(), Set.of("System"));
+
+        new Thread(RequestManager.initialize(sml)).start();
 
         new Gateway(port, OnlineSuperMarketSkeleton.class);
 

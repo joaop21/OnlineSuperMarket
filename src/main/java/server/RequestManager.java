@@ -15,7 +15,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Auxiliary class that behaves as a monitor
+ * Auxiliary class that behaves as a monitor (synchronization).
  * */
 class WaitingRoom{
     private final Lock l = new ReentrantLock();
