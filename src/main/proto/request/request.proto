@@ -16,7 +16,7 @@ message Request {
         Response response = 8;
 
     }
-
+    string uuid = 9;
 }
 
 message Item {
