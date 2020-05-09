@@ -6,6 +6,8 @@ import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadMessage;
 
+import java.util.Arrays;
+
 public class ServerMessageListener implements AdvancedMessageListener {
     private final ConcurrentQueue<Triplet<Boolean, Integer, MessageOuterClass.Message>> queue = new ConcurrentQueue<>();
     private int message_counter = 0;
@@ -17,13 +19,17 @@ public class ServerMessageListener implements AdvancedMessageListener {
         MembershipInfo info = spreadMessage.getMembershipInfo();
 
         try {
-            switch (info.getGroup().toString()) {
+            switch (spreadMessage.getGroups()[0].toString()) {
 
                 case "Servers":
                     boolean from_myself = false;
                     if(spreadMessage.getSender().toString().equals(this.myself))
                         from_myself = true;
                     this.queue.add(new Triplet<>(from_myself, message_counter++, MessageOuterClass.Message.parseFrom(spreadMessage.getData())));
+                    break;
+
+                case "System":
+                    System.out.println(MessageOuterClass.Message.parseFrom(spreadMessage.getData()).toString());
                     break;
 
             }
