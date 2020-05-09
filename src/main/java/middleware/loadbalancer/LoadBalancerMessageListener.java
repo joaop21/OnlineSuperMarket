@@ -99,7 +99,7 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
                 SpreadGroup server_spread = spreadMessage.getSender();
 
-                System.out.println(server_spread);
+                System.out.println("Server spread: " + server_spread);
 
                 ServerInfo server_socket = message.getAssignment().getServerInfo();
                 System.out.println("Address: " + server_socket.getAddress() + " ; Port: " + server_socket.getPort() + " ;");

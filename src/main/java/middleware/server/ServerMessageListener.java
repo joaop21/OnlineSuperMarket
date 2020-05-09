@@ -23,6 +23,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             Message message = Message.parseFrom(spreadMessage.getData());
 
+            if (message.hasAssignment()) return; // Ignoring Assignment Messages sent from other servers
 
         } catch (InvalidProtocolBufferException e) {
 
