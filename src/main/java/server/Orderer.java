@@ -46,19 +46,19 @@ class WaitingRoom{
     }
 }
 
-public class RequestManager implements Runnable {
-    private static  RequestManager instance = null;
+public class Orderer implements Runnable {
+    private static Orderer instance = null;
     private static ServerMessageListener sml = null;
     private static Map<String, WaitingRoom> waiting_requests = null;
 
-    public RequestManager(ServerMessageListener serverMessageListener){
+    public Orderer(ServerMessageListener serverMessageListener){
         sml = serverMessageListener;
         waiting_requests = new ConcurrentHashMap<>();
     }
 
-    public static RequestManager initialize(ServerMessageListener serverMessageListener){
+    public static Orderer initialize(ServerMessageListener serverMessageListener){
         if(instance == null) {
-            instance = new RequestManager(serverMessageListener);
+            instance = new Orderer(serverMessageListener);
         }
         return instance;
     }
@@ -67,14 +67,16 @@ public class RequestManager implements Runnable {
         return waiting_requests.remove(key) != null;
     }
 
-    public Pair<Integer, MessageOuterClass.Message> waitToProceed(MessageOuterClass.Message msg){
+    public static Pair<Integer, MessageOuterClass.Message> waitToProceed(MessageOuterClass.Message msg){
         WaitingRoom wr = new WaitingRoom();
         String key = null;
         do{
             key = UUID.randomUUID().toString();
         } while(waiting_requests.putIfAbsent(key, wr) != null);
 
-        msg.getRequest().toBuilder().setUuid(key).build();
+        MessageOuterClass.Message.Builder builder = msg.toBuilder();
+        builder.getRequestBuilder().setUuid(key);
+        msg = builder.build();
         SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));
 
         return wr.waitToProceed();

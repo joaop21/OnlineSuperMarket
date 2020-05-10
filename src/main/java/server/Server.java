@@ -38,7 +38,7 @@ public class Server {
         // Sending own info throughout the system
         SpreadConnector.cast(message.toByteArray(), Set.of("System"));
 
-        new Thread(RequestManager.initialize(sml)).start();
+        new Thread(Orderer.initialize(sml)).start();
 
         new Gateway(port, OnlineSuperMarketSkeleton.class);
 

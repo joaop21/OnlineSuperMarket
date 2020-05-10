@@ -4652,6 +4652,8 @@ public final class RequestOuterClass {
      */
     com.google.protobuf.ByteString
         getNameBytes();
+
+    public middleware.proto.RequestOuterClass.GetItem.TypeCase getTypeCase();
   }
   /**
    * Protobuf type {@code middleware.proto.GetItem}
@@ -4666,7 +4668,6 @@ public final class RequestOuterClass {
       super(builder);
     }
     private GetItem() {
-      name_ = "";
     }
 
     @java.lang.Override
@@ -4700,14 +4701,14 @@ public final class RequestOuterClass {
               done = true;
               break;
             case 8: {
-
-              itemId_ = input.readInt32();
+              typeCase_ = 1;
+              type_ = input.readInt32();
               break;
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
-
-              name_ = s;
+              typeCase_ = 2;
+              type_ = s;
               break;
             }
             default: {
@@ -4742,31 +4743,78 @@ public final class RequestOuterClass {
               middleware.proto.RequestOuterClass.GetItem.class, middleware.proto.RequestOuterClass.GetItem.Builder.class);
     }
 
+    private int typeCase_ = 0;
+    private java.lang.Object type_;
+    public enum TypeCase
+        implements com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      ITEMID(1),
+      NAME(2),
+      TYPE_NOT_SET(0);
+      private final int value;
+      private TypeCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static TypeCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static TypeCase forNumber(int value) {
+        switch (value) {
+          case 1: return ITEMID;
+          case 2: return NAME;
+          case 0: return TYPE_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public TypeCase
+    getTypeCase() {
+      return TypeCase.forNumber(
+          typeCase_);
+    }
+
     public static final int ITEMID_FIELD_NUMBER = 1;
-    private int itemId_;
     /**
      * <code>int32 itemId = 1;</code>
      * @return The itemId.
      */
     public int getItemId() {
-      return itemId_;
+      if (typeCase_ == 1) {
+        return (java.lang.Integer) type_;
+      }
+      return 0;
     }
 
     public static final int NAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object name_;
     /**
      * <code>string name = 2;</code>
      * @return The name.
      */
     public java.lang.String getName() {
-      java.lang.Object ref = name_;
+      java.lang.Object ref = "";
+      if (typeCase_ == 2) {
+        ref = type_;
+      }
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        name_ = s;
+        if (typeCase_ == 2) {
+          type_ = s;
+        }
         return s;
       }
     }
@@ -4776,12 +4824,17 @@ public final class RequestOuterClass {
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
+      java.lang.Object ref = "";
+      if (typeCase_ == 2) {
+        ref = type_;
+      }
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        name_ = b;
+        if (typeCase_ == 2) {
+          type_ = b;
+        }
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -4802,11 +4855,12 @@ public final class RequestOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (itemId_ != 0) {
-        output.writeInt32(1, itemId_);
+      if (typeCase_ == 1) {
+        output.writeInt32(
+            1, (int)((java.lang.Integer) type_));
       }
-      if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
+      if (typeCase_ == 2) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
       }
       unknownFields.writeTo(output);
     }
@@ -4817,12 +4871,13 @@ public final class RequestOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (itemId_ != 0) {
+      if (typeCase_ == 1) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, itemId_);
+          .computeInt32Size(
+              1, (int)((java.lang.Integer) type_));
       }
-      if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
+      if (typeCase_ == 2) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4839,10 +4894,19 @@ public final class RequestOuterClass {
       }
       middleware.proto.RequestOuterClass.GetItem other = (middleware.proto.RequestOuterClass.GetItem) obj;
 
-      if (getItemId()
-          != other.getItemId()) return false;
-      if (!getName()
-          .equals(other.getName())) return false;
+      if (!getTypeCase().equals(other.getTypeCase())) return false;
+      switch (typeCase_) {
+        case 1:
+          if (getItemId()
+              != other.getItemId()) return false;
+          break;
+        case 2:
+          if (!getName()
+              .equals(other.getName())) return false;
+          break;
+        case 0:
+        default:
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4854,10 +4918,18 @@ public final class RequestOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ITEMID_FIELD_NUMBER;
-      hash = (53 * hash) + getItemId();
-      hash = (37 * hash) + NAME_FIELD_NUMBER;
-      hash = (53 * hash) + getName().hashCode();
+      switch (typeCase_) {
+        case 1:
+          hash = (37 * hash) + ITEMID_FIELD_NUMBER;
+          hash = (53 * hash) + getItemId();
+          break;
+        case 2:
+          hash = (37 * hash) + NAME_FIELD_NUMBER;
+          hash = (53 * hash) + getName().hashCode();
+          break;
+        case 0:
+        default:
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4991,10 +5063,8 @@ public final class RequestOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        itemId_ = 0;
-
-        name_ = "";
-
+        typeCase_ = 0;
+        type_ = null;
         return this;
       }
 
@@ -5021,8 +5091,13 @@ public final class RequestOuterClass {
       @java.lang.Override
       public middleware.proto.RequestOuterClass.GetItem buildPartial() {
         middleware.proto.RequestOuterClass.GetItem result = new middleware.proto.RequestOuterClass.GetItem(this);
-        result.itemId_ = itemId_;
-        result.name_ = name_;
+        if (typeCase_ == 1) {
+          result.type_ = type_;
+        }
+        if (typeCase_ == 2) {
+          result.type_ = type_;
+        }
+        result.typeCase_ = typeCase_;
         onBuilt();
         return result;
       }
@@ -5071,12 +5146,20 @@ public final class RequestOuterClass {
 
       public Builder mergeFrom(middleware.proto.RequestOuterClass.GetItem other) {
         if (other == middleware.proto.RequestOuterClass.GetItem.getDefaultInstance()) return this;
-        if (other.getItemId() != 0) {
-          setItemId(other.getItemId());
-        }
-        if (!other.getName().isEmpty()) {
-          name_ = other.name_;
-          onChanged();
+        switch (other.getTypeCase()) {
+          case ITEMID: {
+            setItemId(other.getItemId());
+            break;
+          }
+          case NAME: {
+            typeCase_ = 2;
+            type_ = other.type_;
+            onChanged();
+            break;
+          }
+          case TYPE_NOT_SET: {
+            break;
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5106,14 +5189,31 @@ public final class RequestOuterClass {
         }
         return this;
       }
+      private int typeCase_ = 0;
+      private java.lang.Object type_;
+      public TypeCase
+          getTypeCase() {
+        return TypeCase.forNumber(
+            typeCase_);
+      }
 
-      private int itemId_ ;
+      public Builder clearType() {
+        typeCase_ = 0;
+        type_ = null;
+        onChanged();
+        return this;
+      }
+
+
       /**
        * <code>int32 itemId = 1;</code>
        * @return The itemId.
        */
       public int getItemId() {
-        return itemId_;
+        if (typeCase_ == 1) {
+          return (java.lang.Integer) type_;
+        }
+        return 0;
       }
       /**
        * <code>int32 itemId = 1;</code>
@@ -5121,8 +5221,8 @@ public final class RequestOuterClass {
        * @return This builder for chaining.
        */
       public Builder setItemId(int value) {
-        
-        itemId_ = value;
+        typeCase_ = 1;
+        type_ = value;
         onChanged();
         return this;
       }
@@ -5131,24 +5231,30 @@ public final class RequestOuterClass {
        * @return This builder for chaining.
        */
       public Builder clearItemId() {
-        
-        itemId_ = 0;
-        onChanged();
+        if (typeCase_ == 1) {
+          typeCase_ = 0;
+          type_ = null;
+          onChanged();
+        }
         return this;
       }
 
-      private java.lang.Object name_ = "";
       /**
        * <code>string name = 2;</code>
        * @return The name.
        */
       public java.lang.String getName() {
-        java.lang.Object ref = name_;
+        java.lang.Object ref = "";
+        if (typeCase_ == 2) {
+          ref = type_;
+        }
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          name_ = s;
+          if (typeCase_ == 2) {
+            type_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -5160,12 +5266,17 @@ public final class RequestOuterClass {
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
-        java.lang.Object ref = name_;
+        java.lang.Object ref = "";
+        if (typeCase_ == 2) {
+          ref = type_;
+        }
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          name_ = b;
+          if (typeCase_ == 2) {
+            type_ = b;
+          }
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -5181,8 +5292,8 @@ public final class RequestOuterClass {
         if (value == null) {
     throw new NullPointerException();
   }
-  
-        name_ = value;
+  typeCase_ = 2;
+        type_ = value;
         onChanged();
         return this;
       }
@@ -5191,9 +5302,11 @@ public final class RequestOuterClass {
        * @return This builder for chaining.
        */
       public Builder clearName() {
-        
-        name_ = getDefaultInstance().getName();
-        onChanged();
+        if (typeCase_ == 2) {
+          typeCase_ = 0;
+          type_ = null;
+          onChanged();
+        }
         return this;
       }
       /**
@@ -5207,8 +5320,8 @@ public final class RequestOuterClass {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        
-        name_ = value;
+        typeCase_ = 2;
+        type_ = value;
         onChanged();
         return this;
       }
@@ -8454,13 +8567,13 @@ public final class RequestOuterClass {
       "tion\030\003 \001(\t\022\r\n\005price\030\004 \001(\002\022\021\n\tavailable\030\005" +
       " \001(\010\"A\n\010Response\022%\n\005items\030\001 \003(\0132\026.middle" +
       "ware.proto.Item\022\016\n\006status\030\002 \001(\010\"\n\n\010GetIt" +
-      "ems\"\'\n\007GetItem\022\016\n\006itemId\030\001 \001(\005\022\014\n\004name\030\002" +
-      " \001(\t\"1\n\rAddItemToCart\022\020\n\010username\030\001 \001(\t\022" +
-      "\016\n\006itemId\030\002 \001(\005\"6\n\022RemoveItemFromCart\022\020\n" +
-      "\010username\030\001 \001(\t\022\016\n\006itemId\030\002 \001(\005\" \n\014GetCa" +
-      "rtItems\022\020\n\010username\030\001 \001(\t\"\031\n\005Order\022\020\n\010us" +
-      "ername\030\001 \001(\t\"+\n\005Login\022\020\n\010username\030\001 \001(\t\022" +
-      "\020\n\010password\030\002 \001(\tb\006proto3"
+      "ems\"3\n\007GetItem\022\020\n\006itemId\030\001 \001(\005H\000\022\016\n\004name" +
+      "\030\002 \001(\tH\000B\006\n\004type\"1\n\rAddItemToCart\022\020\n\010use" +
+      "rname\030\001 \001(\t\022\016\n\006itemId\030\002 \001(\005\"6\n\022RemoveIte" +
+      "mFromCart\022\020\n\010username\030\001 \001(\t\022\016\n\006itemId\030\002 " +
+      "\001(\005\" \n\014GetCartItems\022\020\n\010username\030\001 \001(\t\"\031\n" +
+      "\005Order\022\020\n\010username\030\001 \001(\t\"+\n\005Login\022\020\n\010use" +
+      "rname\030\001 \001(\t\022\020\n\010password\030\002 \001(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -8495,7 +8608,7 @@ public final class RequestOuterClass {
     internal_static_middleware_proto_GetItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_GetItem_descriptor,
-        new java.lang.String[] { "ItemId", "Name", });
+        new java.lang.String[] { "ItemId", "Name", "Type", });
     internal_static_middleware_proto_AddItemToCart_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_middleware_proto_AddItemToCart_fieldAccessorTable = new
