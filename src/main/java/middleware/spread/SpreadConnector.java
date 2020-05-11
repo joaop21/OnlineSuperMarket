@@ -137,4 +137,24 @@ public class SpreadConnector {
         }
     }
 
+    // Cast to specific groups
+    public static void send (byte[] message, SpreadGroup group){
+
+        SpreadMessage m = new SpreadMessage();
+        m.addGroup(group);
+        m.setData(message);
+        m.setSafe();
+
+        try {
+
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            SpreadConnector.spreadConn.multicast(m);
+
+        } catch (SpreadException | UnknownHostException e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
 }

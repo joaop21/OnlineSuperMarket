@@ -8,6 +8,20 @@ message Assignment {
 
         ServerInfo serverInfo = 1;
         ClientInfo clientInfo = 2;
+        LoadBalancerInfo loadBalancerInfo = 3;
+        Error error = 4;
+
+    }
+
+}
+
+message Error {
+
+    ErrorType type = 1;
+
+    enum ErrorType {
+
+        NO_SERVERS_AVAILABLE = 0;
 
     }
 
@@ -21,6 +35,21 @@ message ServerInfo {
 }
 
 message ClientInfo {
+
+    string address = 1;
+    int32 port = 2;
+    State state = 3;
+
+    enum State {
+
+        CONNECTED = 0;
+        DISCONNECTED = 1;
+
+    }
+
+}
+
+message LoadBalancerInfo {
 
     string address = 1;
     int32 port = 2;

@@ -18,19 +18,27 @@ public class Client {
 
         System.out.println("Received message from Load Balancer!");
 
-        System.out.println("Server Info -> Address : " + message.getAssignment().getServerInfo().getAddress() +
-                           " ; Port : " + message.getAssignment().getServerInfo().getPort() + " ;");
+        if (message.getAssignment().hasError()) {
 
-        // Creating socket with server
-        Socket serverSocket = new Socket(message.getAssignment().getServerInfo().getAddress(),
-                                         message.getAssignment().getServerInfo().getPort());
+            System.out.println("Couldn't retrieve Server Info: " +  message.getAssignment().getError().getType());
 
-        // Closing Load Balancer Socket
-        socket.close();
+        } else {
 
-        // Updating Socket info
-        Client.socket = serverSocket;
-        Client.socketIO = new SocketIO(Client.socket);
+            System.out.println("Server Info -> Address : " + message.getAssignment().getServerInfo().getAddress() +
+                    " ; Port : " + message.getAssignment().getServerInfo().getPort() + " ;");
+
+            // Creating socket with server
+            Socket serverSocket = new Socket(message.getAssignment().getServerInfo().getAddress(),
+                    message.getAssignment().getServerInfo().getPort());
+
+            // Closing Load Balancer Socket
+            socket.close();
+
+            // Updating Socket info
+            Client.socket = serverSocket;
+            Client.socketIO = new SocketIO(Client.socket);
+
+        }
 
     }
 
