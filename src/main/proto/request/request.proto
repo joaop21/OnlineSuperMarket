@@ -16,7 +16,7 @@ message Request {
         Response response = 8;
 
     }
-
+    string uuid = 9;
 }
 
 message Item {
@@ -35,8 +35,14 @@ message Response {
 message GetItems{}
 
 message GetItem{
-    int32 itemId = 1;
-    string name = 2;
+
+    oneof type {
+
+        int32 itemId = 1;
+        string name = 2;
+
+    }
+
 }
 
 message AddItemToCart{

@@ -8,9 +8,16 @@ import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadMessage;
 
+import java.util.Arrays;
+
 public class ServerMessageListener implements AdvancedMessageListener {
 
     private ServerInfo serverInfo;
+    
+    private final ConcurrentQueue<Triplet<Boolean, Integer, Message>> queue = new ConcurrentQueue<>();
+    private int message_counter = 0;
+    private String myself;
+    private boolean first_message = true;
 
     public ServerMessageListener (ServerInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -22,6 +29,14 @@ public class ServerMessageListener implements AdvancedMessageListener {
             Message message = Message.parseFrom(spreadMessage.getData());
 
             if (message.hasAssignment()) handleAssignmentMessage (spreadMessage);
+            else {
+
+                boolean from_myself = false;
+                if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+                    
+                this.queue.add(new Triplet<>(from_myself, message_counter++, Message.parseFrom(spreadMessage.getData())));
+
+            }
 
         } catch (InvalidProtocolBufferException e) {
 
@@ -74,7 +89,16 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
+    public Triplet<Boolean, Integer, Message> getMessage() { return this.queue.poll(); }
+
     public void handleSystemInfo (MembershipInfo info) {}
 
-    public void handleServerInfo (MembershipInfo info) {}
+    public void handleServerInfo (MembershipInfo info) {
+
+        if (info.isCausedByJoin() && this.first_message) { // Someone joined the arena
+            this.first_message = false;
+            this.myself = info.getJoined().toString();
+        }
+
+    }
 }

@@ -23,12 +23,17 @@ public class Server {
                 .setPort(port)
                 .build();
 
+        // Creating Server Message Listener
+        ServerMessageListener serverMessageListener = new ServerMessageListener(serverInfo);
+
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("Servers", "System"));
         // Adding listener to connector
         SpreadConnector.addListener(new ServerMessageListener(serverInfo));
         // Initializing connector
         SpreadConnector.initialize();
+
+        new Thread(Orderer.initialize(serverMessageListener)).start();
 
         new Gateway(port, OnlineSuperMarketSkeleton.class);
 

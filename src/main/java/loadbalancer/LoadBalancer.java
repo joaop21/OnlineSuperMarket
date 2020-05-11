@@ -2,6 +2,7 @@ package loadbalancer;
 
 import middleware.loadbalancer.LoadBalancerMessageListener;
 import middleware.proto.AssignmentOuterClass.*;
+import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -9,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.Set;
 
 public class LoadBalancer {
+
+    private static SpreadConnector spreadConnector;
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
 
@@ -22,9 +25,9 @@ public class LoadBalancer {
         // Adding listener to connector
         SpreadConnector.addListener(new LoadBalancerMessageListener(
                 LoadBalancerInfo.newBuilder()
-                        .setAddress("localhost")
-                        .setPort(port)
-                        .build()));
+                .setAddress("localhost")
+                .setPort(port)
+                .build()));
 
         System.out.println("Initializing Connector!");
         // Initializing connector
