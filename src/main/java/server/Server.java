@@ -6,6 +6,7 @@ import middleware.proto.MessageOuterClass;
 import middleware.server.ServerMessageListener;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
+import database.DatabaseManager;
 
 import java.net.UnknownHostException;
 import java.util.Set;
@@ -16,6 +17,8 @@ public class Server {
 
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
+
+        DatabaseManager.createDatabase(DatabaseManager.DB_URL);
 
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("Servers", "System"));
