@@ -1,5 +1,7 @@
 package server;
 
+import application.Item;
+import database.QueryItem;
 import middleware.gateway.Gateway;
 import middleware.proto.AssignmentOuterClass;
 import middleware.proto.MessageOuterClass;
@@ -9,6 +11,7 @@ import spread.SpreadException;
 import database.DatabaseManager;
 
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Set;
 
 public class Server {

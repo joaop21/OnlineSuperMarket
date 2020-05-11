@@ -1,13 +1,10 @@
 package database;
 
 import application.Customer;
-import application.Item;
-
-import database.DatabaseManager;
 
 import java.sql.*;
 
-public class Query {
+public class QueryCustomer {
 
     private static final String DB_URL = DatabaseManager.DB_URL;
 
@@ -42,7 +39,8 @@ public class Query {
         return null;
     }
 
-    public boolean check_password(String username, String password){
+    // returns true if the username and password match or false if not
+    public boolean checkPassword(String username, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -72,7 +70,8 @@ public class Query {
         return false;
     }
 
-    public int new_customer(String username, String password){
+    // returns the new user ID
+    public int newCustomer(String username, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -85,6 +84,7 @@ public class Query {
             pstat.setString(1, username);
             pstat.setString(2, password);
             int inserted = pstat.executeUpdate();
+            conn.commit();
             if (inserted > 0){
                 ResultSet rs = pstat.getGeneratedKeys();
                 if(rs.next())
@@ -98,5 +98,53 @@ public class Query {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public boolean updateCustomerUsername(int id, String username){
+        Connection conn = DatabaseManager.getConnection(DB_URL);
+        try {
+            if (conn == null){
+                System.out.println("No DB connection.");
+                return false;
+            }
+            PreparedStatement pstat = conn.prepareStatement(
+                    "UPDATE Customer "+
+                            "SET username=? "+
+                            "WHERE id=?");
+            pstat.setString(1, username);
+            pstat.setInt(2, id);
+            int updated = pstat.executeUpdate();
+            conn.commit();
+            return updated > 0;
+        }
+        catch(SQLException e) {
+            System.out.println("An error occurred while executing the SQL query.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateCustomerPassword(int id, String password){
+        Connection conn = DatabaseManager.getConnection(DB_URL);
+        try {
+            if (conn == null){
+                System.out.println("No DB connection.");
+                return false;
+            }
+            PreparedStatement pstat = conn.prepareStatement(
+                    "UPDATE Customer "+
+                            "SET password=? "+
+                            "WHERE id=?");
+            pstat.setString(1, password);
+            pstat.setInt(2, id);
+            int updated = pstat.executeUpdate();
+            conn.commit();
+            return updated > 0;
+        }
+        catch(SQLException e) {
+            System.out.println("An error occurred while executing the SQL query.");
+            e.printStackTrace();
+        }
+        return false;
     }
 }
