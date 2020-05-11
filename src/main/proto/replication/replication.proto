@@ -4,6 +4,30 @@ package middleware.proto;
 
 message Replication {
 
-    // Fill here
+    oneof type {
+
+        ServerLoads loads = 1;
+
+    }
+
+}
+
+message ServerLoads {
+
+    repeated Counter counter = 1;
+
+    message Counter {
+
+        ServerInfo serverInfo = 1;
+        int32 load = 2;
+
+        message ServerInfo {
+
+            string address = 1;
+            int32 port = 2;
+
+        }
+
+    }
 
 }

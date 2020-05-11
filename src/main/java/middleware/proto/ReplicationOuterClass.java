@@ -17,6 +17,23 @@ public final class ReplicationOuterClass {
   public interface ReplicationOrBuilder extends
       // @@protoc_insertion_point(interface_extends:middleware.proto.Replication)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     * @return Whether the loads field is set.
+     */
+    boolean hasLoads();
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     * @return The loads.
+     */
+    middleware.proto.ReplicationOuterClass.ServerLoads getLoads();
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     */
+    middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder getLoadsOrBuilder();
+
+    public middleware.proto.ReplicationOuterClass.Replication.TypeCase getTypeCase();
   }
   /**
    * Protobuf type {@code middleware.proto.Replication}
@@ -63,6 +80,20 @@ public final class ReplicationOuterClass {
             case 0:
               done = true;
               break;
+            case 10: {
+              middleware.proto.ReplicationOuterClass.ServerLoads.Builder subBuilder = null;
+              if (typeCase_ == 1) {
+                subBuilder = ((middleware.proto.ReplicationOuterClass.ServerLoads) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.ReplicationOuterClass.ServerLoads.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.ReplicationOuterClass.ServerLoads) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 1;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -95,6 +126,73 @@ public final class ReplicationOuterClass {
               middleware.proto.ReplicationOuterClass.Replication.class, middleware.proto.ReplicationOuterClass.Replication.Builder.class);
     }
 
+    private int typeCase_ = 0;
+    private java.lang.Object type_;
+    public enum TypeCase
+        implements com.google.protobuf.Internal.EnumLite,
+            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+      LOADS(1),
+      TYPE_NOT_SET(0);
+      private final int value;
+      private TypeCase(int value) {
+        this.value = value;
+      }
+      /**
+       * @param value The number of the enum to look for.
+       * @return The enum associated with the given number.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static TypeCase valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static TypeCase forNumber(int value) {
+        switch (value) {
+          case 1: return LOADS;
+          case 0: return TYPE_NOT_SET;
+          default: return null;
+        }
+      }
+      public int getNumber() {
+        return this.value;
+      }
+    };
+
+    public TypeCase
+    getTypeCase() {
+      return TypeCase.forNumber(
+          typeCase_);
+    }
+
+    public static final int LOADS_FIELD_NUMBER = 1;
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     * @return Whether the loads field is set.
+     */
+    public boolean hasLoads() {
+      return typeCase_ == 1;
+    }
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     * @return The loads.
+     */
+    public middleware.proto.ReplicationOuterClass.ServerLoads getLoads() {
+      if (typeCase_ == 1) {
+         return (middleware.proto.ReplicationOuterClass.ServerLoads) type_;
+      }
+      return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.ServerLoads loads = 1;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder getLoadsOrBuilder() {
+      if (typeCase_ == 1) {
+         return (middleware.proto.ReplicationOuterClass.ServerLoads) type_;
+      }
+      return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -109,6 +207,9 @@ public final class ReplicationOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (typeCase_ == 1) {
+        output.writeMessage(1, (middleware.proto.ReplicationOuterClass.ServerLoads) type_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -118,6 +219,10 @@ public final class ReplicationOuterClass {
       if (size != -1) return size;
 
       size = 0;
+      if (typeCase_ == 1) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, (middleware.proto.ReplicationOuterClass.ServerLoads) type_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -133,6 +238,15 @@ public final class ReplicationOuterClass {
       }
       middleware.proto.ReplicationOuterClass.Replication other = (middleware.proto.ReplicationOuterClass.Replication) obj;
 
+      if (!getTypeCase().equals(other.getTypeCase())) return false;
+      switch (typeCase_) {
+        case 1:
+          if (!getLoads()
+              .equals(other.getLoads())) return false;
+          break;
+        case 0:
+        default:
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -144,6 +258,14 @@ public final class ReplicationOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      switch (typeCase_) {
+        case 1:
+          hash = (37 * hash) + LOADS_FIELD_NUMBER;
+          hash = (53 * hash) + getLoads().hashCode();
+          break;
+        case 0:
+        default:
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -277,6 +399,8 @@ public final class ReplicationOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        typeCase_ = 0;
+        type_ = null;
         return this;
       }
 
@@ -303,6 +427,14 @@ public final class ReplicationOuterClass {
       @java.lang.Override
       public middleware.proto.ReplicationOuterClass.Replication buildPartial() {
         middleware.proto.ReplicationOuterClass.Replication result = new middleware.proto.ReplicationOuterClass.Replication(this);
+        if (typeCase_ == 1) {
+          if (loadsBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = loadsBuilder_.build();
+          }
+        }
+        result.typeCase_ = typeCase_;
         onBuilt();
         return result;
       }
@@ -351,6 +483,15 @@ public final class ReplicationOuterClass {
 
       public Builder mergeFrom(middleware.proto.ReplicationOuterClass.Replication other) {
         if (other == middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance()) return this;
+        switch (other.getTypeCase()) {
+          case LOADS: {
+            mergeLoads(other.getLoads());
+            break;
+          }
+          case TYPE_NOT_SET: {
+            break;
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -378,6 +519,159 @@ public final class ReplicationOuterClass {
           }
         }
         return this;
+      }
+      private int typeCase_ = 0;
+      private java.lang.Object type_;
+      public TypeCase
+          getTypeCase() {
+        return TypeCase.forNumber(
+            typeCase_);
+      }
+
+      public Builder clearType() {
+        typeCase_ = 0;
+        type_ = null;
+        onChanged();
+        return this;
+      }
+
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.ServerLoads, middleware.proto.ReplicationOuterClass.ServerLoads.Builder, middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder> loadsBuilder_;
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       * @return Whether the loads field is set.
+       */
+      public boolean hasLoads() {
+        return typeCase_ == 1;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       * @return The loads.
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads getLoads() {
+        if (loadsBuilder_ == null) {
+          if (typeCase_ == 1) {
+            return (middleware.proto.ReplicationOuterClass.ServerLoads) type_;
+          }
+          return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+        } else {
+          if (typeCase_ == 1) {
+            return loadsBuilder_.getMessage();
+          }
+          return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public Builder setLoads(middleware.proto.ReplicationOuterClass.ServerLoads value) {
+        if (loadsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          loadsBuilder_.setMessage(value);
+        }
+        typeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public Builder setLoads(
+          middleware.proto.ReplicationOuterClass.ServerLoads.Builder builderForValue) {
+        if (loadsBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          loadsBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public Builder mergeLoads(middleware.proto.ReplicationOuterClass.ServerLoads value) {
+        if (loadsBuilder_ == null) {
+          if (typeCase_ == 1 &&
+              type_ != middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance()) {
+            type_ = middleware.proto.ReplicationOuterClass.ServerLoads.newBuilder((middleware.proto.ReplicationOuterClass.ServerLoads) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 1) {
+            loadsBuilder_.mergeFrom(value);
+          }
+          loadsBuilder_.setMessage(value);
+        }
+        typeCase_ = 1;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public Builder clearLoads() {
+        if (loadsBuilder_ == null) {
+          if (typeCase_ == 1) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 1) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          loadsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Builder getLoadsBuilder() {
+        return getLoadsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder getLoadsOrBuilder() {
+        if ((typeCase_ == 1) && (loadsBuilder_ != null)) {
+          return loadsBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 1) {
+            return (middleware.proto.ReplicationOuterClass.ServerLoads) type_;
+          }
+          return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads loads = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.ServerLoads, middleware.proto.ReplicationOuterClass.ServerLoads.Builder, middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder> 
+          getLoadsFieldBuilder() {
+        if (loadsBuilder_ == null) {
+          if (!(typeCase_ == 1)) {
+            type_ = middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+          }
+          loadsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.ReplicationOuterClass.ServerLoads, middleware.proto.ReplicationOuterClass.ServerLoads.Builder, middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder>(
+                  (middleware.proto.ReplicationOuterClass.ServerLoads) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 1;
+        onChanged();;
+        return loadsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -432,11 +726,2134 @@ public final class ReplicationOuterClass {
 
   }
 
+  public interface ServerLoadsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:middleware.proto.ServerLoads)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter> 
+        getCounterList();
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    middleware.proto.ReplicationOuterClass.ServerLoads.Counter getCounter(int index);
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    int getCounterCount();
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    java.util.List<? extends middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder> 
+        getCounterOrBuilderList();
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder getCounterOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code middleware.proto.ServerLoads}
+   */
+  public  static final class ServerLoads extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:middleware.proto.ServerLoads)
+      ServerLoadsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ServerLoads.newBuilder() to construct.
+    private ServerLoads(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ServerLoads() {
+      counter_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ServerLoads();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ServerLoads(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                counter_ = new java.util.ArrayList<middleware.proto.ReplicationOuterClass.ServerLoads.Counter>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              counter_.add(
+                  input.readMessage(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          counter_ = java.util.Collections.unmodifiableList(counter_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              middleware.proto.ReplicationOuterClass.ServerLoads.class, middleware.proto.ReplicationOuterClass.ServerLoads.Builder.class);
+    }
+
+    public interface CounterOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:middleware.proto.ServerLoads.Counter)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       * @return Whether the serverInfo field is set.
+       */
+      boolean hasServerInfo();
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       * @return The serverInfo.
+       */
+      middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getServerInfo();
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       */
+      middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder getServerInfoOrBuilder();
+
+      /**
+       * <code>int32 load = 2;</code>
+       * @return The load.
+       */
+      int getLoad();
+    }
+    /**
+     * Protobuf type {@code middleware.proto.ServerLoads.Counter}
+     */
+    public  static final class Counter extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:middleware.proto.ServerLoads.Counter)
+        CounterOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use Counter.newBuilder() to construct.
+      private Counter(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private Counter() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new Counter();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private Counter(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder subBuilder = null;
+                if (serverInfo_ != null) {
+                  subBuilder = serverInfo_.toBuilder();
+                }
+                serverInfo_ = input.readMessage(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(serverInfo_);
+                  serverInfo_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+              case 16: {
+
+                load_ = input.readInt32();
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.ReplicationOuterClass.ServerLoads.Counter.class, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder.class);
+      }
+
+      public interface ServerInfoOrBuilder extends
+          // @@protoc_insertion_point(interface_extends:middleware.proto.ServerLoads.Counter.ServerInfo)
+          com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <code>string address = 1;</code>
+         * @return The address.
+         */
+        java.lang.String getAddress();
+        /**
+         * <code>string address = 1;</code>
+         * @return The bytes for address.
+         */
+        com.google.protobuf.ByteString
+            getAddressBytes();
+
+        /**
+         * <code>int32 port = 2;</code>
+         * @return The port.
+         */
+        int getPort();
+      }
+      /**
+       * Protobuf type {@code middleware.proto.ServerLoads.Counter.ServerInfo}
+       */
+      public  static final class ServerInfo extends
+          com.google.protobuf.GeneratedMessageV3 implements
+          // @@protoc_insertion_point(message_implements:middleware.proto.ServerLoads.Counter.ServerInfo)
+          ServerInfoOrBuilder {
+      private static final long serialVersionUID = 0L;
+        // Use ServerInfo.newBuilder() to construct.
+        private ServerInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+          super(builder);
+        }
+        private ServerInfo() {
+          address_ = "";
+        }
+
+        @java.lang.Override
+        @SuppressWarnings({"unused"})
+        protected java.lang.Object newInstance(
+            UnusedPrivateParameter unused) {
+          return new ServerInfo();
+        }
+
+        @java.lang.Override
+        public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+          return this.unknownFields;
+        }
+        private ServerInfo(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          this();
+          if (extensionRegistry == null) {
+            throw new java.lang.NullPointerException();
+          }
+          com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+              com.google.protobuf.UnknownFieldSet.newBuilder();
+          try {
+            boolean done = false;
+            while (!done) {
+              int tag = input.readTag();
+              switch (tag) {
+                case 0:
+                  done = true;
+                  break;
+                case 10: {
+                  java.lang.String s = input.readStringRequireUtf8();
+
+                  address_ = s;
+                  break;
+                }
+                case 16: {
+
+                  port_ = input.readInt32();
+                  break;
+                }
+                default: {
+                  if (!parseUnknownField(
+                      input, unknownFields, extensionRegistry, tag)) {
+                    done = true;
+                  }
+                  break;
+                }
+              }
+            }
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            throw e.setUnfinishedMessage(this);
+          } catch (java.io.IOException e) {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                e).setUnfinishedMessage(this);
+          } finally {
+            this.unknownFields = unknownFields.build();
+            makeExtensionsImmutable();
+          }
+        }
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.class, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder.class);
+        }
+
+        public static final int ADDRESS_FIELD_NUMBER = 1;
+        private volatile java.lang.Object address_;
+        /**
+         * <code>string address = 1;</code>
+         * @return The address.
+         */
+        public java.lang.String getAddress() {
+          java.lang.Object ref = address_;
+          if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+          } else {
+            com.google.protobuf.ByteString bs = 
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            address_ = s;
+            return s;
+          }
+        }
+        /**
+         * <code>string address = 1;</code>
+         * @return The bytes for address.
+         */
+        public com.google.protobuf.ByteString
+            getAddressBytes() {
+          java.lang.Object ref = address_;
+          if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            address_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+
+        public static final int PORT_FIELD_NUMBER = 2;
+        private int port_;
+        /**
+         * <code>int32 port = 2;</code>
+         * @return The port.
+         */
+        public int getPort() {
+          return port_;
+        }
+
+        private byte memoizedIsInitialized = -1;
+        @java.lang.Override
+        public final boolean isInitialized() {
+          byte isInitialized = memoizedIsInitialized;
+          if (isInitialized == 1) return true;
+          if (isInitialized == 0) return false;
+
+          memoizedIsInitialized = 1;
+          return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                            throws java.io.IOException {
+          if (!getAddressBytes().isEmpty()) {
+            com.google.protobuf.GeneratedMessageV3.writeString(output, 1, address_);
+          }
+          if (port_ != 0) {
+            output.writeInt32(2, port_);
+          }
+          unknownFields.writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+          int size = memoizedSize;
+          if (size != -1) return size;
+
+          size = 0;
+          if (!getAddressBytes().isEmpty()) {
+            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, address_);
+          }
+          if (port_ != 0) {
+            size += com.google.protobuf.CodedOutputStream
+              .computeInt32Size(2, port_);
+          }
+          size += unknownFields.getSerializedSize();
+          memoizedSize = size;
+          return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+          if (obj == this) {
+           return true;
+          }
+          if (!(obj instanceof middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo)) {
+            return super.equals(obj);
+          }
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo other = (middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo) obj;
+
+          if (!getAddress()
+              .equals(other.getAddress())) return false;
+          if (getPort()
+              != other.getPort()) return false;
+          if (!unknownFields.equals(other.unknownFields)) return false;
+          return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+          if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+          }
+          int hash = 41;
+          hash = (19 * hash) + getDescriptor().hashCode();
+          hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+          hash = (53 * hash) + getAddress().hashCode();
+          hash = (37 * hash) + PORT_FIELD_NUMBER;
+          hash = (53 * hash) + getPort();
+          hash = (29 * hash) + unknownFields.hashCode();
+          memoizedHashCode = hash;
+          return hash;
+        }
+
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return PARSER.parseFrom(data, extensionRegistry);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseDelimitedWithIOException(PARSER, input);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input);
+        }
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          return com.google.protobuf.GeneratedMessageV3
+              .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() { return newBuilder(); }
+        public static Builder newBuilder() {
+          return DEFAULT_INSTANCE.toBuilder();
+        }
+        public static Builder newBuilder(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo prototype) {
+          return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+        @java.lang.Override
+        public Builder toBuilder() {
+          return this == DEFAULT_INSTANCE
+              ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          Builder builder = new Builder(parent);
+          return builder;
+        }
+        /**
+         * Protobuf type {@code middleware.proto.ServerLoads.Counter.ServerInfo}
+         */
+        public static final class Builder extends
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:middleware.proto.ServerLoads.Counter.ServerInfo)
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder {
+          public static final com.google.protobuf.Descriptors.Descriptor
+              getDescriptor() {
+            return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor;
+          }
+
+          @java.lang.Override
+          protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+              internalGetFieldAccessorTable() {
+            return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.class, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder.class);
+          }
+
+          // Construct using middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.newBuilder()
+          private Builder() {
+            maybeForceBuilderInitialization();
+          }
+
+          private Builder(
+              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+          }
+          private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessageV3
+                    .alwaysUseFieldBuilders) {
+            }
+          }
+          @java.lang.Override
+          public Builder clear() {
+            super.clear();
+            address_ = "";
+
+            port_ = 0;
+
+            return this;
+          }
+
+          @java.lang.Override
+          public com.google.protobuf.Descriptors.Descriptor
+              getDescriptorForType() {
+            return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor;
+          }
+
+          @java.lang.Override
+          public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getDefaultInstanceForType() {
+            return middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.getDefaultInstance();
+          }
+
+          @java.lang.Override
+          public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo build() {
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo result = buildPartial();
+            if (!result.isInitialized()) {
+              throw newUninitializedMessageException(result);
+            }
+            return result;
+          }
+
+          @java.lang.Override
+          public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo buildPartial() {
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo result = new middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo(this);
+            result.address_ = address_;
+            result.port_ = port_;
+            onBuilt();
+            return result;
+          }
+
+          @java.lang.Override
+          public Builder clone() {
+            return super.clone();
+          }
+          @java.lang.Override
+          public Builder setField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
+            return super.setField(field, value);
+          }
+          @java.lang.Override
+          public Builder clearField(
+              com.google.protobuf.Descriptors.FieldDescriptor field) {
+            return super.clearField(field);
+          }
+          @java.lang.Override
+          public Builder clearOneof(
+              com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+            return super.clearOneof(oneof);
+          }
+          @java.lang.Override
+          public Builder setRepeatedField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              int index, java.lang.Object value) {
+            return super.setRepeatedField(field, index, value);
+          }
+          @java.lang.Override
+          public Builder addRepeatedField(
+              com.google.protobuf.Descriptors.FieldDescriptor field,
+              java.lang.Object value) {
+            return super.addRepeatedField(field, value);
+          }
+          @java.lang.Override
+          public Builder mergeFrom(com.google.protobuf.Message other) {
+            if (other instanceof middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo) {
+              return mergeFrom((middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo)other);
+            } else {
+              super.mergeFrom(other);
+              return this;
+            }
+          }
+
+          public Builder mergeFrom(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo other) {
+            if (other == middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.getDefaultInstance()) return this;
+            if (!other.getAddress().isEmpty()) {
+              address_ = other.address_;
+              onChanged();
+            }
+            if (other.getPort() != 0) {
+              setPort(other.getPort());
+            }
+            this.mergeUnknownFields(other.unknownFields);
+            onChanged();
+            return this;
+          }
+
+          @java.lang.Override
+          public final boolean isInitialized() {
+            return true;
+          }
+
+          @java.lang.Override
+          public Builder mergeFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws java.io.IOException {
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo parsedMessage = null;
+            try {
+              parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+              parsedMessage = (middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo) e.getUnfinishedMessage();
+              throw e.unwrapIOException();
+            } finally {
+              if (parsedMessage != null) {
+                mergeFrom(parsedMessage);
+              }
+            }
+            return this;
+          }
+
+          private java.lang.Object address_ = "";
+          /**
+           * <code>string address = 1;</code>
+           * @return The address.
+           */
+          public java.lang.String getAddress() {
+            java.lang.Object ref = address_;
+            if (!(ref instanceof java.lang.String)) {
+              com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
+              java.lang.String s = bs.toStringUtf8();
+              address_ = s;
+              return s;
+            } else {
+              return (java.lang.String) ref;
+            }
+          }
+          /**
+           * <code>string address = 1;</code>
+           * @return The bytes for address.
+           */
+          public com.google.protobuf.ByteString
+              getAddressBytes() {
+            java.lang.Object ref = address_;
+            if (ref instanceof String) {
+              com.google.protobuf.ByteString b = 
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                      (java.lang.String) ref);
+              address_ = b;
+              return b;
+            } else {
+              return (com.google.protobuf.ByteString) ref;
+            }
+          }
+          /**
+           * <code>string address = 1;</code>
+           * @param value The address to set.
+           * @return This builder for chaining.
+           */
+          public Builder setAddress(
+              java.lang.String value) {
+            if (value == null) {
+    throw new NullPointerException();
+  }
+  
+            address_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>string address = 1;</code>
+           * @return This builder for chaining.
+           */
+          public Builder clearAddress() {
+            
+            address_ = getDefaultInstance().getAddress();
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>string address = 1;</code>
+           * @param value The bytes for address to set.
+           * @return This builder for chaining.
+           */
+          public Builder setAddressBytes(
+              com.google.protobuf.ByteString value) {
+            if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+            
+            address_ = value;
+            onChanged();
+            return this;
+          }
+
+          private int port_ ;
+          /**
+           * <code>int32 port = 2;</code>
+           * @return The port.
+           */
+          public int getPort() {
+            return port_;
+          }
+          /**
+           * <code>int32 port = 2;</code>
+           * @param value The port to set.
+           * @return This builder for chaining.
+           */
+          public Builder setPort(int value) {
+            
+            port_ = value;
+            onChanged();
+            return this;
+          }
+          /**
+           * <code>int32 port = 2;</code>
+           * @return This builder for chaining.
+           */
+          public Builder clearPort() {
+            
+            port_ = 0;
+            onChanged();
+            return this;
+          }
+          @java.lang.Override
+          public final Builder setUnknownFields(
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return super.setUnknownFields(unknownFields);
+          }
+
+          @java.lang.Override
+          public final Builder mergeUnknownFields(
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
+            return super.mergeUnknownFields(unknownFields);
+          }
+
+
+          // @@protoc_insertion_point(builder_scope:middleware.proto.ServerLoads.Counter.ServerInfo)
+        }
+
+        // @@protoc_insertion_point(class_scope:middleware.proto.ServerLoads.Counter.ServerInfo)
+        private static final middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo DEFAULT_INSTANCE;
+        static {
+          DEFAULT_INSTANCE = new middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo();
+        }
+
+        public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getDefaultInstance() {
+          return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<ServerInfo>
+            PARSER = new com.google.protobuf.AbstractParser<ServerInfo>() {
+          @java.lang.Override
+          public ServerInfo parsePartialFrom(
+              com.google.protobuf.CodedInputStream input,
+              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+              throws com.google.protobuf.InvalidProtocolBufferException {
+            return new ServerInfo(input, extensionRegistry);
+          }
+        };
+
+        public static com.google.protobuf.Parser<ServerInfo> parser() {
+          return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<ServerInfo> getParserForType() {
+          return PARSER;
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getDefaultInstanceForType() {
+          return DEFAULT_INSTANCE;
+        }
+
+      }
+
+      public static final int SERVERINFO_FIELD_NUMBER = 1;
+      private middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo serverInfo_;
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       * @return Whether the serverInfo field is set.
+       */
+      public boolean hasServerInfo() {
+        return serverInfo_ != null;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       * @return The serverInfo.
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getServerInfo() {
+        return serverInfo_ == null ? middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.getDefaultInstance() : serverInfo_;
+      }
+      /**
+       * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder getServerInfoOrBuilder() {
+        return getServerInfo();
+      }
+
+      public static final int LOAD_FIELD_NUMBER = 2;
+      private int load_;
+      /**
+       * <code>int32 load = 2;</code>
+       * @return The load.
+       */
+      public int getLoad() {
+        return load_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (serverInfo_ != null) {
+          output.writeMessage(1, getServerInfo());
+        }
+        if (load_ != 0) {
+          output.writeInt32(2, load_);
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (serverInfo_ != null) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, getServerInfo());
+        }
+        if (load_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt32Size(2, load_);
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof middleware.proto.ReplicationOuterClass.ServerLoads.Counter)) {
+          return super.equals(obj);
+        }
+        middleware.proto.ReplicationOuterClass.ServerLoads.Counter other = (middleware.proto.ReplicationOuterClass.ServerLoads.Counter) obj;
+
+        if (hasServerInfo() != other.hasServerInfo()) return false;
+        if (hasServerInfo()) {
+          if (!getServerInfo()
+              .equals(other.getServerInfo())) return false;
+        }
+        if (getLoad()
+            != other.getLoad()) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (hasServerInfo()) {
+          hash = (37 * hash) + SERVERINFO_FIELD_NUMBER;
+          hash = (53 * hash) + getServerInfo().hashCode();
+        }
+        hash = (37 * hash) + LOAD_FIELD_NUMBER;
+        hash = (53 * hash) + getLoad();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(middleware.proto.ReplicationOuterClass.ServerLoads.Counter prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code middleware.proto.ServerLoads.Counter}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:middleware.proto.ServerLoads.Counter)
+          middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  middleware.proto.ReplicationOuterClass.ServerLoads.Counter.class, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder.class);
+        }
+
+        // Construct using middleware.proto.ReplicationOuterClass.ServerLoads.Counter.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          if (serverInfoBuilder_ == null) {
+            serverInfo_ = null;
+          } else {
+            serverInfo_ = null;
+            serverInfoBuilder_ = null;
+          }
+          load_ = 0;
+
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_Counter_descriptor;
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter getDefaultInstanceForType() {
+          return middleware.proto.ReplicationOuterClass.ServerLoads.Counter.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter build() {
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter buildPartial() {
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter result = new middleware.proto.ReplicationOuterClass.ServerLoads.Counter(this);
+          if (serverInfoBuilder_ == null) {
+            result.serverInfo_ = serverInfo_;
+          } else {
+            result.serverInfo_ = serverInfoBuilder_.build();
+          }
+          result.load_ = load_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof middleware.proto.ReplicationOuterClass.ServerLoads.Counter) {
+            return mergeFrom((middleware.proto.ReplicationOuterClass.ServerLoads.Counter)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(middleware.proto.ReplicationOuterClass.ServerLoads.Counter other) {
+          if (other == middleware.proto.ReplicationOuterClass.ServerLoads.Counter.getDefaultInstance()) return this;
+          if (other.hasServerInfo()) {
+            mergeServerInfo(other.getServerInfo());
+          }
+          if (other.getLoad() != 0) {
+            setLoad(other.getLoad());
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (middleware.proto.ReplicationOuterClass.ServerLoads.Counter) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo serverInfo_;
+        private com.google.protobuf.SingleFieldBuilderV3<
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder> serverInfoBuilder_;
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         * @return Whether the serverInfo field is set.
+         */
+        public boolean hasServerInfo() {
+          return serverInfoBuilder_ != null || serverInfo_ != null;
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         * @return The serverInfo.
+         */
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo getServerInfo() {
+          if (serverInfoBuilder_ == null) {
+            return serverInfo_ == null ? middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.getDefaultInstance() : serverInfo_;
+          } else {
+            return serverInfoBuilder_.getMessage();
+          }
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public Builder setServerInfo(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo value) {
+          if (serverInfoBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            serverInfo_ = value;
+            onChanged();
+          } else {
+            serverInfoBuilder_.setMessage(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public Builder setServerInfo(
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder builderForValue) {
+          if (serverInfoBuilder_ == null) {
+            serverInfo_ = builderForValue.build();
+            onChanged();
+          } else {
+            serverInfoBuilder_.setMessage(builderForValue.build());
+          }
+
+          return this;
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public Builder mergeServerInfo(middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo value) {
+          if (serverInfoBuilder_ == null) {
+            if (serverInfo_ != null) {
+              serverInfo_ =
+                middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.newBuilder(serverInfo_).mergeFrom(value).buildPartial();
+            } else {
+              serverInfo_ = value;
+            }
+            onChanged();
+          } else {
+            serverInfoBuilder_.mergeFrom(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public Builder clearServerInfo() {
+          if (serverInfoBuilder_ == null) {
+            serverInfo_ = null;
+            onChanged();
+          } else {
+            serverInfo_ = null;
+            serverInfoBuilder_ = null;
+          }
+
+          return this;
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder getServerInfoBuilder() {
+          
+          onChanged();
+          return getServerInfoFieldBuilder().getBuilder();
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder getServerInfoOrBuilder() {
+          if (serverInfoBuilder_ != null) {
+            return serverInfoBuilder_.getMessageOrBuilder();
+          } else {
+            return serverInfo_ == null ?
+                middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.getDefaultInstance() : serverInfo_;
+          }
+        }
+        /**
+         * <code>.middleware.proto.ServerLoads.Counter.ServerInfo serverInfo = 1;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder> 
+            getServerInfoFieldBuilder() {
+          if (serverInfoBuilder_ == null) {
+            serverInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfo.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.ServerInfoOrBuilder>(
+                    getServerInfo(),
+                    getParentForChildren(),
+                    isClean());
+            serverInfo_ = null;
+          }
+          return serverInfoBuilder_;
+        }
+
+        private int load_ ;
+        /**
+         * <code>int32 load = 2;</code>
+         * @return The load.
+         */
+        public int getLoad() {
+          return load_;
+        }
+        /**
+         * <code>int32 load = 2;</code>
+         * @param value The load to set.
+         * @return This builder for chaining.
+         */
+        public Builder setLoad(int value) {
+          
+          load_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>int32 load = 2;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearLoad() {
+          
+          load_ = 0;
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:middleware.proto.ServerLoads.Counter)
+      }
+
+      // @@protoc_insertion_point(class_scope:middleware.proto.ServerLoads.Counter)
+      private static final middleware.proto.ReplicationOuterClass.ServerLoads.Counter DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new middleware.proto.ReplicationOuterClass.ServerLoads.Counter();
+      }
+
+      public static middleware.proto.ReplicationOuterClass.ServerLoads.Counter getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<Counter>
+          PARSER = new com.google.protobuf.AbstractParser<Counter>() {
+        @java.lang.Override
+        public Counter parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Counter(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<Counter> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<Counter> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public static final int COUNTER_FIELD_NUMBER = 1;
+    private java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter> counter_;
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    public java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter> getCounterList() {
+      return counter_;
+    }
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    public java.util.List<? extends middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder> 
+        getCounterOrBuilderList() {
+      return counter_;
+    }
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    public int getCounterCount() {
+      return counter_.size();
+    }
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.ServerLoads.Counter getCounter(int index) {
+      return counter_.get(index);
+    }
+    /**
+     * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder getCounterOrBuilder(
+        int index) {
+      return counter_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < counter_.size(); i++) {
+        output.writeMessage(1, counter_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < counter_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, counter_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof middleware.proto.ReplicationOuterClass.ServerLoads)) {
+        return super.equals(obj);
+      }
+      middleware.proto.ReplicationOuterClass.ServerLoads other = (middleware.proto.ReplicationOuterClass.ServerLoads) obj;
+
+      if (!getCounterList()
+          .equals(other.getCounterList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getCounterCount() > 0) {
+        hash = (37 * hash) + COUNTER_FIELD_NUMBER;
+        hash = (53 * hash) + getCounterList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.ServerLoads parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(middleware.proto.ReplicationOuterClass.ServerLoads prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code middleware.proto.ServerLoads}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:middleware.proto.ServerLoads)
+        middleware.proto.ReplicationOuterClass.ServerLoadsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.ReplicationOuterClass.ServerLoads.class, middleware.proto.ReplicationOuterClass.ServerLoads.Builder.class);
+      }
+
+      // Construct using middleware.proto.ReplicationOuterClass.ServerLoads.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getCounterFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (counterBuilder_ == null) {
+          counter_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          counterBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_ServerLoads_descriptor;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.ServerLoads getDefaultInstanceForType() {
+        return middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.ServerLoads build() {
+        middleware.proto.ReplicationOuterClass.ServerLoads result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.ServerLoads buildPartial() {
+        middleware.proto.ReplicationOuterClass.ServerLoads result = new middleware.proto.ReplicationOuterClass.ServerLoads(this);
+        int from_bitField0_ = bitField0_;
+        if (counterBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            counter_ = java.util.Collections.unmodifiableList(counter_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.counter_ = counter_;
+        } else {
+          result.counter_ = counterBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof middleware.proto.ReplicationOuterClass.ServerLoads) {
+          return mergeFrom((middleware.proto.ReplicationOuterClass.ServerLoads)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(middleware.proto.ReplicationOuterClass.ServerLoads other) {
+        if (other == middleware.proto.ReplicationOuterClass.ServerLoads.getDefaultInstance()) return this;
+        if (counterBuilder_ == null) {
+          if (!other.counter_.isEmpty()) {
+            if (counter_.isEmpty()) {
+              counter_ = other.counter_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureCounterIsMutable();
+              counter_.addAll(other.counter_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.counter_.isEmpty()) {
+            if (counterBuilder_.isEmpty()) {
+              counterBuilder_.dispose();
+              counterBuilder_ = null;
+              counter_ = other.counter_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              counterBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCounterFieldBuilder() : null;
+            } else {
+              counterBuilder_.addAllMessages(other.counter_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        middleware.proto.ReplicationOuterClass.ServerLoads parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (middleware.proto.ReplicationOuterClass.ServerLoads) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter> counter_ =
+        java.util.Collections.emptyList();
+      private void ensureCounterIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          counter_ = new java.util.ArrayList<middleware.proto.ReplicationOuterClass.ServerLoads.Counter>(counter_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder> counterBuilder_;
+
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter> getCounterList() {
+        if (counterBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(counter_);
+        } else {
+          return counterBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public int getCounterCount() {
+        if (counterBuilder_ == null) {
+          return counter_.size();
+        } else {
+          return counterBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter getCounter(int index) {
+        if (counterBuilder_ == null) {
+          return counter_.get(index);
+        } else {
+          return counterBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder setCounter(
+          int index, middleware.proto.ReplicationOuterClass.ServerLoads.Counter value) {
+        if (counterBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCounterIsMutable();
+          counter_.set(index, value);
+          onChanged();
+        } else {
+          counterBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder setCounter(
+          int index, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder builderForValue) {
+        if (counterBuilder_ == null) {
+          ensureCounterIsMutable();
+          counter_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          counterBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder addCounter(middleware.proto.ReplicationOuterClass.ServerLoads.Counter value) {
+        if (counterBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCounterIsMutable();
+          counter_.add(value);
+          onChanged();
+        } else {
+          counterBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder addCounter(
+          int index, middleware.proto.ReplicationOuterClass.ServerLoads.Counter value) {
+        if (counterBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCounterIsMutable();
+          counter_.add(index, value);
+          onChanged();
+        } else {
+          counterBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder addCounter(
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder builderForValue) {
+        if (counterBuilder_ == null) {
+          ensureCounterIsMutable();
+          counter_.add(builderForValue.build());
+          onChanged();
+        } else {
+          counterBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder addCounter(
+          int index, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder builderForValue) {
+        if (counterBuilder_ == null) {
+          ensureCounterIsMutable();
+          counter_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          counterBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder addAllCounter(
+          java.lang.Iterable<? extends middleware.proto.ReplicationOuterClass.ServerLoads.Counter> values) {
+        if (counterBuilder_ == null) {
+          ensureCounterIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, counter_);
+          onChanged();
+        } else {
+          counterBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder clearCounter() {
+        if (counterBuilder_ == null) {
+          counter_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          counterBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public Builder removeCounter(int index) {
+        if (counterBuilder_ == null) {
+          ensureCounterIsMutable();
+          counter_.remove(index);
+          onChanged();
+        } else {
+          counterBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder getCounterBuilder(
+          int index) {
+        return getCounterFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder getCounterOrBuilder(
+          int index) {
+        if (counterBuilder_ == null) {
+          return counter_.get(index);  } else {
+          return counterBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public java.util.List<? extends middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder> 
+           getCounterOrBuilderList() {
+        if (counterBuilder_ != null) {
+          return counterBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(counter_);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder addCounterBuilder() {
+        return getCounterFieldBuilder().addBuilder(
+            middleware.proto.ReplicationOuterClass.ServerLoads.Counter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder addCounterBuilder(
+          int index) {
+        return getCounterFieldBuilder().addBuilder(
+            index, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .middleware.proto.ServerLoads.Counter counter = 1;</code>
+       */
+      public java.util.List<middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder> 
+           getCounterBuilderList() {
+        return getCounterFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.ServerLoads.Counter, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder> 
+          getCounterFieldBuilder() {
+        if (counterBuilder_ == null) {
+          counterBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              middleware.proto.ReplicationOuterClass.ServerLoads.Counter, middleware.proto.ReplicationOuterClass.ServerLoads.Counter.Builder, middleware.proto.ReplicationOuterClass.ServerLoads.CounterOrBuilder>(
+                  counter_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          counter_ = null;
+        }
+        return counterBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:middleware.proto.ServerLoads)
+    }
+
+    // @@protoc_insertion_point(class_scope:middleware.proto.ServerLoads)
+    private static final middleware.proto.ReplicationOuterClass.ServerLoads DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new middleware.proto.ReplicationOuterClass.ServerLoads();
+    }
+
+    public static middleware.proto.ReplicationOuterClass.ServerLoads getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ServerLoads>
+        PARSER = new com.google.protobuf.AbstractParser<ServerLoads>() {
+      @java.lang.Override
+      public ServerLoads parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ServerLoads(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ServerLoads> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ServerLoads> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public middleware.proto.ReplicationOuterClass.ServerLoads getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_middleware_proto_Replication_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_middleware_proto_Replication_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_ServerLoads_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_ServerLoads_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_ServerLoads_Counter_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_ServerLoads_Counter_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -447,7 +2864,14 @@ public final class ReplicationOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\035replication/replication.proto\022\020middlew" +
-      "are.proto\"\r\n\013Replicationb\006proto3"
+      "are.proto\"E\n\013Replication\022.\n\005loads\030\001 \001(\0132" +
+      "\035.middleware.proto.ServerLoadsH\000B\006\n\004type" +
+      "\"\322\001\n\013ServerLoads\0226\n\007counter\030\001 \003(\0132%.midd" +
+      "leware.proto.ServerLoads.Counter\032\212\001\n\007Cou" +
+      "nter\022D\n\nserverInfo\030\001 \001(\01320.middleware.pr" +
+      "oto.ServerLoads.Counter.ServerInfo\022\014\n\004lo" +
+      "ad\030\002 \001(\005\032+\n\nServerInfo\022\017\n\007address\030\001 \001(\t\022" +
+      "\014\n\004port\030\002 \001(\005b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -458,7 +2882,25 @@ public final class ReplicationOuterClass {
     internal_static_middleware_proto_Replication_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Replication_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Loads", "Type", });
+    internal_static_middleware_proto_ServerLoads_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_middleware_proto_ServerLoads_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_ServerLoads_descriptor,
+        new java.lang.String[] { "Counter", });
+    internal_static_middleware_proto_ServerLoads_Counter_descriptor =
+      internal_static_middleware_proto_ServerLoads_descriptor.getNestedTypes().get(0);
+    internal_static_middleware_proto_ServerLoads_Counter_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_ServerLoads_Counter_descriptor,
+        new java.lang.String[] { "ServerInfo", "Load", });
+    internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor =
+      internal_static_middleware_proto_ServerLoads_Counter_descriptor.getNestedTypes().get(0);
+    internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_ServerLoads_Counter_ServerInfo_descriptor,
+        new java.lang.String[] { "Address", "Port", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

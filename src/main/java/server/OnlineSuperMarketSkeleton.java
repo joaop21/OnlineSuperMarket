@@ -80,6 +80,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                         .setClientInfo(ClientInfo.newBuilder()
                                 .setAddress(((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().getHostAddress())
                                 .setPort(((InetSocketAddress) socket.getRemoteSocketAddress()).getPort())
+                                .setState(ClientInfo.State.CONNECTED)
                                 .build())
                         .build())
                 .build();
@@ -95,7 +96,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
         informLoadBalancer();
 
-        while(true){
+       while(true){
             try {
                 Message msg = Message.parseFrom(this.socketIO.read());
                 switch (msg.getRequest().getTypeCase()){
@@ -159,6 +160,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                 e.printStackTrace();
             }
         }
+
 
     }
 
