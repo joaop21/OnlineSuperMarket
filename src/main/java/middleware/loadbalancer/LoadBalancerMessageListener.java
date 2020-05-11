@@ -63,12 +63,10 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
             // Unmarshalling the counters as a Map known by the balancer
             Map<Object, Integer> counters = serverLoads.getCounterList().stream()
-                    .collect(Collectors.toMap(c -> {return
-                            ServerInfo.newBuilder()
-                                    .setAddress(c.getServerInfo().getAddress())
-                                    .setPort(c.getServerInfo().getPort())
-                                    .build();
-                    }, ServerLoads.Counter::getLoad));
+                    .collect(Collectors.toMap(c -> ServerInfo.newBuilder()
+                            .setAddress(c.getServerInfo().getAddress())
+                            .setPort(c.getServerInfo().getPort())
+                            .build(), ServerLoads.Counter::getLoad));
 
             // Setting the counters to the balancer
             Balancer.Balancer().set(counters);
@@ -200,7 +198,7 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                             .build();
 
                     // Sending loads to new load balancer
-                    SpreadConnector.cast(message.toByteArray(), Set.of("LoadBalancing"));
+                    SpreadConnector.send(message.toByteArray(), info.getJoined());
 
                 }
 
@@ -235,7 +233,49 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
     }
 
-    private void handleSystemInfo (MembershipInfo info) {}
+    private void handleSystemInfo (MembershipInfo info) {
+
+        System.out.println("Received System Info!");
+
+        if (info.isCausedByJoin()) {
+
+            System.out.println("Sending Load Balancer Info!");
+
+            // Sending own info
+            Message message = Message.newBuilder()
+                    .setAssignment(Assignment.newBuilder()
+                            .setLoadBalancerInfo(loadBalancerInfo)
+                            .build())
+                    .build();
+
+            SpreadConnector.send(message.toByteArray(), info.getJoined());
+
+
+        } else if (info.isCausedByDisconnect()) // Someone disconnected from the arena
+
+            if (server_info.containsKey(info.getDisconnected())) {
+
+                // Removing from Balancer
+                Balancer.Balancer().rem(server_info.get(info.getDisconnected()));
+
+                // Removing from known server spread groups
+                server_info.remove(info.getDisconnected());
+
+            }
+
+        else if (info.isCausedByLeave()) // Someone left the arena
+
+                if (server_info.containsKey(info.getLeft())) {
+
+                    // Removing from Balancer
+                    Balancer.Balancer().rem(server_info.get(info.getLeft()));
+
+                    // Removing from known server spread groups
+                    server_info.remove(info.getLeft());
+
+                }
+
+    }
 
     public boolean getPrimary() {return this.primary;}
 }

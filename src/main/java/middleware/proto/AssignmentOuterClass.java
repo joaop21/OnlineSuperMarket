@@ -63,6 +63,21 @@ public final class AssignmentOuterClass {
      */
     middleware.proto.AssignmentOuterClass.LoadBalancerInfoOrBuilder getLoadBalancerInfoOrBuilder();
 
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     * @return Whether the error field is set.
+     */
+    boolean hasError();
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     * @return The error.
+     */
+    middleware.proto.AssignmentOuterClass.Error getError();
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     */
+    middleware.proto.AssignmentOuterClass.ErrorOrBuilder getErrorOrBuilder();
+
     public middleware.proto.AssignmentOuterClass.Assignment.TypeCase getTypeCase();
   }
   /**
@@ -152,6 +167,20 @@ public final class AssignmentOuterClass {
               typeCase_ = 3;
               break;
             }
+            case 34: {
+              middleware.proto.AssignmentOuterClass.Error.Builder subBuilder = null;
+              if (typeCase_ == 4) {
+                subBuilder = ((middleware.proto.AssignmentOuterClass.Error) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.AssignmentOuterClass.Error.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.AssignmentOuterClass.Error) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 4;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -192,6 +221,7 @@ public final class AssignmentOuterClass {
       SERVERINFO(1),
       CLIENTINFO(2),
       LOADBALANCERINFO(3),
+      ERROR(4),
       TYPE_NOT_SET(0);
       private final int value;
       private TypeCase(int value) {
@@ -212,6 +242,7 @@ public final class AssignmentOuterClass {
           case 1: return SERVERINFO;
           case 2: return CLIENTINFO;
           case 3: return LOADBALANCERINFO;
+          case 4: return ERROR;
           case 0: return TYPE_NOT_SET;
           default: return null;
         }
@@ -311,6 +342,34 @@ public final class AssignmentOuterClass {
       return middleware.proto.AssignmentOuterClass.LoadBalancerInfo.getDefaultInstance();
     }
 
+    public static final int ERROR_FIELD_NUMBER = 4;
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     * @return Whether the error field is set.
+     */
+    public boolean hasError() {
+      return typeCase_ == 4;
+    }
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     * @return The error.
+     */
+    public middleware.proto.AssignmentOuterClass.Error getError() {
+      if (typeCase_ == 4) {
+         return (middleware.proto.AssignmentOuterClass.Error) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.Error error = 4;</code>
+     */
+    public middleware.proto.AssignmentOuterClass.ErrorOrBuilder getErrorOrBuilder() {
+      if (typeCase_ == 4) {
+         return (middleware.proto.AssignmentOuterClass.Error) type_;
+      }
+      return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -334,6 +393,9 @@ public final class AssignmentOuterClass {
       if (typeCase_ == 3) {
         output.writeMessage(3, (middleware.proto.AssignmentOuterClass.LoadBalancerInfo) type_);
       }
+      if (typeCase_ == 4) {
+        output.writeMessage(4, (middleware.proto.AssignmentOuterClass.Error) type_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -354,6 +416,10 @@ public final class AssignmentOuterClass {
       if (typeCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, (middleware.proto.AssignmentOuterClass.LoadBalancerInfo) type_);
+      }
+      if (typeCase_ == 4) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, (middleware.proto.AssignmentOuterClass.Error) type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -384,6 +450,10 @@ public final class AssignmentOuterClass {
           if (!getLoadBalancerInfo()
               .equals(other.getLoadBalancerInfo())) return false;
           break;
+        case 4:
+          if (!getError()
+              .equals(other.getError())) return false;
+          break;
         case 0:
         default:
       }
@@ -410,6 +480,10 @@ public final class AssignmentOuterClass {
         case 3:
           hash = (37 * hash) + LOADBALANCERINFO_FIELD_NUMBER;
           hash = (53 * hash) + getLoadBalancerInfo().hashCode();
+          break;
+        case 4:
+          hash = (37 * hash) + ERROR_FIELD_NUMBER;
+          hash = (53 * hash) + getError().hashCode();
           break;
         case 0:
         default:
@@ -596,6 +670,13 @@ public final class AssignmentOuterClass {
             result.type_ = loadBalancerInfoBuilder_.build();
           }
         }
+        if (typeCase_ == 4) {
+          if (errorBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = errorBuilder_.build();
+          }
+        }
         result.typeCase_ = typeCase_;
         onBuilt();
         return result;
@@ -656,6 +737,10 @@ public final class AssignmentOuterClass {
           }
           case LOADBALANCERINFO: {
             mergeLoadBalancerInfo(other.getLoadBalancerInfo());
+            break;
+          }
+          case ERROR: {
+            mergeError(other.getError());
             break;
           }
           case TYPE_NOT_SET: {
@@ -1119,6 +1204,144 @@ public final class AssignmentOuterClass {
         onChanged();;
         return loadBalancerInfoBuilder_;
       }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.Error, middleware.proto.AssignmentOuterClass.Error.Builder, middleware.proto.AssignmentOuterClass.ErrorOrBuilder> errorBuilder_;
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       * @return Whether the error field is set.
+       */
+      public boolean hasError() {
+        return typeCase_ == 4;
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       * @return The error.
+       */
+      public middleware.proto.AssignmentOuterClass.Error getError() {
+        if (errorBuilder_ == null) {
+          if (typeCase_ == 4) {
+            return (middleware.proto.AssignmentOuterClass.Error) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+        } else {
+          if (typeCase_ == 4) {
+            return errorBuilder_.getMessage();
+          }
+          return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public Builder setError(middleware.proto.AssignmentOuterClass.Error value) {
+        if (errorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          errorBuilder_.setMessage(value);
+        }
+        typeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public Builder setError(
+          middleware.proto.AssignmentOuterClass.Error.Builder builderForValue) {
+        if (errorBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          errorBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public Builder mergeError(middleware.proto.AssignmentOuterClass.Error value) {
+        if (errorBuilder_ == null) {
+          if (typeCase_ == 4 &&
+              type_ != middleware.proto.AssignmentOuterClass.Error.getDefaultInstance()) {
+            type_ = middleware.proto.AssignmentOuterClass.Error.newBuilder((middleware.proto.AssignmentOuterClass.Error) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 4) {
+            errorBuilder_.mergeFrom(value);
+          }
+          errorBuilder_.setMessage(value);
+        }
+        typeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public Builder clearError() {
+        if (errorBuilder_ == null) {
+          if (typeCase_ == 4) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 4) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          errorBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.Error.Builder getErrorBuilder() {
+        return getErrorFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      public middleware.proto.AssignmentOuterClass.ErrorOrBuilder getErrorOrBuilder() {
+        if ((typeCase_ == 4) && (errorBuilder_ != null)) {
+          return errorBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 4) {
+            return (middleware.proto.AssignmentOuterClass.Error) type_;
+          }
+          return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.Error error = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.AssignmentOuterClass.Error, middleware.proto.AssignmentOuterClass.Error.Builder, middleware.proto.AssignmentOuterClass.ErrorOrBuilder> 
+          getErrorFieldBuilder() {
+        if (errorBuilder_ == null) {
+          if (!(typeCase_ == 4)) {
+            type_ = middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+          }
+          errorBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.AssignmentOuterClass.Error, middleware.proto.AssignmentOuterClass.Error.Builder, middleware.proto.AssignmentOuterClass.ErrorOrBuilder>(
+                  (middleware.proto.AssignmentOuterClass.Error) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 4;
+        onChanged();;
+        return errorBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1167,6 +1390,624 @@ public final class AssignmentOuterClass {
 
     @java.lang.Override
     public middleware.proto.AssignmentOuterClass.Assignment getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ErrorOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:middleware.proto.Error)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+     * @return The enum numeric value on the wire for type.
+     */
+    int getTypeValue();
+    /**
+     * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+     * @return The type.
+     */
+    middleware.proto.AssignmentOuterClass.Error.ErrorType getType();
+  }
+  /**
+   * Protobuf type {@code middleware.proto.Error}
+   */
+  public  static final class Error extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:middleware.proto.Error)
+      ErrorOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Error.newBuilder() to construct.
+    private Error(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Error() {
+      type_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Error();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Error(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_Error_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_Error_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              middleware.proto.AssignmentOuterClass.Error.class, middleware.proto.AssignmentOuterClass.Error.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code middleware.proto.Error.ErrorType}
+     */
+    public enum ErrorType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>NO_SERVERS_AVAILABLE = 0;</code>
+       */
+      NO_SERVERS_AVAILABLE(0),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>NO_SERVERS_AVAILABLE = 0;</code>
+       */
+      public static final int NO_SERVERS_AVAILABLE_VALUE = 0;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static ErrorType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static ErrorType forNumber(int value) {
+        switch (value) {
+          case 0: return NO_SERVERS_AVAILABLE;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<ErrorType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          ErrorType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<ErrorType>() {
+              public ErrorType findValueByNumber(int number) {
+                return ErrorType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return middleware.proto.AssignmentOuterClass.Error.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final ErrorType[] VALUES = values();
+
+      public static ErrorType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private ErrorType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:middleware.proto.Error.ErrorType)
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private int type_;
+    /**
+     * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+     * @return The enum numeric value on the wire for type.
+     */
+    public int getTypeValue() {
+      return type_;
+    }
+    /**
+     * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+     * @return The type.
+     */
+    public middleware.proto.AssignmentOuterClass.Error.ErrorType getType() {
+      @SuppressWarnings("deprecation")
+      middleware.proto.AssignmentOuterClass.Error.ErrorType result = middleware.proto.AssignmentOuterClass.Error.ErrorType.valueOf(type_);
+      return result == null ? middleware.proto.AssignmentOuterClass.Error.ErrorType.UNRECOGNIZED : result;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (type_ != middleware.proto.AssignmentOuterClass.Error.ErrorType.NO_SERVERS_AVAILABLE.getNumber()) {
+        output.writeEnum(1, type_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (type_ != middleware.proto.AssignmentOuterClass.Error.ErrorType.NO_SERVERS_AVAILABLE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, type_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof middleware.proto.AssignmentOuterClass.Error)) {
+        return super.equals(obj);
+      }
+      middleware.proto.AssignmentOuterClass.Error other = (middleware.proto.AssignmentOuterClass.Error) obj;
+
+      if (type_ != other.type_) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.AssignmentOuterClass.Error parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(middleware.proto.AssignmentOuterClass.Error prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code middleware.proto.Error}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:middleware.proto.Error)
+        middleware.proto.AssignmentOuterClass.ErrorOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_Error_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_Error_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.AssignmentOuterClass.Error.class, middleware.proto.AssignmentOuterClass.Error.Builder.class);
+      }
+
+      // Construct using middleware.proto.AssignmentOuterClass.Error.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        type_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return middleware.proto.AssignmentOuterClass.internal_static_middleware_proto_Error_descriptor;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.Error getDefaultInstanceForType() {
+        return middleware.proto.AssignmentOuterClass.Error.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.Error build() {
+        middleware.proto.AssignmentOuterClass.Error result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public middleware.proto.AssignmentOuterClass.Error buildPartial() {
+        middleware.proto.AssignmentOuterClass.Error result = new middleware.proto.AssignmentOuterClass.Error(this);
+        result.type_ = type_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof middleware.proto.AssignmentOuterClass.Error) {
+          return mergeFrom((middleware.proto.AssignmentOuterClass.Error)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(middleware.proto.AssignmentOuterClass.Error other) {
+        if (other == middleware.proto.AssignmentOuterClass.Error.getDefaultInstance()) return this;
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        middleware.proto.AssignmentOuterClass.Error parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (middleware.proto.AssignmentOuterClass.Error) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int type_ = 0;
+      /**
+       * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+       * @return The enum numeric value on the wire for type.
+       */
+      public int getTypeValue() {
+        return type_;
+      }
+      /**
+       * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+       * @param value The enum numeric value on the wire for type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTypeValue(int value) {
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+       * @return The type.
+       */
+      public middleware.proto.AssignmentOuterClass.Error.ErrorType getType() {
+        @SuppressWarnings("deprecation")
+        middleware.proto.AssignmentOuterClass.Error.ErrorType result = middleware.proto.AssignmentOuterClass.Error.ErrorType.valueOf(type_);
+        return result == null ? middleware.proto.AssignmentOuterClass.Error.ErrorType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setType(middleware.proto.AssignmentOuterClass.Error.ErrorType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Error.ErrorType type = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearType() {
+        
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:middleware.proto.Error)
+    }
+
+    // @@protoc_insertion_point(class_scope:middleware.proto.Error)
+    private static final middleware.proto.AssignmentOuterClass.Error DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new middleware.proto.AssignmentOuterClass.Error();
+    }
+
+    public static middleware.proto.AssignmentOuterClass.Error getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Error>
+        PARSER = new com.google.protobuf.AbstractParser<Error>() {
+      @java.lang.Override
+      public Error parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Error(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Error> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Error> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public middleware.proto.AssignmentOuterClass.Error getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3289,6 +4130,11 @@ public final class AssignmentOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_middleware_proto_Assignment_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_Error_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_Error_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_middleware_proto_ServerInfo_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -3313,18 +4159,21 @@ public final class AssignmentOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\033assignment/assignment.proto\022\020middlewar" +
-      "e.proto\"\274\001\n\nAssignment\0222\n\nserverInfo\030\001 \001" +
+      "e.proto\"\346\001\n\nAssignment\0222\n\nserverInfo\030\001 \001" +
       "(\0132\034.middleware.proto.ServerInfoH\000\0222\n\ncl" +
       "ientInfo\030\002 \001(\0132\034.middleware.proto.Client" +
       "InfoH\000\022>\n\020loadBalancerInfo\030\003 \001(\0132\".middl" +
-      "eware.proto.LoadBalancerInfoH\000B\006\n\004type\"+" +
-      "\n\nServerInfo\022\017\n\007address\030\001 \001(\t\022\014\n\004port\030\002 " +
-      "\001(\005\"\210\001\n\nClientInfo\022\017\n\007address\030\001 \001(\t\022\014\n\004p" +
-      "ort\030\002 \001(\005\0221\n\005state\030\003 \001(\0162\".middleware.pr" +
-      "oto.ClientInfo.State\"(\n\005State\022\r\n\tCONNECT" +
-      "ED\020\000\022\020\n\014DISCONNECTED\020\001\"1\n\020LoadBalancerIn" +
-      "fo\022\017\n\007address\030\001 \001(\t\022\014\n\004port\030\002 \001(\005b\006proto" +
-      "3"
+      "eware.proto.LoadBalancerInfoH\000\022(\n\005error\030" +
+      "\004 \001(\0132\027.middleware.proto.ErrorH\000B\006\n\004type" +
+      "\"_\n\005Error\022/\n\004type\030\001 \001(\0162!.middleware.pro" +
+      "to.Error.ErrorType\"%\n\tErrorType\022\030\n\024NO_SE" +
+      "RVERS_AVAILABLE\020\000\"+\n\nServerInfo\022\017\n\007addre" +
+      "ss\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\"\210\001\n\nClientInfo\022\017\n" +
+      "\007address\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\0221\n\005state\030\003 " +
+      "\001(\0162\".middleware.proto.ClientInfo.State\"" +
+      "(\n\005State\022\r\n\tCONNECTED\020\000\022\020\n\014DISCONNECTED\020" +
+      "\001\"1\n\020LoadBalancerInfo\022\017\n\007address\030\001 \001(\t\022\014" +
+      "\n\004port\030\002 \001(\005b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -3335,21 +4184,27 @@ public final class AssignmentOuterClass {
     internal_static_middleware_proto_Assignment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Assignment_descriptor,
-        new java.lang.String[] { "ServerInfo", "ClientInfo", "LoadBalancerInfo", "Type", });
-    internal_static_middleware_proto_ServerInfo_descriptor =
+        new java.lang.String[] { "ServerInfo", "ClientInfo", "LoadBalancerInfo", "Error", "Type", });
+    internal_static_middleware_proto_Error_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_middleware_proto_Error_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_Error_descriptor,
+        new java.lang.String[] { "Type", });
+    internal_static_middleware_proto_ServerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_middleware_proto_ServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_ServerInfo_descriptor,
         new java.lang.String[] { "Address", "Port", });
     internal_static_middleware_proto_ClientInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_middleware_proto_ClientInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_ClientInfo_descriptor,
         new java.lang.String[] { "Address", "Port", "State", });
     internal_static_middleware_proto_LoadBalancerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_middleware_proto_LoadBalancerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_LoadBalancerInfo_descriptor,

@@ -8,8 +8,6 @@ import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadMessage;
 
-import java.util.Set;
-
 public class ServerMessageListener implements AdvancedMessageListener {
 
     private ServerInfo serverInfo;
@@ -23,11 +21,35 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             Message message = Message.parseFrom(spreadMessage.getData());
 
-            if (message.hasAssignment()) return; // Ignoring Assignment Messages sent from other servers
+            if (message.hasAssignment()) handleAssignmentMessage (spreadMessage);
 
         } catch (InvalidProtocolBufferException e) {
 
             e.printStackTrace();
+
+        }
+
+    }
+
+    private void handleAssignmentMessage(SpreadMessage spreadMessage) throws InvalidProtocolBufferException {
+
+        Message message = Message.parseFrom(spreadMessage.getData());
+
+        System.out.println("Received Assignment Message!");
+
+        if (message.getAssignment().hasLoadBalancerInfo()) {
+
+            System.out.println("Received Load Balancer Info!");
+
+            message = Message.newBuilder()
+                    .setAssignment(Assignment.newBuilder()
+                            .setServerInfo(serverInfo)
+                            .build())
+                    .build();
+
+            System.out.println("Sending Server Info back!");
+
+            SpreadConnector.send(message.toByteArray(), spreadMessage.getSender());
 
         }
 
@@ -52,23 +74,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    public void handleSystemInfo (MembershipInfo info) {
-
-        if (info.isCausedByJoin()) {
-
-            // Creating message with own info to send to laod balancer
-            Message message = Message.newBuilder()
-                    .setAssignment(Assignment.newBuilder()
-                            .setServerInfo(serverInfo)
-                            .build())
-                    .build();
-
-            // Sending own info throughout the system
-            SpreadConnector.cast(message.toByteArray(), Set.of("System"));
-
-        }
-
-    }
+    public void handleSystemInfo (MembershipInfo info) {}
 
     public void handleServerInfo (MembershipInfo info) {}
 }

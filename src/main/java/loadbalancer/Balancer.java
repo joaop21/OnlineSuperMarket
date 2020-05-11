@@ -51,7 +51,7 @@ public class Balancer {
             if (chosen_entry == null || entry.getValue() < chosen_entry.getValue())
                 chosen_entry = entry;
 
-        return chosen_entry.getKey();
+        return (chosen_entry != null) ? chosen_entry.getKey() : null;
 
     }
 

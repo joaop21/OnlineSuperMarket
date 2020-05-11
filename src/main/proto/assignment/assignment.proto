@@ -9,6 +9,19 @@ message Assignment {
         ServerInfo serverInfo = 1;
         ClientInfo clientInfo = 2;
         LoadBalancerInfo loadBalancerInfo = 3;
+        Error error = 4;
+
+    }
+
+}
+
+message Error {
+
+    ErrorType type = 1;
+
+    enum ErrorType {
+
+        NO_SERVERS_AVAILABLE = 0;
 
     }
 

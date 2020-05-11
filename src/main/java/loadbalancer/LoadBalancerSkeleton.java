@@ -1,6 +1,7 @@
 package loadbalancer;
 
 import middleware.gateway.Skeleton;
+import middleware.proto.AssignmentOuterClass;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketIO;
@@ -19,15 +20,32 @@ public class LoadBalancerSkeleton extends Skeleton {
 
             try {
 
-                // Choosing a port
-                ServerInfo server_info = (ServerInfo) Balancer.Balancer().min();
+                // Message to send to client
+                Message message;
 
-                // Marshalling the server info
-                Message message = Message.newBuilder()
-                        .setAssignment(Assignment.newBuilder()
-                                .setServerInfo(server_info)
-                                .build())
-                        .build();
+                if (Balancer.Balancer().min() == null) {
+
+                    message = Message.newBuilder()
+                            .setAssignment(Assignment.newBuilder()
+                                    .setError(AssignmentOuterClass.Error.newBuilder()
+                                            .setType(AssignmentOuterClass.Error.ErrorType.NO_SERVERS_AVAILABLE)
+                                            .build())
+                                    .build())
+                            .build();
+
+                } else {
+
+                    // Choosing a port
+                    ServerInfo server_info = (ServerInfo) Balancer.Balancer().min();
+
+                    // Marshalling the server info
+                    message = Message.newBuilder()
+                            .setAssignment(Assignment.newBuilder()
+                                    .setServerInfo(server_info)
+                                    .build())
+                            .build();
+
+                }
 
                 System.out.println("Sending message to Client!");
 

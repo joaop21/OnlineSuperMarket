@@ -138,7 +138,7 @@ public class SpreadConnector {
     }
 
     // Cast to specific groups
-    /*public static void send (byte[] message, SpreadGroup group){
+    public static void send (byte[] message, SpreadGroup group){
 
         SpreadMessage m = new SpreadMessage();
         m.addGroup(group);
@@ -155,6 +155,6 @@ public class SpreadConnector {
             e.printStackTrace();
 
         }
-    }*/
+    }
 
 }
