@@ -167,6 +167,21 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                     if (!g.toString().equals(myself))
                         this.leader_fifo.add(g.toString());
 
+                
+                System.out.println("Casting Load Balancer Info!");
+                // Sending own info
+                Message message = Message.newBuilder()
+                        .setAssignment(Assignment.newBuilder()
+                                .setLoadBalancerInfo(
+                                        LoadBalancerInfo.newBuilder()
+                                                .setAddress(loadBalancerInfo.getAddress())
+                                                .setPort(loadBalancerInfo.getPort())
+                                                .build())
+                                .build())
+                        .build();
+
+                SpreadConnector.cast(message.toByteArray(), Set.of("System"));
+
             } else { // Someone else joined
 
                 System.out.println("Someone else joined!");
@@ -194,8 +209,7 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                             .setReplication(Replication.newBuilder()
                                     .setLoads(ServerLoads.newBuilder().
                                             addAllCounter(serverLoads)
-                                            .build()
-                                    )
+                                            .build())
                                     .build())
                             .build();
 
@@ -250,8 +264,7 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                                     LoadBalancerInfo.newBuilder()
                                             .setAddress(loadBalancerInfo.getAddress())
                                             .setPort(loadBalancerInfo.getPort())
-                                            .build()
-                            )
+                                            .build())
                             .build())
                     .build();
 

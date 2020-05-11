@@ -9,8 +9,6 @@ import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadMessage;
 
-import java.util.Arrays;
-
 public class ServerMessageListener implements AdvancedMessageListener {
 
     private SocketInfo serverInfo;
