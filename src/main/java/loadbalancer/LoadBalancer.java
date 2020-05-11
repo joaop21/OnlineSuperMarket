@@ -1,8 +1,7 @@
 package loadbalancer;
 
 import middleware.loadbalancer.LoadBalancerMessageListener;
-import middleware.proto.AssignmentOuterClass.*;
-import middleware.server.ServerMessageListener;
+import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -23,11 +22,9 @@ public class LoadBalancer {
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("LoadBalancing", "System"));
         // Adding listener to connector
-        SpreadConnector.addListener(new LoadBalancerMessageListener(
-                LoadBalancerInfo.newBuilder()
-                .setAddress("localhost")
-                .setPort(port)
-                .build()));
+        SpreadConnector.addListener(
+                new LoadBalancerMessageListener(
+                        new SocketInfo("localhost", port)));
 
         System.out.println("Initializing Connector!");
         // Initializing connector

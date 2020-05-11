@@ -3,6 +3,7 @@ package middleware.server;
 import com.google.protobuf.InvalidProtocolBufferException;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
+import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
@@ -12,14 +13,14 @@ import java.util.Arrays;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
-    private ServerInfo serverInfo;
+    private SocketInfo serverInfo;
     
     private final ConcurrentQueue<Triplet<Boolean, Integer, Message>> queue = new ConcurrentQueue<>();
     private int message_counter = 0;
     private String myself;
     private boolean first_message = true;
 
-    public ServerMessageListener (ServerInfo serverInfo) { this.serverInfo = serverInfo; }
+    public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
@@ -58,7 +59,12 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             message = Message.newBuilder()
                     .setAssignment(Assignment.newBuilder()
-                            .setServerInfo(serverInfo)
+                            .setServerInfo(
+                                    ServerInfo.newBuilder()
+                                            .setAddress(serverInfo.getAddress())
+                                            .setPort(serverInfo.getPort())
+                                            .build()
+                            )
                             .build())
                     .build();
 

@@ -7,6 +7,7 @@ import middleware.gateway.Gateway;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.ReplicationOuterClass.*;
+import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
@@ -25,11 +26,11 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
     private boolean primary = false;
     private boolean balancer_set = false;
 
-    private LoadBalancerInfo loadBalancerInfo;
+    private SocketInfo loadBalancerInfo;
 
-    private HashMap<SpreadGroup, ServerInfo> server_info = new HashMap<>();
+    private HashMap<SpreadGroup, SocketInfo> server_info = new HashMap<>();
 
-    public LoadBalancerMessageListener(LoadBalancerInfo loadBalancerInfo) { this.loadBalancerInfo = loadBalancerInfo; }
+    public LoadBalancerMessageListener(SocketInfo loadBalancerInfo) { this.loadBalancerInfo = loadBalancerInfo; }
 
     @Override
     public void regularMessageReceived(SpreadMessage spreadMessage) {
@@ -63,10 +64,9 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
             // Unmarshalling the counters as a Map known by the balancer
             Map<Object, Integer> counters = serverLoads.getCounterList().stream()
-                    .collect(Collectors.toMap(c -> ServerInfo.newBuilder()
-                            .setAddress(c.getServerInfo().getAddress())
-                            .setPort(c.getServerInfo().getPort())
-                            .build(), ServerLoads.Counter::getLoad));
+                    .collect(Collectors.toMap(c -> new SocketInfo( c.getServerInfo().getAddress(),
+                                                                   c.getServerInfo().getPort())
+                            , ServerLoads.Counter::getLoad));
 
             // Setting the counters to the balancer
             Balancer.Balancer().set(counters);
@@ -103,10 +103,10 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                 System.out.println("Address: " + server_socket.getAddress() + " ; Port: " + server_socket.getPort() + " ;");
 
                 // Storing mapping of spread group and server socket info
-                server_info.put(server_spread, server_socket);
+                server_info.put(server_spread, new SocketInfo(server_socket.getAddress(), server_socket.getPort()));
 
                 // Adding new entry to the map that holds the load of each server
-                Balancer.Balancer().add(server_socket, 0);
+                Balancer.Balancer().add(new SocketInfo(server_socket.getAddress(), server_socket.getPort()), 0);
 
                 // Server sending info about a client
             } else if (message.getAssignment().hasClientInfo()) {
@@ -114,6 +114,8 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                 System.out.println("System message had client info!");
 
                 SpreadGroup server_spread = spreadMessage.getSender();
+
+                System.out.println("Socket Info to increment: " + server_info.get(server_spread).getAddress() + " - " + server_info.get(server_spread).getPort() );
 
                 // Incrementing the load of this server
                 Balancer.Balancer().inc(server_info.get(server_spread));
@@ -181,8 +183,8 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
                             ServerLoads.Counter.newBuilder()
                             .setServerInfo(
                                     ServerLoads.Counter.ServerInfo.newBuilder()
-                                            .setAddress(((ServerInfo) e.getKey()).getAddress())
-                                            .setPort(((ServerInfo) e.getKey()).getPort())
+                                            .setAddress(((SocketInfo) e.getKey()).getAddress())
+                                            .setPort(((SocketInfo) e.getKey()).getPort())
                                             .build())
                             .setLoad(e.getValue())
                             .build()).collect(Collectors.toList());
@@ -244,7 +246,12 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
             // Sending own info
             Message message = Message.newBuilder()
                     .setAssignment(Assignment.newBuilder()
-                            .setLoadBalancerInfo(loadBalancerInfo)
+                            .setLoadBalancerInfo(
+                                    LoadBalancerInfo.newBuilder()
+                                            .setAddress(loadBalancerInfo.getAddress())
+                                            .setPort(loadBalancerInfo.getPort())
+                                            .build()
+                            )
                             .build())
                     .build();
 

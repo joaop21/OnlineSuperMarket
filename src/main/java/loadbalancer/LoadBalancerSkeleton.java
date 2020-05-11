@@ -5,6 +5,7 @@ import middleware.proto.AssignmentOuterClass;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketIO;
+import middleware.socket.SocketInfo;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -36,12 +37,15 @@ public class LoadBalancerSkeleton extends Skeleton {
                 } else {
 
                     // Choosing a port
-                    ServerInfo server_info = (ServerInfo) Balancer.Balancer().min();
+                    SocketInfo server_info = (SocketInfo) Balancer.Balancer().min();
 
                     // Marshalling the server info
                     message = Message.newBuilder()
                             .setAssignment(Assignment.newBuilder()
-                                    .setServerInfo(server_info)
+                                    .setServerInfo(ServerInfo.newBuilder()
+                                            .setAddress(server_info.getAddress())
+                                            .setPort(server_info.getPort())
+                                            .build())
                                     .build())
                             .build();
 

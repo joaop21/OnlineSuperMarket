@@ -1,9 +1,8 @@
 package server;
 
 import middleware.gateway.Gateway;
-import middleware.proto.AssignmentOuterClass.*;
-import middleware.proto.MessageOuterClass.*;
 import middleware.server.ServerMessageListener;
+import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.SpreadException;
 
@@ -17,11 +16,8 @@ public class Server {
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
 
-        // Setting server info
-        ServerInfo serverInfo = ServerInfo.newBuilder()
-                .setAddress("localhost")
-                .setPort(port)
-                .build();
+        // Setting socket info
+        SocketInfo serverInfo = new SocketInfo("localhost", port);
 
         // Creating Server Message Listener
         ServerMessageListener serverMessageListener = new ServerMessageListener(serverInfo);
@@ -29,7 +25,7 @@ public class Server {
         // Adding groups to connector
         SpreadConnector.addGroups(Set.of("Servers", "System"));
         // Adding listener to connector
-        SpreadConnector.addListener(new ServerMessageListener(serverInfo));
+        SpreadConnector.addListener(serverMessageListener);
         // Initializing connector
         SpreadConnector.initialize();
 
