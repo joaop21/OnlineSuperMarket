@@ -54,4 +54,13 @@ public class Item {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public String toString(){
+        return "<ITEM id="+ this.id +
+                ", name=" + this.name +
+                ", price=" + this.price +
+                ", stock=" + this.stock +
+                ", description=" + this.description
+                +">";
+    }
 }
