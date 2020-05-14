@@ -2,8 +2,10 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
+import database.QueryCustomer;
 import database.QueryItem;
 import middleware.gateway.Skeleton;
+import middleware.proto.MessageOuterClass;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.RequestOuterClass;
@@ -14,6 +16,7 @@ import middleware.spread.SpreadConnector;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +35,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
     @Override
     public Item getItem(int itemId) {
-        return null;
+        return QueryItem.getItem(itemId);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
     @Override
     public boolean login(String username, String password) {
-        return false;
+        return QueryCustomer.checkPassword(username, password);
     }
 
     public void informLoadBalancer(){
@@ -96,9 +99,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                 switch (msg.getRequest().getTypeCase()){
 
                     case GETITEMS:
-                        List<Item> res1 = getItems();
-                        System.out.println(res1);
-                        // send response
+                        socketIO.write(createResponse(getItems()).toByteArray());
                         break;
 
                     case GETITEM:
@@ -115,7 +116,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                                 break;
 
                         }
-                        // send response
+                        socketIO.write(createResponse(res2).toByteArray());
                         break;
 
                     case ADDITEMTOCART:
@@ -147,16 +148,60 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
                     case LOGIN:
                         RequestOuterClass.Login login = msg.getRequest().getLogin();
-                        boolean status3 = login(login.getUsername(), login.getPassword());
-                        // send response
+                        socketIO.write(createResponse(login(login.getUsername(), login.getPassword())).toByteArray());
                         break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
 
+    public Message createResponse(List<Item> items){
+        List<RequestOuterClass.Item> res_items = new ArrayList<>();
+        for(Item item : items){
+            res_items.add(constructItem(item));
+        }
 
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setResponse(RequestOuterClass.Response.newBuilder()
+                                .addAllItem(res_items)
+                                .setStatus(true)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public Message createResponse(Item item){
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setResponse(RequestOuterClass.Response.newBuilder()
+                                .addItem(constructItem(item))
+                                .setStatus(true)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public Message createResponse(boolean status){
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setResponse(RequestOuterClass.Response.newBuilder()
+                                .setStatus(status)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    private RequestOuterClass.Item constructItem(Item item){
+        return RequestOuterClass.Item.newBuilder()
+                .setId(item.getId())
+                .setName(item.getName())
+                .setDescription(item.getDescription())
+                .setPrice(item.getPrice())
+                .setAvailable(item.getStock()>=1)
+                .build();
     }
 
 }

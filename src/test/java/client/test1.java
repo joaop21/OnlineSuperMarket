@@ -22,17 +22,30 @@ public class test1 implements Runnable {
                             .build())
                     .build();
 
-            socketIO.write(message1.toByteArray());
+            MessageOuterClass.Message message2 = MessageOuterClass.Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setGetItem(RequestOuterClass.GetItem.newBuilder().setItemId(1).build())
+                            .build())
+                    .build();
 
-            while (true) Thread.sleep(10000);
+            MessageOuterClass.Message message3 = MessageOuterClass.Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setLogin(RequestOuterClass.Login.newBuilder().setUsername("joao").setPassword("joao").build())
+                            .build())
+                    .build();
 
-        } catch (InterruptedException | IOException e) {
+            socketIO.write(message3.toByteArray());
+
+            while (true)
+                System.out.println(MessageOuterClass.Message.parseFrom(socketIO.read()));
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        for(int i = 0 ; i < 10 ; i++)
+        for(int i = 0 ; i < 1 ; i++)
             new Thread(new test1()).start();
     }
 }
