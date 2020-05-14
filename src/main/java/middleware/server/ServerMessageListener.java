@@ -7,7 +7,11 @@ import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
+import spread.SpreadGroup;
 import spread.SpreadMessage;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
@@ -15,8 +19,11 @@ public class ServerMessageListener implements AdvancedMessageListener {
     
     private final ConcurrentQueue<Triplet<Boolean, Integer, Message>> queue = new ConcurrentQueue<>();
     private int message_counter = 0;
+
+    private List<String> leader_fifo = new LinkedList<>();
     private String myself;
     private boolean first_message = true;
+    private boolean primary = false;
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -99,10 +106,35 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     public void handleServerInfo (MembershipInfo info) {
 
-        if (info.isCausedByJoin() && this.first_message) { // Someone joined the arena
-            this.first_message = false;
-            this.myself = info.getJoined().toString();
+        if (info.isCausedByJoin()) {
+
+            if (this.first_message) {  // I joined
+
+                this.first_message = false;
+                this.myself = info.getJoined().toString();
+
+                if (info.getMembers().length > 1){
+                    for(SpreadGroup g : info.getMembers())
+                        if(!g.toString().equals(myself))
+                            this.leader_fifo.add(g.toString());
+                }
+
+            }
+
+            leader_fifo.add(info.getJoined().toString());
+        }
+        else if(info.isCausedByDisconnect())
+            this.leader_fifo.removeIf(member -> member.equals(info.getDisconnected().toString()));
+
+        else if (info.isCausedByLeave())
+            this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
+
+        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
+            this.primary = true;
+            System.out.println("I'm the Boss");
         }
 
     }
+
+    public boolean isPrimary() {return this.primary;}
 }
