@@ -2,6 +2,7 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
+import database.QueryItem;
 import middleware.gateway.Skeleton;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.AssignmentOuterClass.*;
@@ -13,7 +14,6 @@ import middleware.spread.SpreadConnector;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,13 +27,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
     @Override
     public List<Item> getItems() {
-        List<Item> res =new ArrayList<>();
-        res.add(new Item(1, "item1", "descr: item1", (float) 1.00, 10));
-        res.add(new Item(2, "item2", "descr: item2", (float) 2.00, 20));
-        res.add(new Item(3, "item3", "descr: item3", (float) 3.00, 30));
-        res.add(new Item(4, "item4", "descr: item4", (float) 4.00, 40));
-        res.add(new Item(5, "item5", "descr: item5", (float) 5.00, 50));
-        return res;
+        return QueryItem.getItems();
     }
 
     @Override
@@ -103,6 +97,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
 
                     case GETITEMS:
                         List<Item> res1 = getItems();
+                        System.out.println(res1);
                         // send response
                         break;
 
