@@ -2,8 +2,6 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
-import database.QueryCustomer;
-import database.QueryItem;
 import middleware.gateway.Skeleton;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.AssignmentOuterClass.*;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ClientManager extends Skeleton implements OnlineSuperMarket {
+public class ClientManager extends Skeleton {
     private final SocketIO socketIO;
 
     public ClientManager(Socket sock) {
@@ -28,44 +26,74 @@ public class ClientManager extends Skeleton implements OnlineSuperMarket {
     }
 
     @Override
-    public List<Item> getItems() {
-        return QueryItem.getItems();
-    }
+    public void run() {
 
-    @Override
-    public Item getItem(int itemId) {
-        return QueryItem.getItem(itemId);
-    }
+        informLoadBalancer();
 
-    @Override
-    public Item getItem(String itemName) {
-        return null;
-    }
+        OnlineSuperMarket osm = new OnlineSuperMarketSkeleton();
 
-    @Override
-    public boolean addItemToCart(String username, int itemId) {
-        System.out.println(username + " : " + itemId);
-        return true;
-    }
+        while(true){
+            try {
+                Message msg = Message.parseFrom(this.socketIO.read());
+                switch (msg.getRequest().getTypeCase()){
 
-    @Override
-    public void removeItemFromCart(String username, int itemId) {
+                    case GETITEMS:
+                        socketIO.write(createResponse(osm.getItems()).toByteArray());
+                        break;
 
-    }
+                    case GETITEM:
+                        RequestOuterClass.GetItem getItem = msg.getRequest().getGetItem();
+                        Item res2 = null;
+                        switch (getItem.getTypeCase()){
 
-    @Override
-    public List<Item> getCartItems(String username) {
-        return null;
-    }
+                            case ITEMID:
+                                res2 = osm.getItem(getItem.getItemId());
+                                break;
 
-    @Override
-    public boolean order(String username) {
-        return false;
-    }
+                            case NAME:
+                                res2 = osm.getItem(getItem.getName());
+                                break;
 
-    @Override
-    public boolean login(String username, String password) {
-        return QueryCustomer.checkPassword(username, password);
+                        }
+                        socketIO.write(createResponse(res2).toByteArray());
+                        break;
+
+                    case ADDITEMTOCART:
+                        Pair<Long, Message> message_pair1 = RequestManager.publishRequest(msg);
+                        RequestOuterClass.AddItemToCart addItemToCart = msg.getRequest().getAddItemToCart();
+                        boolean status1 = false;
+                        if(osm.addItemToCart(addItemToCart.getUsername(), addItemToCart.getItemId()))
+                            status1 = true;
+                        // send response
+                        break;
+
+                    case REMOVEITEMFROMCART:
+                        Pair<Long, Message> message_pair2 = RequestManager.publishRequest(msg);
+                        RequestOuterClass.RemoveItemFromCart removeItemFromCart = msg.getRequest().getRemoveItemFromCart();
+                        osm.removeItemFromCart(removeItemFromCart.getUsername(), removeItemFromCart.getItemId());
+                        // send response
+                        break;
+
+                    case GETCARTITEMS:
+                        List<Item> res3 = osm.getCartItems(msg.getRequest().getGetCartItems().getUsername());
+                        // send response
+                        break;
+
+                    case ORDER:
+                        Pair<Long, Message> message_pair3 = RequestManager.publishRequest(msg);
+                        boolean status2 = osm.order(msg.getRequest().getOrder().getUsername());
+                        // send response
+                        break;
+
+                    case LOGIN:
+                        RequestOuterClass.Login login = msg.getRequest().getLogin();
+                        socketIO.write(createResponse(osm.login(login.getUsername(), login.getPassword())).toByteArray());
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void informLoadBalancer(){
@@ -85,75 +113,6 @@ public class ClientManager extends Skeleton implements OnlineSuperMarket {
 
         SpreadConnector.cast(message.toByteArray(), Set.of("System"));
 
-    }
-
-    @Override
-    public void run() {
-
-        informLoadBalancer();
-
-       while(true){
-            try {
-                Message msg = Message.parseFrom(this.socketIO.read());
-                switch (msg.getRequest().getTypeCase()){
-
-                    case GETITEMS:
-                        socketIO.write(createResponse(getItems()).toByteArray());
-                        break;
-
-                    case GETITEM:
-                        RequestOuterClass.GetItem getItem = msg.getRequest().getGetItem();
-                        Item res2 = null;
-                        switch (getItem.getTypeCase()){
-
-                            case ITEMID:
-                                res2 = getItem(getItem.getItemId());
-                                break;
-
-                            case NAME:
-                                res2 = getItem(getItem.getName());
-                                break;
-
-                        }
-                        socketIO.write(createResponse(res2).toByteArray());
-                        break;
-
-                    case ADDITEMTOCART:
-                        Pair<Long, Message> message_pair1 = RequestManager.publishRequest(msg);
-                        RequestOuterClass.AddItemToCart addItemToCart = msg.getRequest().getAddItemToCart();
-                        boolean status1 = false;
-                        if(addItemToCart(addItemToCart.getUsername(), addItemToCart.getItemId()))
-                            status1 = true;
-                        // send response
-                        break;
-
-                    case REMOVEITEMFROMCART:
-                        Pair<Long, Message> message_pair2 = RequestManager.publishRequest(msg);
-                        RequestOuterClass.RemoveItemFromCart removeItemFromCart = msg.getRequest().getRemoveItemFromCart();
-                        removeItemFromCart(removeItemFromCart.getUsername(), removeItemFromCart.getItemId());
-                        // send response
-                        break;
-
-                    case GETCARTITEMS:
-                        List<Item> res3 = getCartItems(msg.getRequest().getGetCartItems().getUsername());
-                        // send response
-                        break;
-
-                    case ORDER:
-                        Pair<Long, Message> message_pair3 = RequestManager.publishRequest(msg);
-                        boolean status2 = order(msg.getRequest().getOrder().getUsername());
-                        // send response
-                        break;
-
-                    case LOGIN:
-                        RequestOuterClass.Login login = msg.getRequest().getLogin();
-                        socketIO.write(createResponse(login(login.getUsername(), login.getPassword())).toByteArray());
-                        break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public Message createResponse(List<Item> items){

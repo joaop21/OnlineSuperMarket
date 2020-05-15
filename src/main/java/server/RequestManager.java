@@ -34,9 +34,9 @@ public class RequestManager implements Runnable {
     @Override
     public void run() {
 
-        while(true){
+        Triplet<Boolean, Long, Message> message;
 
-            Triplet<Boolean, Long, Message> message = messageListener.getNextRequest();
+        while((message = messageListener.getNextRequest()) != null){
 
             if (!message.getFirst()) {
                 Pair<String, String> pair = new Pair<>(message.getThird().getRequest().getSender(), message.getThird().getRequest().getUuid());
@@ -65,5 +65,9 @@ public class RequestManager implements Runnable {
         SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));
 
         return wr.waitToProceed();
+    }
+
+    public static Message getNextRequest(){
+        return sorted_requests.poll();
     }
 }
