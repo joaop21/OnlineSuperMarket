@@ -1,7 +1,5 @@
 package server;
 
-import application.Item;
-import database.QueryItem;
 import middleware.gateway.Gateway;
 import middleware.server.ServerMessageListener;
 import middleware.socket.SocketInfo;
@@ -10,7 +8,6 @@ import spread.SpreadException;
 import database.DatabaseManager;
 
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.Set;
 
 public class Server {
@@ -37,7 +34,7 @@ public class Server {
 
         new Thread(RequestManager.initialize(serverMessageListener)).start();
 
-        new Gateway(port, OnlineSuperMarketSkeleton.class);
+        new Gateway(port, ClientManager.class);
 
         // Sleeping
         while(true) Thread.sleep(10000);

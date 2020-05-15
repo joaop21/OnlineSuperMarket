@@ -1,6 +1,5 @@
 package server;
 
-import middleware.proto.MessageOuterClass;
 import middleware.server.ConcurrentQueue;
 import middleware.server.Pair;
 import middleware.server.ServerMessageListener;
@@ -40,10 +39,8 @@ public class RequestManager implements Runnable {
             Triplet<Boolean, Long, Message> message = messageListener.getNextRequest();
 
             if (!message.getFirst()) {
-
                 Pair<String, String> pair = new Pair<>(message.getThird().getRequest().getSender(), message.getThird().getRequest().getUuid());
                 waiting_requests.put(pair,null);
-
             }
 
             if(messageListener.isPrimary())
@@ -53,6 +50,7 @@ public class RequestManager implements Runnable {
     }
 
     public static Pair<Long, Message> publishRequest(Message msg){
+
         WaitingRoom wr = new WaitingRoom();
         String sender = messageListener.getMyself();
         String key = null;
@@ -63,6 +61,7 @@ public class RequestManager implements Runnable {
         Message.Builder builder = msg.toBuilder();
         builder.getRequestBuilder().setUuid(key).setSender(sender);
         msg = builder.build();
+
         SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));
 
         return wr.waitToProceed();

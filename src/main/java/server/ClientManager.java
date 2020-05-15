@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMarket {
+public class ClientManager extends Skeleton implements OnlineSuperMarket {
     private final SocketIO socketIO;
 
-    public OnlineSuperMarketSkeleton(Socket sock) {
+    public ClientManager(Socket sock) {
         super(sock);
         this.socketIO = new SocketIO(sock);
     }
