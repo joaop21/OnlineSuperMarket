@@ -7,6 +7,7 @@ message Replication {
     oneof type {
 
         ServerLoads loads = 1;
+        DatabaseUpdates updates = 2;
 
     }
 
@@ -25,6 +26,31 @@ message ServerLoads {
 
             string address = 1;
             int32 port = 2;
+
+        }
+
+    }
+
+}
+
+message DatabaseUpdates{
+
+    bool status = 1;
+    repeated Modification modifications = 2;
+    string sender = 3;
+    string requestUuid = 4;
+
+    message Modification {
+
+        string table = 1;
+        int32 id = 2;
+        string field = 3;
+
+        oneof fieldType {
+
+            int32 valueInt = 4;
+            string valueString = 5;
+            bool valueBool = 6;
 
         }
 

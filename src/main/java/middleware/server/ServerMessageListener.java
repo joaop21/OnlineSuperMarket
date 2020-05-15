@@ -20,7 +20,8 @@ public class ServerMessageListener implements AdvancedMessageListener {
     
     private final ConcurrentQueue<Triplet<Boolean, Long, Message>> request_queue = new ConcurrentQueue<>();
     private final ConcurrentQueue<Triplet<Boolean, Long, Message>> replication_queue = new ConcurrentQueue<>();
-    private final AtomicLong message_counter = new AtomicLong();
+    private final AtomicLong request_counter = new AtomicLong();
+    private final AtomicLong replication_counter = new AtomicLong();
 
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
@@ -39,7 +40,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
             switch (message.getTypeCase()){
 
                 case ASSIGNMENT:
-                    handleAssignmentMessage (spreadMessage, message);
+                    handleAssignmentMessage(spreadMessage, message);
                     break;
 
                 case REQUEST:
@@ -47,7 +48,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
                     break;
 
                 case REPLICATION:
-                    // has to deal with replication requests
+                    handleReplicationMessage(spreadMessage, message);
                     break;
 
             }
@@ -89,14 +90,19 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     private void handleRequestMessage(SpreadMessage spreadMessage, Message message){
 
-        if(this.primary){
+        boolean from_myself = false;
+        if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
 
-            boolean from_myself = false;
-            if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+        this.request_queue.add(new Triplet<>(from_myself, request_counter.incrementAndGet(), message));
 
-            this.request_queue.add(new Triplet<>(from_myself, message_counter.incrementAndGet(), message));
+    }
 
-        }
+    private void handleReplicationMessage(SpreadMessage spreadMessage, Message message){
+
+        boolean from_myself = false;
+        if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+
+        this.replication_queue.add(new Triplet<>(from_myself, replication_counter.incrementAndGet(), message));
 
     }
 
@@ -157,5 +163,5 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     public Triplet<Boolean, Long, Message> getNextRequest() { return this.request_queue.poll(); }
 
-    public Triplet<Boolean, Long, Message> getNextReplication() { return this.replication_queue.poll(); }
+    public Triplet<Boolean,Long,Message> getNextReplication() { return this.replication_queue.poll(); }
 }

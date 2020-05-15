@@ -40,7 +40,7 @@ public class RequestManager implements Runnable {
 
             if (!message.getFirst()) {
                 Pair<String, String> pair = new Pair<>(message.getThird().getRequest().getSender(), message.getThird().getRequest().getUuid());
-                waiting_requests.put(pair,null);
+                waiting_requests.put(pair,new WaitingRoom());
             }
 
             if(messageListener.isPrimary())
@@ -49,9 +49,11 @@ public class RequestManager implements Runnable {
         }
     }
 
-    public static Pair<Long, Message> publishRequest(Message msg){
+    public static Message publishRequest(Message msg){
 
         WaitingRoom wr = new WaitingRoom();
+        wr.activate();
+
         String sender = messageListener.getMyself();
         String key = null;
         do{
@@ -65,6 +67,17 @@ public class RequestManager implements Runnable {
         SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));
 
         return wr.waitToProceed();
+    }
+
+    public static void putResponse(Pair<String,String> request_key, Message msg){
+
+        WaitingRoom wr = waiting_requests.get(request_key);
+
+        if(wr.isActive())
+            wr.putMessage(msg);
+        else
+            waiting_requests.remove(request_key);
+
     }
 
     public static Message getNextRequest(){

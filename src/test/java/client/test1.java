@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class test1 implements Runnable {
+    private final int process_number;
+
+    public test1(int i) {
+        process_number = i;
+    }
 
     @Override
     public void run() {
         try {
             // Starting socket
-            Socket socket = new Socket("localhost", 9999);
+            int server_port = (int)Math.round(Math.random()*4) + 9996;
+            Socket socket = new Socket("localhost", server_port);
             SocketIO socketIO = new SocketIO(socket);
 
             MessageOuterClass.Message message1 = MessageOuterClass.Message.newBuilder()
@@ -34,10 +40,20 @@ public class test1 implements Runnable {
                             .build())
                     .build();
 
-            socketIO.write(message3.toByteArray());
+            MessageOuterClass.Message message4 = MessageOuterClass.Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setAddItemToCart(RequestOuterClass.AddItemToCart.newBuilder()
+                                    .setUsername("joao")
+                                    .setItemId(2)
+                                    .build())
+                            .build())
+                    .build();
 
-            while (true)
-                System.out.println(MessageOuterClass.Message.parseFrom(socketIO.read()));
+            socketIO.write(message4.toByteArray());
+
+            MessageOuterClass.Message msg = MessageOuterClass.Message.parseFrom(socketIO.read());
+
+            System.out.println("\n" + process_number + ":\n" + msg);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +61,7 @@ public class test1 implements Runnable {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        for(int i = 0 ; i < 1 ; i++)
-            new Thread(new test1()).start();
+        for(int i = 0 ; i < 100 ; i++)
+            new Thread(new test1(i)).start();
     }
 }

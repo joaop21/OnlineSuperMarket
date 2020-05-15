@@ -5,8 +5,11 @@ import application.OnlineSuperMarket;
 import database.QueryCustomer;
 import database.QueryItem;
 import middleware.proto.MessageOuterClass.Message;
+import middleware.proto.ReplicationOuterClass;
+import middleware.spread.SpreadConnector;
 
 import java.util.List;
+import java.util.Set;
 
 public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     @Override
@@ -60,6 +63,22 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
             switch(msg.getRequest().getTypeCase()){
 
                 case ADDITEMTOCART:
+                    Message msg1 = Message.newBuilder()
+                            .setReplication(ReplicationOuterClass.Replication.newBuilder()
+                                    .setUpdates(ReplicationOuterClass.DatabaseUpdates.newBuilder()
+                                            .setStatus(true)
+                                            .setSender(msg.getRequest().getSender())
+                                            .setRequestUuid(msg.getRequest().getUuid())
+                                            .addModifications( ReplicationOuterClass.DatabaseUpdates.Modification.newBuilder()
+                                                    .setTable("Cart_Item")
+                                                    .setId(1)
+                                                    .setField("Itemid")
+                                                    .setValueInt(2)
+                                                    .build())
+                                            .build())
+                                    .build())
+                            .build();
+                    SpreadConnector.cast(msg1.toByteArray(), Set.of("Servers"));
                     // send to db
                     // get and send replication message
                     break;

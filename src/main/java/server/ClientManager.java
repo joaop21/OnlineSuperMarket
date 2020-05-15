@@ -59,29 +59,16 @@ public class ClientManager extends Skeleton {
                         break;
 
                     case ADDITEMTOCART:
-                        Pair<Long, Message> message_pair1 = RequestManager.publishRequest(msg);
-                        RequestOuterClass.AddItemToCart addItemToCart = msg.getRequest().getAddItemToCart();
-                        boolean status1 = false;
-                        if(osm.addItemToCart(addItemToCart.getUsername(), addItemToCart.getItemId()))
-                            status1 = true;
-                        // send response
-                        break;
 
                     case REMOVEITEMFROMCART:
-                        Pair<Long, Message> message_pair2 = RequestManager.publishRequest(msg);
-                        RequestOuterClass.RemoveItemFromCart removeItemFromCart = msg.getRequest().getRemoveItemFromCart();
-                        osm.removeItemFromCart(removeItemFromCart.getUsername(), removeItemFromCart.getItemId());
-                        // send response
+
+                    case ORDER:
+                        Message response_message1 = RequestManager.publishRequest(msg);
+                        socketIO.write(createResponse(response_message1.getReplication().getUpdates().getStatus()).toByteArray());
                         break;
 
                     case GETCARTITEMS:
                         List<Item> res3 = osm.getCartItems(msg.getRequest().getGetCartItems().getUsername());
-                        // send response
-                        break;
-
-                    case ORDER:
-                        Pair<Long, Message> message_pair3 = RequestManager.publishRequest(msg);
-                        boolean status2 = osm.order(msg.getRequest().getOrder().getUsername());
                         // send response
                         break;
 

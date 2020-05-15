@@ -32,11 +32,14 @@ public class Server {
         // Initializing connector
         SpreadConnector.initialize();
 
+        // Initializing RequestManager and run it
         new Thread(RequestManager.initialize(serverMessageListener)).start();
+        // Initializing ReplicationManager and run it
+        new Thread(ReplicationManager.initialize(serverMessageListener)).start();
 
+        // Initializing Gateway that delivers connection to a ClientManager Thread
         new Gateway(port, ClientManager.class);
 
-        // Sleeping
-        while(true) Thread.sleep(10000);
+        new Thread(new OnlineSuperMarketSkeleton()).run();
     }
 }
