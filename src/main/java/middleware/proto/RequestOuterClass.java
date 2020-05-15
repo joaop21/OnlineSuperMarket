@@ -150,6 +150,18 @@ public final class RequestOuterClass {
     com.google.protobuf.ByteString
         getUuidBytes();
 
+    /**
+     * <code>string sender = 10;</code>
+     * @return The sender.
+     */
+    java.lang.String getSender();
+    /**
+     * <code>string sender = 10;</code>
+     * @return The bytes for sender.
+     */
+    com.google.protobuf.ByteString
+        getSenderBytes();
+
     public middleware.proto.RequestOuterClass.Request.TypeCase getTypeCase();
   }
   /**
@@ -166,6 +178,7 @@ public final class RequestOuterClass {
     }
     private Request() {
       uuid_ = "";
+      sender_ = "";
     }
 
     @java.lang.Override
@@ -314,6 +327,12 @@ public final class RequestOuterClass {
               java.lang.String s = input.readStringRequireUtf8();
 
               uuid_ = s;
+              break;
+            }
+            case 82: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              sender_ = s;
               break;
             }
             default: {
@@ -661,6 +680,42 @@ public final class RequestOuterClass {
       }
     }
 
+    public static final int SENDER_FIELD_NUMBER = 10;
+    private volatile java.lang.Object sender_;
+    /**
+     * <code>string sender = 10;</code>
+     * @return The sender.
+     */
+    public java.lang.String getSender() {
+      java.lang.Object ref = sender_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        sender_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string sender = 10;</code>
+     * @return The bytes for sender.
+     */
+    public com.google.protobuf.ByteString
+        getSenderBytes() {
+      java.lang.Object ref = sender_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        sender_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -701,6 +756,9 @@ public final class RequestOuterClass {
       }
       if (!getUuidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 9, uuid_);
+      }
+      if (!getSenderBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 10, sender_);
       }
       unknownFields.writeTo(output);
     }
@@ -746,6 +804,9 @@ public final class RequestOuterClass {
       if (!getUuidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, uuid_);
       }
+      if (!getSenderBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(10, sender_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -763,6 +824,8 @@ public final class RequestOuterClass {
 
       if (!getUuid()
           .equals(other.getUuid())) return false;
+      if (!getSender()
+          .equals(other.getSender())) return false;
       if (!getTypeCase().equals(other.getTypeCase())) return false;
       switch (typeCase_) {
         case 1:
@@ -813,6 +876,8 @@ public final class RequestOuterClass {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + UUID_FIELD_NUMBER;
       hash = (53 * hash) + getUuid().hashCode();
+      hash = (37 * hash) + SENDER_FIELD_NUMBER;
+      hash = (53 * hash) + getSender().hashCode();
       switch (typeCase_) {
         case 1:
           hash = (37 * hash) + GETITEMS_FIELD_NUMBER;
@@ -984,6 +1049,8 @@ public final class RequestOuterClass {
         super.clear();
         uuid_ = "";
 
+        sender_ = "";
+
         typeCase_ = 0;
         type_ = null;
         return this;
@@ -1069,6 +1136,7 @@ public final class RequestOuterClass {
           }
         }
         result.uuid_ = uuid_;
+        result.sender_ = sender_;
         result.typeCase_ = typeCase_;
         onBuilt();
         return result;
@@ -1120,6 +1188,10 @@ public final class RequestOuterClass {
         if (other == middleware.proto.RequestOuterClass.Request.getDefaultInstance()) return this;
         if (!other.getUuid().isEmpty()) {
           uuid_ = other.uuid_;
+          onChanged();
+        }
+        if (!other.getSender().isEmpty()) {
+          sender_ = other.sender_;
           onChanged();
         }
         switch (other.getTypeCase()) {
@@ -2379,6 +2451,82 @@ public final class RequestOuterClass {
   checkByteStringIsUtf8(value);
         
         uuid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object sender_ = "";
+      /**
+       * <code>string sender = 10;</code>
+       * @return The sender.
+       */
+      public java.lang.String getSender() {
+        java.lang.Object ref = sender_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          sender_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string sender = 10;</code>
+       * @return The bytes for sender.
+       */
+      public com.google.protobuf.ByteString
+          getSenderBytes() {
+        java.lang.Object ref = sender_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          sender_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string sender = 10;</code>
+       * @param value The sender to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSender(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        sender_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string sender = 10;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSender() {
+        
+        sender_ = getDefaultInstance().getSender();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string sender = 10;</code>
+       * @param value The bytes for sender to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSenderBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        sender_ = value;
         onChanged();
         return this;
       }
@@ -8551,7 +8699,7 @@ public final class RequestOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rrequest.proto\022\020middleware.proto\"\267\003\n\007Re" +
+      "\n\rrequest.proto\022\020middleware.proto\"\307\003\n\007Re" +
       "quest\022.\n\010getItems\030\001 \001(\0132\032.middleware.pro" +
       "to.GetItemsH\000\022,\n\007getItem\030\002 \001(\0132\031.middlew" +
       "are.proto.GetItemH\000\0228\n\raddItemToCart\030\003 \001" +
@@ -8562,18 +8710,19 @@ public final class RequestOuterClass {
       "\000\022(\n\005order\030\006 \001(\0132\027.middleware.proto.Orde" +
       "rH\000\022(\n\005login\030\007 \001(\0132\027.middleware.proto.Lo" +
       "ginH\000\022.\n\010response\030\010 \001(\0132\032.middleware.pro" +
-      "to.ResponseH\000\022\014\n\004uuid\030\t \001(\tB\006\n\004type\"W\n\004I" +
-      "tem\022\n\n\002id\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\023\n\013descrip" +
-      "tion\030\003 \001(\t\022\r\n\005price\030\004 \001(\002\022\021\n\tavailable\030\005" +
-      " \001(\010\"@\n\010Response\022$\n\004item\030\001 \003(\0132\026.middlew" +
-      "are.proto.Item\022\016\n\006status\030\002 \001(\010\"\n\n\010GetIte" +
-      "ms\"3\n\007GetItem\022\020\n\006itemId\030\001 \001(\005H\000\022\016\n\004name\030" +
-      "\002 \001(\tH\000B\006\n\004type\"1\n\rAddItemToCart\022\020\n\010user" +
-      "name\030\001 \001(\t\022\016\n\006itemId\030\002 \001(\005\"6\n\022RemoveItem" +
-      "FromCart\022\020\n\010username\030\001 \001(\t\022\016\n\006itemId\030\002 \001" +
-      "(\005\" \n\014GetCartItems\022\020\n\010username\030\001 \001(\t\"\031\n\005" +
-      "Order\022\020\n\010username\030\001 \001(\t\"+\n\005Login\022\020\n\010user" +
-      "name\030\001 \001(\t\022\020\n\010password\030\002 \001(\tb\006proto3"
+      "to.ResponseH\000\022\014\n\004uuid\030\t \001(\t\022\016\n\006sender\030\n " +
+      "\001(\tB\006\n\004type\"W\n\004Item\022\n\n\002id\030\001 \001(\005\022\014\n\004name\030" +
+      "\002 \001(\t\022\023\n\013description\030\003 \001(\t\022\r\n\005price\030\004 \001(" +
+      "\002\022\021\n\tavailable\030\005 \001(\010\"@\n\010Response\022$\n\004item" +
+      "\030\001 \003(\0132\026.middleware.proto.Item\022\016\n\006status" +
+      "\030\002 \001(\010\"\n\n\010GetItems\"3\n\007GetItem\022\020\n\006itemId\030" +
+      "\001 \001(\005H\000\022\016\n\004name\030\002 \001(\tH\000B\006\n\004type\"1\n\rAddIt" +
+      "emToCart\022\020\n\010username\030\001 \001(\t\022\016\n\006itemId\030\002 \001" +
+      "(\005\"6\n\022RemoveItemFromCart\022\020\n\010username\030\001 \001" +
+      "(\t\022\016\n\006itemId\030\002 \001(\005\" \n\014GetCartItems\022\020\n\010us" +
+      "ername\030\001 \001(\t\"\031\n\005Order\022\020\n\010username\030\001 \001(\t\"" +
+      "+\n\005Login\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002" +
+      " \001(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -8584,7 +8733,7 @@ public final class RequestOuterClass {
     internal_static_middleware_proto_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Request_descriptor,
-        new java.lang.String[] { "GetItems", "GetItem", "AddItemToCart", "RemoveItemFromCart", "GetCartItems", "Order", "Login", "Response", "Uuid", "Type", });
+        new java.lang.String[] { "GetItems", "GetItem", "AddItemToCart", "RemoveItemFromCart", "GetCartItems", "Order", "Login", "Response", "Uuid", "Sender", "Type", });
     internal_static_middleware_proto_Item_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_middleware_proto_Item_fieldAccessorTable = new

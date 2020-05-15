@@ -17,6 +17,7 @@ message Request {
 
     }
     string uuid = 9;
+    string sender = 10;
 }
 
 message Item {

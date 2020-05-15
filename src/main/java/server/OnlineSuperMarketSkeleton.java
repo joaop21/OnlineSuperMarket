@@ -5,7 +5,6 @@ import application.OnlineSuperMarket;
 import database.QueryCustomer;
 import database.QueryItem;
 import middleware.gateway.Skeleton;
-import middleware.proto.MessageOuterClass;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.RequestOuterClass;
@@ -120,7 +119,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                         break;
 
                     case ADDITEMTOCART:
-                        Pair<Integer, Message> message_pair1 = Orderer.waitToProceed(msg);
+                        Pair<Long, Message> message_pair1 = RequestManager.publishRequest(msg);
                         RequestOuterClass.AddItemToCart addItemToCart = msg.getRequest().getAddItemToCart();
                         boolean status1 = false;
                         if(addItemToCart(addItemToCart.getUsername(), addItemToCart.getItemId()))
@@ -129,7 +128,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                         break;
 
                     case REMOVEITEMFROMCART:
-                        Pair<Integer, Message> message_pair2 = Orderer.waitToProceed(msg);
+                        Pair<Long, Message> message_pair2 = RequestManager.publishRequest(msg);
                         RequestOuterClass.RemoveItemFromCart removeItemFromCart = msg.getRequest().getRemoveItemFromCart();
                         removeItemFromCart(removeItemFromCart.getUsername(), removeItemFromCart.getItemId());
                         // send response
@@ -141,7 +140,7 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
                         break;
 
                     case ORDER:
-                        Pair<Integer, Message> message_pair3 = Orderer.waitToProceed(msg);
+                        Pair<Long, Message> message_pair3 = RequestManager.publishRequest(msg);
                         boolean status2 = order(msg.getRequest().getOrder().getUsername());
                         // send response
                         break;

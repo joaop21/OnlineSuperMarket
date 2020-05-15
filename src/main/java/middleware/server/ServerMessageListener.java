@@ -12,13 +12,15 @@ import spread.SpreadMessage;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
     private SocketInfo serverInfo;
     
-    private final ConcurrentQueue<Triplet<Boolean, Integer, Message>> queue = new ConcurrentQueue<>();
-    private int message_counter = 0;
+    private final ConcurrentQueue<Triplet<Boolean, Long, Message>> request_queue = new ConcurrentQueue<>();
+    private final ConcurrentQueue<Triplet<Boolean, Long, Message>> replication_queue = new ConcurrentQueue<>();
+    private final AtomicLong message_counter = new AtomicLong();
 
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
@@ -34,13 +36,19 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             Message message = Message.parseFrom(spreadMessage.getData());
 
-            if (message.hasAssignment()) handleAssignmentMessage (spreadMessage);
-            else {
+            switch (message.getTypeCase()){
 
-                boolean from_myself = false;
-                if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
-                    
-                this.queue.add(new Triplet<>(from_myself, message_counter++, Message.parseFrom(spreadMessage.getData())));
+                case ASSIGNMENT:
+                    handleAssignmentMessage (spreadMessage, message);
+                    break;
+
+                case REQUEST:
+                    handleRequestMessage(spreadMessage, message);
+                    break;
+
+                case REPLICATION:
+                    // has to deal with replication requests
+                    break;
 
             }
 
@@ -52,9 +60,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    private void handleAssignmentMessage(SpreadMessage spreadMessage) throws InvalidProtocolBufferException {
-
-        Message message = Message.parseFrom(spreadMessage.getData());
+    private void handleAssignmentMessage(SpreadMessage spreadMessage, Message message) throws InvalidProtocolBufferException {
 
         System.out.println("Received Assignment Message!");
 
@@ -81,6 +87,19 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
+    private void handleRequestMessage(SpreadMessage spreadMessage, Message message){
+
+        if(this.primary){
+
+            boolean from_myself = false;
+            if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+
+            this.request_queue.add(new Triplet<>(from_myself, message_counter.incrementAndGet(), message));
+
+        }
+
+    }
+
     @Override
     public void membershipMessageReceived(SpreadMessage spreadMessage) {
 
@@ -99,8 +118,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
         }
 
     }
-
-    public Triplet<Boolean, Integer, Message> getMessage() { return this.queue.poll(); }
 
     public void handleSystemInfo (MembershipInfo info) {}
 
@@ -129,12 +146,16 @@ public class ServerMessageListener implements AdvancedMessageListener {
         else if (info.isCausedByLeave())
             this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
 
-        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
+        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
             this.primary = true;
-            System.out.println("I'm the Boss");
-        }
 
     }
 
+    public String getMyself(){ return this.myself;}
+
     public boolean isPrimary() {return this.primary;}
+
+    public Triplet<Boolean, Long, Message> getNextRequest() { return this.request_queue.poll(); }
+
+    public Triplet<Boolean, Long, Message> getNextReplication() { return this.replication_queue.poll(); }
 }

@@ -35,7 +35,7 @@ public class Server {
         // Initializing connector
         SpreadConnector.initialize();
 
-        new Thread(Orderer.initialize(serverMessageListener)).start();
+        new Thread(RequestManager.initialize(serverMessageListener)).start();
 
         new Gateway(port, OnlineSuperMarketSkeleton.class);
 
