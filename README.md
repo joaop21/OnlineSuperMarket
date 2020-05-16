@@ -3,6 +3,7 @@ Fault Tolerance Project
 
 ## Wiki
 * [System Architecture](https://github.com/joaop21/OnlineSuperMarket/wiki/System-Architecture)
+* [Database Architecture](https://github.com/joaop21/OnlineSuperMarket/wiki/Database-Architecture)
 
 ## Contributors
 | <a href="https://github.com/joaop21" target="_blank">**João Silva**</a> | <a href="https://github.com/hpereira98" target="_blank">**Henrique Pereira**</a> | <a href="https://github.com/MAACarvalho" target="_blank">**Miguel Carvalho**</a> |
