@@ -63,4 +63,23 @@ public class Item {
                 ", description=" + this.description
                 +">";
     }
+
+    public String toPrettyString() {
+
+        return "# " + this.id +
+                " -> " + this.name +
+                " ( " + this.price + " €)" +
+                " - " + ((this.stock > 0) ? this.stock + " in Stock"  : "Out of Stock");
+
+    }
+
+    public String toDescriptionString () {
+
+        return "# Id: " + this.id + "\n" +
+                "# Name: " + this.name + "\n" +
+                "# Description: " + this.description + " \n" +
+                "# Price: " + this.price + " €\n" +
+                "# Stock: " + this.stock;
+
+    }
 }

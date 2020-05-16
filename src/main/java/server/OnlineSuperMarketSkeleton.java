@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
+
     @Override
     public List<Item> getItems() {
         return QueryItem.getItems();
