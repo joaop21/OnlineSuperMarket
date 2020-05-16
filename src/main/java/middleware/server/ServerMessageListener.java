@@ -7,16 +7,26 @@ import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
+import spread.SpreadGroup;
 import spread.SpreadMessage;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
     private SocketInfo serverInfo;
     
-    private final ConcurrentQueue<Triplet<Boolean, Integer, Message>> queue = new ConcurrentQueue<>();
-    private int message_counter = 0;
+    private final ConcurrentQueue<Triplet<Boolean, Long, Message>> request_queue = new ConcurrentQueue<>();
+    private final ConcurrentQueue<Triplet<Boolean, Long, Message>> replication_queue = new ConcurrentQueue<>();
+    private final AtomicLong request_counter = new AtomicLong();
+    private final AtomicLong replication_counter = new AtomicLong();
+
+    private List<String> leader_fifo = new LinkedList<>();
     private String myself;
     private boolean first_message = true;
+    private boolean primary = false;
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -27,13 +37,19 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             Message message = Message.parseFrom(spreadMessage.getData());
 
-            if (message.hasAssignment()) handleAssignmentMessage (spreadMessage);
-            else {
+            switch (message.getTypeCase()){
 
-                boolean from_myself = false;
-                if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
-                    
-                this.queue.add(new Triplet<>(from_myself, message_counter++, Message.parseFrom(spreadMessage.getData())));
+                case ASSIGNMENT:
+                    handleAssignmentMessage(spreadMessage, message);
+                    break;
+
+                case REQUEST:
+                    handleRequestMessage(spreadMessage, message);
+                    break;
+
+                case REPLICATION:
+                    handleReplicationMessage(spreadMessage, message);
+                    break;
 
             }
 
@@ -45,9 +61,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    private void handleAssignmentMessage(SpreadMessage spreadMessage) throws InvalidProtocolBufferException {
-
-        Message message = Message.parseFrom(spreadMessage.getData());
+    private void handleAssignmentMessage(SpreadMessage spreadMessage, Message message) throws InvalidProtocolBufferException {
 
         System.out.println("Received Assignment Message!");
 
@@ -74,6 +88,24 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
+    private void handleRequestMessage(SpreadMessage spreadMessage, Message message){
+
+        boolean from_myself = false;
+        if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+
+        this.request_queue.add(new Triplet<>(from_myself, request_counter.incrementAndGet(), message));
+
+    }
+
+    private void handleReplicationMessage(SpreadMessage spreadMessage, Message message){
+
+        boolean from_myself = false;
+        if (spreadMessage.getSender().toString().equals(this.myself)) from_myself = true;
+
+        this.replication_queue.add(new Triplet<>(from_myself, replication_counter.incrementAndGet(), message));
+
+    }
+
     @Override
     public void membershipMessageReceived(SpreadMessage spreadMessage) {
 
@@ -93,16 +125,43 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    public Triplet<Boolean, Integer, Message> getMessage() { return this.queue.poll(); }
-
     public void handleSystemInfo (MembershipInfo info) {}
 
     public void handleServerInfo (MembershipInfo info) {
 
-        if (info.isCausedByJoin() && this.first_message) { // Someone joined the arena
-            this.first_message = false;
-            this.myself = info.getJoined().toString();
+        if (info.isCausedByJoin()) {
+
+            if (this.first_message) {  // I joined
+
+                this.first_message = false;
+                this.myself = info.getJoined().toString();
+
+                if (info.getMembers().length > 1){
+                    for(SpreadGroup g : info.getMembers())
+                        if(!g.toString().equals(myself))
+                            this.leader_fifo.add(g.toString());
+                }
+
+            }
+
+            leader_fifo.add(info.getJoined().toString());
         }
+        else if(info.isCausedByDisconnect())
+            this.leader_fifo.removeIf(member -> member.equals(info.getDisconnected().toString()));
+
+        else if (info.isCausedByLeave())
+            this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
+
+        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
+            this.primary = true;
 
     }
+
+    public String getMyself(){ return this.myself;}
+
+    public boolean isPrimary() {return this.primary;}
+
+    public Triplet<Boolean, Long, Message> getNextRequest() { return this.request_queue.poll(); }
+
+    public Triplet<Boolean,Long,Message> getNextReplication() { return this.replication_queue.poll(); }
 }

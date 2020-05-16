@@ -17,6 +17,7 @@ message Request {
 
     }
     string uuid = 9;
+    string sender = 10;
 }
 
 message Item {
@@ -28,7 +29,7 @@ message Item {
 }
 
 message Response {
-    repeated Item items = 1;
+    repeated Item item = 1;
     bool status = 2;
 }
 

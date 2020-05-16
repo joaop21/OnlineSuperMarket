@@ -11,7 +11,7 @@ public class ConcurrentQueue<T> {
      *
      * @return Object Object that is inside of the queue.
      * */
-    synchronized T poll(){
+    public synchronized T poll(){
         while(this.queue.size() == 0) {
             try {
                 wait();
@@ -27,7 +27,7 @@ public class ConcurrentQueue<T> {
      *
      * @param obj Object to be inserted in the queue.
      * */
-    synchronized void add(T obj){
+    public synchronized void add(T obj){
         this.queue.add(obj);
         notify();
     }
