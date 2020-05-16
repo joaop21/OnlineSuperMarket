@@ -102,7 +102,7 @@ public class ClientDriver {
     }
 
 
-    public static void request (Message message) {
+    public static Message request (Message message) {
 
         System.out.println("Connecting to server!");
 
@@ -119,6 +119,7 @@ public class ClientDriver {
             // Receiving message from server
             message = Message.parseFrom(ClientDriver.serverSocketIO.read());
 
+            return message;
 
         } catch (IOException e) {
 
@@ -127,7 +128,7 @@ public class ClientDriver {
             ClientDriver.shutdownServerConnection();
 
             // Requesting message again
-            ClientDriver.request(message);
+            return ClientDriver.request(message);
 
         }
 
