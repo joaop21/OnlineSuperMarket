@@ -39,13 +39,13 @@ public class QueryCustomer {
         return null;
     }
 
-    // returns true if the username and password match or false if not
-    public boolean checkPassword(String username, String password){
+    // returns user ID if the username and password match or -1 if not
+    public int checkPassword(String username, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
                 System.out.println("No DB connection.");
-                return false;
+                return -1;
             }
             PreparedStatement pstat = conn.prepareStatement(
                     "SELECT username, password FROM Customer WHERE username=?");
@@ -53,12 +53,15 @@ public class QueryCustomer {
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that username.");
-                return false;
+                return -1;
             }
             else {
                 do {
                     String customerPassword = rs.getString("password");
-                    return customerPassword.equals(password);
+                    if (customerPassword.equals(password))
+                        return rs.getInt("id");
+                    else
+                        return -1;
                 }
                 while (rs.next());
             }
@@ -67,7 +70,7 @@ public class QueryCustomer {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
         }
-        return false;
+        return -1;
     }
 
     // returns the new user ID
