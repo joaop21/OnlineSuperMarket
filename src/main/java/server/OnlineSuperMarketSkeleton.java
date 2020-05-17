@@ -53,25 +53,6 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
         return -1;
     }
 
-    public void informLoadBalancer(){
-
-        // Creating client-server info message
-        Message message = Message.newBuilder()
-                .setAssignment(Assignment.newBuilder()
-                        .setClientInfo(ClientInfo.newBuilder()
-                                .setAddress(((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().getHostAddress())
-                                .setPort(((InetSocketAddress) socket.getRemoteSocketAddress()).getPort())
-                                .setState(ClientInfo.State.CONNECTED)
-                                .build())
-                        .build())
-                .build();
-
-        System.out.println("Sending message to other Load Balancers!");
-
-        SpreadConnector.cast(message.toByteArray(), Set.of("System"));
-
-    }
-
     @Override
     public void run() {
 
