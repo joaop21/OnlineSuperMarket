@@ -9,7 +9,7 @@ public class QueryCustomer {
     private static final String DB_URL = DatabaseManager.DB_URL;
 
     // CUSTOMER LOGIC
-    public Customer getCustomer(int id){
+    public static Customer getCustomer(int id){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -74,7 +74,7 @@ public class QueryCustomer {
     }
 
     // returns the new user ID
-    public int newCustomer(String username, String password){
+    public static int newCustomer(String username, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -103,7 +103,7 @@ public class QueryCustomer {
         return -1;
     }
 
-    public boolean updateCustomerUsername(int id, String username){
+    public static boolean updateCustomerUsername(int id, String username){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -127,7 +127,7 @@ public class QueryCustomer {
         return false;
     }
 
-    public boolean updateCustomerPassword(int id, String password){
+    public static boolean updateCustomerPassword(int id, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){

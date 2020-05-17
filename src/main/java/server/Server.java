@@ -1,7 +1,5 @@
 package server;
 
-import application.Item;
-import database.QueryItem;
 import middleware.gateway.Gateway;
 import middleware.server.ServerMessageListener;
 import middleware.socket.SocketInfo;
@@ -10,7 +8,6 @@ import spread.SpreadException;
 import database.DatabaseManager;
 
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.Set;
 
 public class Server {
@@ -20,7 +17,7 @@ public class Server {
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
 
-        DatabaseManager.createDatabase(DatabaseManager.DB_URL);
+        DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + port + "/onlinesupermarket");
 
         // Setting socket info
         SocketInfo serverInfo = new SocketInfo("localhost", port);
@@ -35,11 +32,14 @@ public class Server {
         // Initializing connector
         SpreadConnector.initialize();
 
-        new Thread(Orderer.initialize(serverMessageListener)).start();
+        // Initializing RequestManager and run it
+        new Thread(RequestManager.initialize(serverMessageListener)).start();
+        // Initializing ReplicationManager and run it
+        new Thread(ReplicationManager.initialize(serverMessageListener)).start();
 
-        new Gateway(port, OnlineSuperMarketSkeleton.class);
+        // Initializing Gateway that delivers connection to a ClientManager Thread
+        new Gateway(port, ClientManager.class);
 
-        // Sleeping
-        while(true) Thread.sleep(10000);
+        new Thread(new OnlineSuperMarketSkeleton()).run();
     }
 }

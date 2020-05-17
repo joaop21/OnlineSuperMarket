@@ -2,43 +2,24 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
-import middleware.gateway.Skeleton;
-import middleware.proto.MessageOuterClass.*;
-import middleware.proto.AssignmentOuterClass.*;
-import middleware.proto.RequestOuterClass;
-import middleware.server.Pair;
-import middleware.socket.SocketIO;
+import database.QueryCustomer;
+import database.QueryItem;
+import middleware.proto.MessageOuterClass.Message;
+import middleware.proto.ReplicationOuterClass;
 import middleware.spread.SpreadConnector;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMarket {
-    private final SocketIO socketIO;
-
-    public OnlineSuperMarketSkeleton(Socket sock) {
-        super(sock);
-        this.socketIO = new SocketIO(sock);
-    }
-
+public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     @Override
     public List<Item> getItems() {
-        List<Item> res =new ArrayList<>();
-        res.add(new Item(1, "item1", "descr: item1", (float) 1.00, 10));
-        res.add(new Item(2, "item2", "descr: item2", (float) 2.00, 20));
-        res.add(new Item(3, "item3", "descr: item3", (float) 3.00, 30));
-        res.add(new Item(4, "item4", "descr: item4", (float) 4.00, 40));
-        res.add(new Item(5, "item5", "descr: item5", (float) 5.00, 50));
-        return res;
+        return QueryItem.getItems();
     }
 
     @Override
     public Item getItem(int itemId) {
-        return null;
+        return QueryItem.getItem(itemId);
     }
 
     @Override
@@ -94,74 +75,45 @@ public class OnlineSuperMarketSkeleton extends Skeleton implements OnlineSuperMa
     @Override
     public void run() {
 
-        informLoadBalancer();
+        Message msg;
 
-       while(true){
-            try {
-                Message msg = Message.parseFrom(this.socketIO.read());
-                switch (msg.getRequest().getTypeCase()){
+        while((msg = RequestManager.getNextRequest()) != null){
 
-                    case GETITEMS:
-                        List<Item> res1 = getItems();
-                        // send response
-                        break;
+            switch(msg.getRequest().getTypeCase()){
 
-                    case GETITEM:
-                        RequestOuterClass.GetItem getItem = msg.getRequest().getGetItem();
-                        Item res2 = null;
-                        switch (getItem.getTypeCase()){
+                case ADDITEMTOCART:
+                    Message msg1 = Message.newBuilder()
+                            .setReplication(ReplicationOuterClass.Replication.newBuilder()
+                                    .setUpdates(ReplicationOuterClass.DatabaseUpdates.newBuilder()
+                                            .setStatus(true)
+                                            .setSender(msg.getRequest().getSender())
+                                            .setRequestUuid(msg.getRequest().getUuid())
+                                            .addModifications( ReplicationOuterClass.DatabaseUpdates.Modification.newBuilder()
+                                                    .setTable("Cart_Item")
+                                                    .setId(1)
+                                                    .setField("Itemid")
+                                                    .setValueInt(2)
+                                                    .build())
+                                            .build())
+                                    .build())
+                            .build();
+                    SpreadConnector.cast(msg1.toByteArray(), Set.of("Servers"));
+                    // send to db
+                    // get and send replication message
+                    break;
 
-                            case ITEMID:
-                                res2 = getItem(getItem.getItemId());
-                                break;
+                case REMOVEITEMFROMCART:
+                    // send to db
+                    // get and send replication message
+                    break;
 
-                            case NAME:
-                                res2 = getItem(getItem.getName());
-                                break;
+                case ORDER:
+                    // send to db
+                    // get and send replication message
+                    break;
 
-                        }
-                        // send response
-                        break;
-
-                    case ADDITEMTOCART:
-                        Pair<Integer, Message> message_pair1 = Orderer.waitToProceed(msg);
-                        RequestOuterClass.AddItemToCart addItemToCart = msg.getRequest().getAddItemToCart();
-                        boolean status1 = false;
-                        if(addItemToCart(addItemToCart.getUsername(), addItemToCart.getItemId()))
-                            status1 = true;
-                        // send response
-                        break;
-
-                    case REMOVEITEMFROMCART:
-                        Pair<Integer, Message> message_pair2 = Orderer.waitToProceed(msg);
-                        RequestOuterClass.RemoveItemFromCart removeItemFromCart = msg.getRequest().getRemoveItemFromCart();
-                        removeItemFromCart(removeItemFromCart.getUsername(), removeItemFromCart.getItemId());
-                        // send response
-                        break;
-
-                    case GETCARTITEMS:
-                        List<Item> res3 = getCartItems(msg.getRequest().getGetCartItems().getUsername());
-                        // send response
-                        break;
-
-                    case ORDER:
-                        Pair<Integer, Message> message_pair3 = Orderer.waitToProceed(msg);
-                        boolean status2 = order(msg.getRequest().getOrder().getUsername());
-                        // send response
-                        break;
-
-                    case LOGIN:
-                        RequestOuterClass.Login login = msg.getRequest().getLogin();
-                        boolean status3 = login(login.getUsername(), login.getPassword());
-                        // send response
-                        break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
 
-
     }
-
 }

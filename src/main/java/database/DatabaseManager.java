@@ -10,9 +10,10 @@ import java.sql.SQLException;
 public class DatabaseManager {
 
     // FOR TESTING PURPOSES: USE IN EACH SERVER TH DB DEDICATED TO IT
-    public static final String DB_URL = "jdbc:hsqldb:file:databases/db/onlinesupermarket";
+    public static String DB_URL = "jdbc:hsqldb:file:databases/db/onlinesupermarket";
 
     public static void createDatabase(String url){
+        DB_URL = url;
         try {
             Connection conn = DriverManager.getConnection(url+";ifexists=true", "SA", "");
             conn.close();
