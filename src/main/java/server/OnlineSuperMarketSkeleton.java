@@ -28,29 +28,29 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     }
 
     @Override
-    public boolean addItemToCart(String username, int itemId) {
-        System.out.println(username + " : " + itemId);
+    public boolean addItemToCart(int userId, int itemId) {
+        System.out.println(userId + " : " + itemId);
         return true;
     }
 
     @Override
-    public void removeItemFromCart(String username, int itemId) {
+    public void removeItemFromCart(int userId, int itemId) {
 
     }
 
     @Override
-    public List<Item> getCartItems(String username) {
+    public List<Item> getCartItems(int userId) {
         return null;
     }
 
     @Override
-    public boolean order(String username) {
+    public boolean order(int userId) {
         return false;
     }
 
     @Override
-    public boolean login(String username, String password) {
-        return QueryCustomer.checkPassword(username, password);
+    public int login(String username, String password) {
+        return -1;
     }
 
     @Override
