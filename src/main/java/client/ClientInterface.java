@@ -40,7 +40,9 @@ public class ClientInterface {
             ClientInterface.userID = new ClientStub().login(username, password);
 
             if (ClientInterface.userID >= 0) menuScreen();
-            else { errorScreen("The credentials provided are invalid. Try again."); loginScreen(); }
+            else if (ClientInterface.userID == -2) { errorScreen("Unknown username. Try again."); loginScreen(); }
+            else if (ClientInterface.userID == -3) { errorScreen("Incorrect password. Try again."); loginScreen(); }
+            else { errorScreen("Oops, DB Error. Try again."); loginScreen(); }
 
         } catch (IOException e) {
 

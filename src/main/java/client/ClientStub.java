@@ -3,9 +3,11 @@ package client;
 import application.Item;
 import application.OnlineSuperMarket;
 import middleware.proto.MessageOuterClass.*;
+import middleware.proto.RequestOuterClass;
 import middleware.proto.RequestOuterClass.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientStub implements OnlineSuperMarket {
 
@@ -21,9 +23,10 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
-        // Do something with message received
+        return message.getRequest().getGetItems().getItemsList().stream()
+                .map(item -> new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getStock()))
+                .collect(Collectors.toList());
 
-        return null;
     }
 
     @Override
@@ -39,10 +42,9 @@ public class ClientStub implements OnlineSuperMarket {
                 .build();
 
         message = ClientDriver.request(message);
+        RequestOuterClass.Item item = message.getRequest().getGetItem().getItem();
 
-        // Do something with message received
-
-        return null;
+        return new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getStock());
 
     }
 
@@ -61,9 +63,7 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
-        // Do something with message received
-
-        return false;
+        return message.getRequest().getAddItemToCart().getAnswer();
     }
 
     @Override
@@ -81,9 +81,7 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
-        // Do something with message received
-
-        return false;
+        return message.getRequest().getRemoveItemFromCart().getAnswer();
     }
 
     @Override
@@ -100,9 +98,9 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
-        // Do something with message received
-
-        return null;
+        return message.getRequest().getGetCartItems().getItemsList().stream()
+                .map(item -> new Item(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getStock()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -119,10 +117,7 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
-        // Do something with message received
-
-
-        return false;
+        return message.getRequest().getOrder().getAnswer();
     }
 
     @Override
@@ -139,8 +134,6 @@ public class ClientStub implements OnlineSuperMarket {
                 .build();
 
         message = ClientDriver.request(message);
-
-        // Do something with message received
 
         return message.getRequest().getLogin().getId();
     }

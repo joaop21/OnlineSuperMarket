@@ -9,6 +9,7 @@ import middleware.proto.RequestOuterClass;
 import middleware.socket.SocketIO;
 import middleware.spread.SpreadConnector;
 
+import javax.print.MultiDocPrintService;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;

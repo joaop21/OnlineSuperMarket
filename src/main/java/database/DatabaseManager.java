@@ -123,15 +123,17 @@ public class DatabaseManager {
             ps6.setInt(1, 1);
             ps6.setTimestamp(2, null);
             ps6.setBoolean(3, false);
+            ps6.executeUpdate();
             PreparedStatement ps7 = conn.prepareStatement(cart);
             ps7.setInt(1, 2);
             ps7.setTimestamp(2, null);
             ps7.setBoolean(3, false);
+            ps7.executeUpdate();
             PreparedStatement ps8 = conn.prepareStatement(cart);
             ps8.setInt(1, 3);
             ps8.setTimestamp(2, null);
             ps8.setBoolean(3, false);
-
+            ps8.executeUpdate();
 
             System.out.println("Loaded successfully.");
         }

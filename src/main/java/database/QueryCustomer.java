@@ -17,7 +17,8 @@ public class QueryCustomer {
                 return null;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT username, password FROM Customer WHERE id=" + id);
+                    "SELECT username, password FROM Customer WHERE id=?");
+            pstat.setInt(1, id);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
@@ -48,8 +49,8 @@ public class QueryCustomer {
                 return -1;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT username, password FROM Customer WHERE username=?");
-            pstat.setString(1,username);
+                    "SELECT * FROM Customer WHERE username=?");
+            pstat.setString(1, username);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that username.");

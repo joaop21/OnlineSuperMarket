@@ -20,7 +20,8 @@ public class QueryCart {
                 return null;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT begin, active FROM Customer WHERE customerid=" + userId);
+                    "SELECT begin, active FROM Customer WHERE customerid=?");
+            pstat.setInt(1, userId);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
@@ -50,7 +51,8 @@ public class QueryCart {
                 return false;
             }
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT active FROM Cart WHERE customerid = "+userId);
+                    "SELECT active FROM Cart WHERE customerid=?");
+            ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
