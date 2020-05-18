@@ -11,7 +11,7 @@ public class ClientInterface {
 
     private static final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-    private static String username = null;
+    private static int userID = -1;
 
     public static void start () {
 
@@ -37,7 +37,9 @@ public class ClientInterface {
 
             System.out.println("#####################################################");
 
-            if (new ClientStub().login(username, password)) { ClientInterface.username = username; menuScreen(); }
+            ClientInterface.userID = new ClientStub().login(username, password);
+
+            if (ClientInterface.userID > 0) menuScreen();
             else { errorScreen("The credentials provided are invalid. Try again."); loginScreen(); }
 
         } catch (IOException e) {
@@ -205,7 +207,7 @@ public class ClientInterface {
 
             System.out.println("#####################################################");
 
-            if (new ClientStub().addItemToCart(ClientInterface.username, itemId))
+            if (new ClientStub().addItemToCart(ClientInterface.userID, itemId))
 
                 System.out.println("# Item added to cart!");
 
@@ -242,7 +244,7 @@ public class ClientInterface {
 
             System.out.println("#####################################################");
 
-            new ClientStub().removeItemFromCart(ClientInterface.username, itemId);
+            new ClientStub().removeItemFromCart(ClientInterface.userID, itemId);
 
             menuScreen();
 
@@ -262,7 +264,7 @@ public class ClientInterface {
 
     private static void cartScreen() {
 
-        List<Item> items = new ClientStub().getCartItems(ClientInterface.username);
+        List<Item> items = new ClientStub().getCartItems(ClientInterface.userID);
 
         System.out.println("####################### Cart ########################");
 
@@ -276,7 +278,7 @@ public class ClientInterface {
 
     private static void orderScreen() {
 
-        if (new ClientStub().order(ClientInterface.username))
+        if (new ClientStub().order(ClientInterface.userID))
 
             System.out.println("# All items ordered.");
 

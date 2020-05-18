@@ -43,7 +43,7 @@ public class test1 implements Runnable {
             MessageOuterClass.Message message4 = MessageOuterClass.Message.newBuilder()
                     .setRequest(RequestOuterClass.Request.newBuilder()
                             .setAddItemToCart(RequestOuterClass.AddItemToCart.newBuilder()
-                                    .setUsername("joao")
+                                    .setUserId(1)
                                     .setItemId(2)
                                     .build())
                             .build())

@@ -63,12 +63,12 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
-    public boolean addItemToCart(String username, int itemId) {
+    public boolean addItemToCart(int userId, int itemId) {
 
         Message message = Message.newBuilder()
                 .setRequest(Request.newBuilder()
                         .setAddItemToCart(AddItemToCart.newBuilder()
-                                .setUsername(username)
+                                .setUserId(userId)
                                 .setItemId(itemId)
                                 .build())
                         .build())
@@ -82,12 +82,12 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
-    public void removeItemFromCart(String username, int itemId) {
+    public void removeItemFromCart(int userId, int itemId) {
 
         Message message = Message.newBuilder()
                 .setRequest(Request.newBuilder()
                         .setRemoveItemFromCart(RemoveItemFromCart.newBuilder()
-                                .setUsername(username)
+                                .setUserId(userId)
                                 .setItemId(itemId)
                                 .build())
                         .build())
@@ -100,12 +100,12 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
-    public List<Item> getCartItems(String username) {
+    public List<Item> getCartItems(int userId) {
 
         Message message = Message.newBuilder()
                 .setRequest(Request.newBuilder()
                         .setGetCartItems(GetCartItems.newBuilder()
-                                .setUsername(username)
+                                .setUserId(userId)
                                 .build())
                         .build())
                 .build();
@@ -118,12 +118,12 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
-    public boolean order(String username) {
+    public boolean order(int userId) {
 
         Message message = Message.newBuilder()
                 .setRequest(Request.newBuilder()
                         .setOrder(Order.newBuilder()
-                                .setUsername(username)
+                                .setUserId(userId)
                                 .build())
                         .build())
                 .build();
@@ -137,7 +137,7 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
-    public boolean login(String username, String password) {
+    public int login(String username, String password) {
 
         Message message = Message.newBuilder()
                 .setRequest(Request.newBuilder()
@@ -150,9 +150,11 @@ public class ClientStub implements OnlineSuperMarket {
 
         message = ClientDriver.request(message);
 
+
+
         // Do something with message received
 
-        return false;
+        return -1;
     }
 }
 

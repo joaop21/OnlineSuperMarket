@@ -68,7 +68,7 @@ public class ClientManager extends Skeleton {
                         break;
 
                     case GETCARTITEMS:
-                        List<Item> res3 = osm.getCartItems(msg.getRequest().getGetCartItems().getUsername());
+                        List<Item> res3 = osm.getCartItems(msg.getRequest().getGetCartItems().getUserId());
                         // send response
                         break;
 
@@ -134,6 +134,16 @@ public class ClientManager extends Skeleton {
                 .setRequest(RequestOuterClass.Request.newBuilder()
                         .setResponse(RequestOuterClass.Response.newBuilder()
                                 .setStatus(status)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public Message createResponse(int status){
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setResponse(RequestOuterClass.Response.newBuilder()
+                                .setStatus(status > 0)
                                 .build())
                         .build())
                 .build();
