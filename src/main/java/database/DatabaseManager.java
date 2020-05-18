@@ -88,7 +88,9 @@ public class DatabaseManager {
         try {
             String customer = "INSERT INTO Customer(username, password) VALUES(?,?)";
             String item = "INSERT INTO Item(name, description, price, stock) VALUES(?,?,?,?)";
+            String cart = "INSERT INTO Cart(customerid, begin, active) VALUES(?,?,?)";
 
+            // Populate Customers
             PreparedStatement ps1 = conn.prepareStatement(customer);
             ps1.setString(1, "henrique");
             ps1.setString(2, "henrique");
@@ -102,6 +104,7 @@ public class DatabaseManager {
             ps3.setString(2, "miguel");
             ps3.executeUpdate();
 
+            // Populate items
             PreparedStatement ps4 = conn.prepareStatement(item);
             ps4.setString(1, "Máscara");
             ps4.setString(2, "Máscara contra o COVID-19");
@@ -114,6 +117,21 @@ public class DatabaseManager {
             ps5.setFloat(3, 100);
             ps5.setInt(4, 10);
             ps5.executeUpdate();
+
+            // Populate Customers' Carts
+            PreparedStatement ps6 = conn.prepareStatement(cart);
+            ps6.setInt(1, 1);
+            ps6.setTimestamp(2, null);
+            ps6.setBoolean(3, false);
+            PreparedStatement ps7 = conn.prepareStatement(cart);
+            ps7.setInt(1, 2);
+            ps7.setTimestamp(2, null);
+            ps7.setBoolean(3, false);
+            PreparedStatement ps8 = conn.prepareStatement(cart);
+            ps8.setInt(1, 3);
+            ps8.setTimestamp(2, null);
+            ps8.setBoolean(3, false);
+
 
             System.out.println("Loaded successfully.");
         }

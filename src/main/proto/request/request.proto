@@ -47,21 +47,21 @@ message GetItem{
 }
 
 message AddItemToCart{
-    string username = 1;
+    int32 userId = 1;
     int32 itemId = 2;
 }
 
 message RemoveItemFromCart {
-    string username = 1;
+    int32 userId = 1;
     int32 itemId = 2;
 }
 
 message GetCartItems {
-    string username = 1;
+    int32 userId = 1;
 }
 
 message Order {
-    string username = 1;
+    int32 userId = 1;
 }
 
 message Login {
