@@ -221,7 +221,7 @@ public class ClientInterface {
 
             exceptionScreen("# Oops, IO Error. Try again!");
 
-            searchIdScreen();
+            addScreen();
 
         } catch (NumberFormatException e) {
 
@@ -250,7 +250,7 @@ public class ClientInterface {
 
             exceptionScreen("# Oops, IO Error. Try again!");
 
-            searchIdScreen();
+            remScreen();
 
         } catch (NumberFormatException e) {
 
