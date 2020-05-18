@@ -9,7 +9,6 @@ import middleware.proto.RequestOuterClass;
 import middleware.socket.SocketIO;
 import middleware.spread.SpreadConnector;
 
-import javax.print.MultiDocPrintService;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -51,7 +50,7 @@ public class ClientManager extends Skeleton {
                         break;
                     case REMOVEITEMFROMCART:
                         socketIO.write(
-                                getRemItemFromCart(msg, osm.addItemToCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
+                                getRemItemFromCart(msg, osm.removeItemFromCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
                                     msg.getRequest().getRemoveItemFromCart().getItemId())).toByteArray());
                         break;
                     case ORDER:

@@ -63,12 +63,13 @@ public class QueryCart {
                     boolean active = rs.getBoolean("active");
                     if (!active) {
                         PreparedStatement ps1 = conn.prepareStatement(
-                                "UPDATE Cart SET begin=NOW(), active=? WHERE customerid=" + userId);
+                                "UPDATE Cart SET begin=NOW(), active=? WHERE customerid=?");
                         ps1.setBoolean(1, true);
+                        ps1.setInt(2, userId);
                         int updated = ps1.executeUpdate();
                     }
                     PreparedStatement pstat = conn.prepareStatement(
-                            "INSERT IGNORE INTO Cart_Item(CartCustomerid, Itemid) VALUES(?,?,?)");
+                            "INSERT IGNORE INTO Cart_Item(CartCustomerid, Itemid) VALUES(?,?)");
                     pstat.setInt(1, userId);
                     pstat.setInt(2, itemId);
                     int inserted = pstat.executeUpdate();

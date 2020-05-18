@@ -122,7 +122,8 @@ public class ClientInterface {
 
         System.out.println("###################### Catalog ######################");
 
-        for (Item it: items) System.out.println(it.toPrettyString());
+        if (items.isEmpty()) System.out.println("# Catalog is empty.");
+        else for (Item it: items) System.out.println(it.toPrettyString());
 
         System.out.println("#####################################################");
 
@@ -218,7 +219,16 @@ public class ClientInterface {
 
             System.out.println("#####################################################");
 
-            new ClientStub().removeItemFromCart(ClientInterface.userID, itemId);
+
+            if (new ClientStub().removeItemFromCart(ClientInterface.userID, itemId))
+
+                System.out.println("# Item removed from cart!");
+
+            else
+
+                System.out.println("# Item not removed from cart!");
+
+            System.out.println("#####################################################");
 
             menuScreen();
 
@@ -242,7 +252,8 @@ public class ClientInterface {
 
         System.out.println("####################### Cart ########################");
 
-        for (Item it: items) System.out.println(it.toPrettyString());
+        if (items.isEmpty()) System.out.println("# Cart is empty.");
+        else for (Item it: items) System.out.println(it.toPrettyString());
 
         System.out.println("#####################################################");
 
@@ -261,6 +272,8 @@ public class ClientInterface {
             System.out.println("# Couldn't order every cart item.");
 
         System.out.println("#####################################################");
+
+        menuScreen();
 
     }
 
