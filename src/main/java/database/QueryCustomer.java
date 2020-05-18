@@ -17,7 +17,8 @@ public class QueryCustomer {
                 return null;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT username, password FROM Customer WHERE id=" + id);
+                    "SELECT username, password FROM Customer WHERE id=?");
+            pstat.setInt(1, id);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
@@ -40,7 +41,7 @@ public class QueryCustomer {
     }
 
     // returns user ID if the username and password match or -1 if not
-    public int checkPassword(String username, String password){
+    public static int checkPassword(String username, String password){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null){
@@ -48,12 +49,12 @@ public class QueryCustomer {
                 return -1;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT username, password FROM Customer WHERE username=?");
-            pstat.setString(1,username);
+                    "SELECT * FROM Customer WHERE username=?");
+            pstat.setString(1, username);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that username.");
-                return -1;
+                return -2;
             }
             else {
                 do {
@@ -61,7 +62,7 @@ public class QueryCustomer {
                     if (customerPassword.equals(password))
                         return rs.getInt("id");
                     else
-                        return -1;
+                        return -3;
                 }
                 while (rs.next());
             }
@@ -70,7 +71,7 @@ public class QueryCustomer {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
         }
-        return -1;
+        return -4;
     }
 
     // returns the new user ID

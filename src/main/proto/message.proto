@@ -12,7 +12,7 @@ message Message {
 
         Assignment assignment = 1;
         Request request = 2;
-        Replication replication = 3;
+        Replication replication = 4;
 
     }
 

@@ -39,8 +39,10 @@ public class ClientInterface {
 
             ClientInterface.userID = new ClientStub().login(username, password);
 
-            if (ClientInterface.userID > 0) menuScreen();
-            else { errorScreen("The credentials provided are invalid. Try again."); loginScreen(); }
+            if (ClientInterface.userID >= 0) menuScreen();
+            else if (ClientInterface.userID == -2) { errorScreen("Unknown username. Try again."); loginScreen(); }
+            else if (ClientInterface.userID == -3) { errorScreen("Incorrect password. Try again."); loginScreen(); }
+            else { errorScreen("Oops, DB Error. Try again."); loginScreen(); }
 
         } catch (IOException e) {
 
@@ -59,12 +61,11 @@ public class ClientInterface {
             System.out.println("####################### Menu ########################");
 
             System.out.println("# 1 - Show Catalog");;
-            System.out.println("# 2 - Search Item (by name)");;
-            System.out.println("# 3 - Search Item (by id)");;
-            System.out.println("# 4 - Add Item to Cart");;
-            System.out.println("# 5 - Remove Item from Cart");;
-            System.out.println("# 6 - Show Cart");;
-            System.out.println("# 7 - Complete order");;
+            System.out.println("# 2 - Search Item (by id)");;
+            System.out.println("# 3 - Add Item to Cart");;
+            System.out.println("# 4 - Remove Item from Cart");;
+            System.out.println("# 5 - Show Cart");;
+            System.out.println("# 6 - Complete order");;
 
             System.out.println("#####################################################");
 
@@ -79,21 +80,18 @@ public class ClientInterface {
                     catalogScreen();
                     return;
                 case 2:
-                    searchNameScreen();
+                    searchScreen();
                     return;
                 case 3:
-                    searchIdScreen();
-                    return;
-                case 4:
                     addScreen();
                     return;
-                case 5:
+                case 4:
                     remScreen();
                     return;
-                case 6:
+                case 5:
                     cartScreen();
                     return;
-                case 7:
+                case 6:
                     orderScreen();
                     return;
                 default:
@@ -124,7 +122,8 @@ public class ClientInterface {
 
         System.out.println("###################### Catalog ######################");
 
-        for (Item it: items) System.out.println(it.toPrettyString());
+        if (items.isEmpty()) System.out.println("# Catalog is empty.");
+        else for (Item it: items) System.out.println(it.toPrettyString());
 
         System.out.println("#####################################################");
 
@@ -132,31 +131,7 @@ public class ClientInterface {
 
     }
 
-    private static void searchNameScreen() {
-
-        try {
-
-            System.out.println("###################### Search #######################");
-
-            System.out.print("Name: ");
-            String itemName = in.readLine();
-
-            System.out.println("#####################################################");
-
-            itemScreen(new ClientStub().getItem(itemName));
-
-            menuScreen();
-
-        } catch (IOException e) {
-
-            exceptionScreen("# Oops, IO Error. Try again!");
-
-            searchNameScreen();
-
-        }
-    }
-
-    private static void searchIdScreen() {
+    private static void searchScreen() {
 
         try {
 
@@ -177,7 +152,7 @@ public class ClientInterface {
 
             exceptionScreen("# Oops, IO Error. Try again!");
 
-            searchIdScreen();
+            searchScreen();
 
         } catch (NumberFormatException e) {
 
@@ -244,7 +219,16 @@ public class ClientInterface {
 
             System.out.println("#####################################################");
 
-            new ClientStub().removeItemFromCart(ClientInterface.userID, itemId);
+
+            if (new ClientStub().removeItemFromCart(ClientInterface.userID, itemId))
+
+                System.out.println("# Item removed from cart!");
+
+            else
+
+                System.out.println("# Item not removed from cart!");
+
+            System.out.println("#####################################################");
 
             menuScreen();
 
@@ -268,7 +252,8 @@ public class ClientInterface {
 
         System.out.println("####################### Cart ########################");
 
-        for (Item it: items) System.out.println(it.toPrettyString());
+        if (items.isEmpty()) System.out.println("# Cart is empty.");
+        else for (Item it: items) System.out.println(it.toPrettyString());
 
         System.out.println("#####################################################");
 
@@ -287,6 +272,8 @@ public class ClientInterface {
             System.out.println("# Couldn't order every cart item.");
 
         System.out.println("#####################################################");
+
+        menuScreen();
 
     }
 

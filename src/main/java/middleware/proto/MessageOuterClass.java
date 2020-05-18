@@ -49,17 +49,17 @@ public final class MessageOuterClass {
     middleware.proto.RequestOuterClass.RequestOrBuilder getRequestOrBuilder();
 
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      * @return Whether the replication field is set.
      */
     boolean hasReplication();
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      * @return The replication.
      */
     middleware.proto.ReplicationOuterClass.Replication getReplication();
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      */
     middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder();
 
@@ -138,9 +138,9 @@ public final class MessageOuterClass {
               typeCase_ = 2;
               break;
             }
-            case 26: {
+            case 34: {
               middleware.proto.ReplicationOuterClass.Replication.Builder subBuilder = null;
-              if (typeCase_ == 3) {
+              if (typeCase_ == 4) {
                 subBuilder = ((middleware.proto.ReplicationOuterClass.Replication) type_).toBuilder();
               }
               type_ =
@@ -149,7 +149,7 @@ public final class MessageOuterClass {
                 subBuilder.mergeFrom((middleware.proto.ReplicationOuterClass.Replication) type_);
                 type_ = subBuilder.buildPartial();
               }
-              typeCase_ = 3;
+              typeCase_ = 4;
               break;
             }
             default: {
@@ -191,7 +191,7 @@ public final class MessageOuterClass {
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
       ASSIGNMENT(1),
       REQUEST(2),
-      REPLICATION(3),
+      REPLICATION(4),
       TYPE_NOT_SET(0);
       private final int value;
       private TypeCase(int value) {
@@ -211,7 +211,7 @@ public final class MessageOuterClass {
         switch (value) {
           case 1: return ASSIGNMENT;
           case 2: return REQUEST;
-          case 3: return REPLICATION;
+          case 4: return REPLICATION;
           case 0: return TYPE_NOT_SET;
           default: return null;
         }
@@ -283,29 +283,29 @@ public final class MessageOuterClass {
       return middleware.proto.RequestOuterClass.Request.getDefaultInstance();
     }
 
-    public static final int REPLICATION_FIELD_NUMBER = 3;
+    public static final int REPLICATION_FIELD_NUMBER = 4;
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      * @return Whether the replication field is set.
      */
     public boolean hasReplication() {
-      return typeCase_ == 3;
+      return typeCase_ == 4;
     }
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      * @return The replication.
      */
     public middleware.proto.ReplicationOuterClass.Replication getReplication() {
-      if (typeCase_ == 3) {
+      if (typeCase_ == 4) {
          return (middleware.proto.ReplicationOuterClass.Replication) type_;
       }
       return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.Replication replication = 3;</code>
+     * <code>.middleware.proto.Replication replication = 4;</code>
      */
     public middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder() {
-      if (typeCase_ == 3) {
+      if (typeCase_ == 4) {
          return (middleware.proto.ReplicationOuterClass.Replication) type_;
       }
       return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
@@ -331,8 +331,8 @@ public final class MessageOuterClass {
       if (typeCase_ == 2) {
         output.writeMessage(2, (middleware.proto.RequestOuterClass.Request) type_);
       }
-      if (typeCase_ == 3) {
-        output.writeMessage(3, (middleware.proto.ReplicationOuterClass.Replication) type_);
+      if (typeCase_ == 4) {
+        output.writeMessage(4, (middleware.proto.ReplicationOuterClass.Replication) type_);
       }
       unknownFields.writeTo(output);
     }
@@ -351,9 +351,9 @@ public final class MessageOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, (middleware.proto.RequestOuterClass.Request) type_);
       }
-      if (typeCase_ == 3) {
+      if (typeCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (middleware.proto.ReplicationOuterClass.Replication) type_);
+          .computeMessageSize(4, (middleware.proto.ReplicationOuterClass.Replication) type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -380,7 +380,7 @@ public final class MessageOuterClass {
           if (!getRequest()
               .equals(other.getRequest())) return false;
           break;
-        case 3:
+        case 4:
           if (!getReplication()
               .equals(other.getReplication())) return false;
           break;
@@ -407,7 +407,7 @@ public final class MessageOuterClass {
           hash = (37 * hash) + REQUEST_FIELD_NUMBER;
           hash = (53 * hash) + getRequest().hashCode();
           break;
-        case 3:
+        case 4:
           hash = (37 * hash) + REPLICATION_FIELD_NUMBER;
           hash = (53 * hash) + getReplication().hashCode();
           break;
@@ -589,7 +589,7 @@ public final class MessageOuterClass {
             result.type_ = requestBuilder_.build();
           }
         }
-        if (typeCase_ == 3) {
+        if (typeCase_ == 4) {
           if (replicationBuilder_ == null) {
             result.type_ = type_;
           } else {
@@ -985,31 +985,31 @@ public final class MessageOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder> replicationBuilder_;
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        * @return Whether the replication field is set.
        */
       public boolean hasReplication() {
-        return typeCase_ == 3;
+        return typeCase_ == 4;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        * @return The replication.
        */
       public middleware.proto.ReplicationOuterClass.Replication getReplication() {
         if (replicationBuilder_ == null) {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             return (middleware.proto.ReplicationOuterClass.Replication) type_;
           }
           return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
         } else {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             return replicationBuilder_.getMessage();
           }
           return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public Builder setReplication(middleware.proto.ReplicationOuterClass.Replication value) {
         if (replicationBuilder_ == null) {
@@ -1021,11 +1021,11 @@ public final class MessageOuterClass {
         } else {
           replicationBuilder_.setMessage(value);
         }
-        typeCase_ = 3;
+        typeCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public Builder setReplication(
           middleware.proto.ReplicationOuterClass.Replication.Builder builderForValue) {
@@ -1035,15 +1035,15 @@ public final class MessageOuterClass {
         } else {
           replicationBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 3;
+        typeCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public Builder mergeReplication(middleware.proto.ReplicationOuterClass.Replication value) {
         if (replicationBuilder_ == null) {
-          if (typeCase_ == 3 &&
+          if (typeCase_ == 4 &&
               type_ != middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance()) {
             type_ = middleware.proto.ReplicationOuterClass.Replication.newBuilder((middleware.proto.ReplicationOuterClass.Replication) type_)
                 .mergeFrom(value).buildPartial();
@@ -1052,26 +1052,26 @@ public final class MessageOuterClass {
           }
           onChanged();
         } else {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             replicationBuilder_.mergeFrom(value);
           }
           replicationBuilder_.setMessage(value);
         }
-        typeCase_ = 3;
+        typeCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public Builder clearReplication() {
         if (replicationBuilder_ == null) {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             typeCase_ = 0;
             type_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             typeCase_ = 0;
             type_ = null;
           }
@@ -1080,32 +1080,32 @@ public final class MessageOuterClass {
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public middleware.proto.ReplicationOuterClass.Replication.Builder getReplicationBuilder() {
         return getReplicationFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       public middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder() {
-        if ((typeCase_ == 3) && (replicationBuilder_ != null)) {
+        if ((typeCase_ == 4) && (replicationBuilder_ != null)) {
           return replicationBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 3) {
+          if (typeCase_ == 4) {
             return (middleware.proto.ReplicationOuterClass.Replication) type_;
           }
           return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Replication replication = 3;</code>
+       * <code>.middleware.proto.Replication replication = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder> 
           getReplicationFieldBuilder() {
         if (replicationBuilder_ == null) {
-          if (!(typeCase_ == 3)) {
+          if (!(typeCase_ == 4)) {
             type_ = middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
           }
           replicationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -1115,7 +1115,7 @@ public final class MessageOuterClass {
                   isClean());
           type_ = null;
         }
-        typeCase_ = 3;
+        typeCase_ = 4;
         onChanged();;
         return replicationBuilder_;
       }
@@ -1192,7 +1192,7 @@ public final class MessageOuterClass {
       "\007Message\0222\n\nassignment\030\001 \001(\0132\034.middlewar" +
       "e.proto.AssignmentH\000\022,\n\007request\030\002 \001(\0132\031." +
       "middleware.proto.RequestH\000\0224\n\013replicatio" +
-      "n\030\003 \001(\0132\035.middleware.proto.ReplicationH\000" +
+      "n\030\004 \001(\0132\035.middleware.proto.ReplicationH\000" +
       "B\006\n\004typeb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor

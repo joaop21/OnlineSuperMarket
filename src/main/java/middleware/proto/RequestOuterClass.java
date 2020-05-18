@@ -19,124 +19,120 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.Request.Type type = 1;</code>
+     * @return The enum numeric value on the wire for type.
+     */
+    int getTypeValue();
+    /**
+     * <code>.middleware.proto.Request.Type type = 1;</code>
+     * @return The type.
+     */
+    middleware.proto.RequestOuterClass.Request.Type getType();
+
+    /**
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      * @return Whether the getItems field is set.
      */
     boolean hasGetItems();
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      * @return The getItems.
      */
     middleware.proto.RequestOuterClass.GetItems getGetItems();
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      */
     middleware.proto.RequestOuterClass.GetItemsOrBuilder getGetItemsOrBuilder();
 
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      * @return Whether the getItem field is set.
      */
     boolean hasGetItem();
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      * @return The getItem.
      */
     middleware.proto.RequestOuterClass.GetItem getGetItem();
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      */
     middleware.proto.RequestOuterClass.GetItemOrBuilder getGetItemOrBuilder();
 
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      * @return Whether the addItemToCart field is set.
      */
     boolean hasAddItemToCart();
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      * @return The addItemToCart.
      */
     middleware.proto.RequestOuterClass.AddItemToCart getAddItemToCart();
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      */
     middleware.proto.RequestOuterClass.AddItemToCartOrBuilder getAddItemToCartOrBuilder();
 
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      * @return Whether the removeItemFromCart field is set.
      */
     boolean hasRemoveItemFromCart();
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      * @return The removeItemFromCart.
      */
     middleware.proto.RequestOuterClass.RemoveItemFromCart getRemoveItemFromCart();
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      */
     middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder getRemoveItemFromCartOrBuilder();
 
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      * @return Whether the getCartItems field is set.
      */
     boolean hasGetCartItems();
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      * @return The getCartItems.
      */
     middleware.proto.RequestOuterClass.GetCartItems getGetCartItems();
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      */
     middleware.proto.RequestOuterClass.GetCartItemsOrBuilder getGetCartItemsOrBuilder();
 
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      * @return Whether the order field is set.
      */
     boolean hasOrder();
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      * @return The order.
      */
     middleware.proto.RequestOuterClass.Order getOrder();
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      */
     middleware.proto.RequestOuterClass.OrderOrBuilder getOrderOrBuilder();
 
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      * @return Whether the login field is set.
      */
     boolean hasLogin();
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      * @return The login.
      */
     middleware.proto.RequestOuterClass.Login getLogin();
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      */
     middleware.proto.RequestOuterClass.LoginOrBuilder getLoginOrBuilder();
-
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     * @return Whether the response field is set.
-     */
-    boolean hasResponse();
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     * @return The response.
-     */
-    middleware.proto.RequestOuterClass.Response getResponse();
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     */
-    middleware.proto.RequestOuterClass.ResponseOrBuilder getResponseOrBuilder();
 
     /**
      * <code>string uuid = 9;</code>
@@ -162,7 +158,7 @@ public final class RequestOuterClass {
     com.google.protobuf.ByteString
         getSenderBytes();
 
-    public middleware.proto.RequestOuterClass.Request.TypeCase getTypeCase();
+    public middleware.proto.RequestOuterClass.Request.OperationCase getOperationCase();
   }
   /**
    * Protobuf type {@code middleware.proto.Request}
@@ -177,6 +173,7 @@ public final class RequestOuterClass {
       super(builder);
     }
     private Request() {
+      type_ = 0;
       uuid_ = "";
       sender_ = "";
     }
@@ -211,116 +208,108 @@ public final class RequestOuterClass {
             case 0:
               done = true;
               break;
-            case 10: {
-              middleware.proto.RequestOuterClass.GetItems.Builder subBuilder = null;
-              if (typeCase_ == 1) {
-                subBuilder = ((middleware.proto.RequestOuterClass.GetItems) type_).toBuilder();
-              }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.GetItems.parser(), extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetItems) type_);
-                type_ = subBuilder.buildPartial();
-              }
-              typeCase_ = 1;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
               break;
             }
             case 18: {
-              middleware.proto.RequestOuterClass.GetItem.Builder subBuilder = null;
-              if (typeCase_ == 2) {
-                subBuilder = ((middleware.proto.RequestOuterClass.GetItem) type_).toBuilder();
+              middleware.proto.RequestOuterClass.GetItems.Builder subBuilder = null;
+              if (operationCase_ == 2) {
+                subBuilder = ((middleware.proto.RequestOuterClass.GetItems) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.GetItem.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.GetItems.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetItem) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetItems) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 2;
+              operationCase_ = 2;
               break;
             }
             case 26: {
-              middleware.proto.RequestOuterClass.AddItemToCart.Builder subBuilder = null;
-              if (typeCase_ == 3) {
-                subBuilder = ((middleware.proto.RequestOuterClass.AddItemToCart) type_).toBuilder();
+              middleware.proto.RequestOuterClass.GetItem.Builder subBuilder = null;
+              if (operationCase_ == 3) {
+                subBuilder = ((middleware.proto.RequestOuterClass.GetItem) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.AddItemToCart.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.GetItem.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.AddItemToCart) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetItem) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 3;
+              operationCase_ = 3;
               break;
             }
             case 34: {
-              middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder subBuilder = null;
-              if (typeCase_ == 4) {
-                subBuilder = ((middleware.proto.RequestOuterClass.RemoveItemFromCart) type_).toBuilder();
+              middleware.proto.RequestOuterClass.AddItemToCart.Builder subBuilder = null;
+              if (operationCase_ == 4) {
+                subBuilder = ((middleware.proto.RequestOuterClass.AddItemToCart) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.RemoveItemFromCart.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.AddItemToCart.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.RemoveItemFromCart) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.AddItemToCart) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 4;
+              operationCase_ = 4;
               break;
             }
             case 42: {
-              middleware.proto.RequestOuterClass.GetCartItems.Builder subBuilder = null;
-              if (typeCase_ == 5) {
-                subBuilder = ((middleware.proto.RequestOuterClass.GetCartItems) type_).toBuilder();
+              middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder subBuilder = null;
+              if (operationCase_ == 5) {
+                subBuilder = ((middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.GetCartItems.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.RemoveItemFromCart.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetCartItems) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 5;
+              operationCase_ = 5;
               break;
             }
             case 50: {
-              middleware.proto.RequestOuterClass.Order.Builder subBuilder = null;
-              if (typeCase_ == 6) {
-                subBuilder = ((middleware.proto.RequestOuterClass.Order) type_).toBuilder();
+              middleware.proto.RequestOuterClass.GetCartItems.Builder subBuilder = null;
+              if (operationCase_ == 6) {
+                subBuilder = ((middleware.proto.RequestOuterClass.GetCartItems) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.Order.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.GetCartItems.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.Order) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.GetCartItems) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 6;
+              operationCase_ = 6;
               break;
             }
             case 58: {
-              middleware.proto.RequestOuterClass.Login.Builder subBuilder = null;
-              if (typeCase_ == 7) {
-                subBuilder = ((middleware.proto.RequestOuterClass.Login) type_).toBuilder();
+              middleware.proto.RequestOuterClass.Order.Builder subBuilder = null;
+              if (operationCase_ == 7) {
+                subBuilder = ((middleware.proto.RequestOuterClass.Order) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.Login.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.Order.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.Login) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.Order) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 7;
+              operationCase_ = 7;
               break;
             }
             case 66: {
-              middleware.proto.RequestOuterClass.Response.Builder subBuilder = null;
-              if (typeCase_ == 8) {
-                subBuilder = ((middleware.proto.RequestOuterClass.Response) type_).toBuilder();
+              middleware.proto.RequestOuterClass.Login.Builder subBuilder = null;
+              if (operationCase_ == 8) {
+                subBuilder = ((middleware.proto.RequestOuterClass.Login) operation_).toBuilder();
               }
-              type_ =
-                  input.readMessage(middleware.proto.RequestOuterClass.Response.parser(), extensionRegistry);
+              operation_ =
+                  input.readMessage(middleware.proto.RequestOuterClass.Login.parser(), extensionRegistry);
               if (subBuilder != null) {
-                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.Response) type_);
-                type_ = subBuilder.buildPartial();
+                subBuilder.mergeFrom((middleware.proto.RequestOuterClass.Login) operation_);
+                operation_ = subBuilder.buildPartial();
               }
-              typeCase_ = 8;
+              operationCase_ = 8;
               break;
             }
             case 74: {
@@ -367,22 +356,125 @@ public final class RequestOuterClass {
               middleware.proto.RequestOuterClass.Request.class, middleware.proto.RequestOuterClass.Request.Builder.class);
     }
 
-    private int typeCase_ = 0;
-    private java.lang.Object type_;
-    public enum TypeCase
+    /**
+     * Protobuf enum {@code middleware.proto.Request.Type}
+     */
+    public enum Type
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>REQUEST = 0;</code>
+       */
+      REQUEST(0),
+      /**
+       * <code>REPLY = 1;</code>
+       */
+      REPLY(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>REQUEST = 0;</code>
+       */
+      public static final int REQUEST_VALUE = 0;
+      /**
+       * <code>REPLY = 1;</code>
+       */
+      public static final int REPLY_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static Type valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static Type forNumber(int value) {
+        switch (value) {
+          case 0: return REQUEST;
+          case 1: return REPLY;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Type>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Type> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+              public Type findValueByNumber(int number) {
+                return Type.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return middleware.proto.RequestOuterClass.Request.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Type[] VALUES = values();
+
+      public static Type valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Type(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:middleware.proto.Request.Type)
+    }
+
+    private int operationCase_ = 0;
+    private java.lang.Object operation_;
+    public enum OperationCase
         implements com.google.protobuf.Internal.EnumLite,
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-      GETITEMS(1),
-      GETITEM(2),
-      ADDITEMTOCART(3),
-      REMOVEITEMFROMCART(4),
-      GETCARTITEMS(5),
-      ORDER(6),
-      LOGIN(7),
-      RESPONSE(8),
-      TYPE_NOT_SET(0);
+      GETITEMS(2),
+      GETITEM(3),
+      ADDITEMTOCART(4),
+      REMOVEITEMFROMCART(5),
+      GETCARTITEMS(6),
+      ORDER(7),
+      LOGIN(8),
+      OPERATION_NOT_SET(0);
       private final int value;
-      private TypeCase(int value) {
+      private OperationCase(int value) {
         this.value = value;
       }
       /**
@@ -391,21 +483,20 @@ public final class RequestOuterClass {
        * @deprecated Use {@link #forNumber(int)} instead.
        */
       @java.lang.Deprecated
-      public static TypeCase valueOf(int value) {
+      public static OperationCase valueOf(int value) {
         return forNumber(value);
       }
 
-      public static TypeCase forNumber(int value) {
+      public static OperationCase forNumber(int value) {
         switch (value) {
-          case 1: return GETITEMS;
-          case 2: return GETITEM;
-          case 3: return ADDITEMTOCART;
-          case 4: return REMOVEITEMFROMCART;
-          case 5: return GETCARTITEMS;
-          case 6: return ORDER;
-          case 7: return LOGIN;
-          case 8: return RESPONSE;
-          case 0: return TYPE_NOT_SET;
+          case 2: return GETITEMS;
+          case 3: return GETITEM;
+          case 4: return ADDITEMTOCART;
+          case 5: return REMOVEITEMFROMCART;
+          case 6: return GETCARTITEMS;
+          case 7: return ORDER;
+          case 8: return LOGIN;
+          case 0: return OPERATION_NOT_SET;
           default: return null;
         }
       }
@@ -414,234 +505,225 @@ public final class RequestOuterClass {
       }
     };
 
-    public TypeCase
-    getTypeCase() {
-      return TypeCase.forNumber(
-          typeCase_);
+    public OperationCase
+    getOperationCase() {
+      return OperationCase.forNumber(
+          operationCase_);
     }
 
-    public static final int GETITEMS_FIELD_NUMBER = 1;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private int type_;
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.Request.Type type = 1;</code>
+     * @return The enum numeric value on the wire for type.
+     */
+    public int getTypeValue() {
+      return type_;
+    }
+    /**
+     * <code>.middleware.proto.Request.Type type = 1;</code>
+     * @return The type.
+     */
+    public middleware.proto.RequestOuterClass.Request.Type getType() {
+      @SuppressWarnings("deprecation")
+      middleware.proto.RequestOuterClass.Request.Type result = middleware.proto.RequestOuterClass.Request.Type.valueOf(type_);
+      return result == null ? middleware.proto.RequestOuterClass.Request.Type.UNRECOGNIZED : result;
+    }
+
+    public static final int GETITEMS_FIELD_NUMBER = 2;
+    /**
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      * @return Whether the getItems field is set.
      */
     public boolean hasGetItems() {
-      return typeCase_ == 1;
+      return operationCase_ == 2;
     }
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      * @return The getItems.
      */
     public middleware.proto.RequestOuterClass.GetItems getGetItems() {
-      if (typeCase_ == 1) {
-         return (middleware.proto.RequestOuterClass.GetItems) type_;
+      if (operationCase_ == 2) {
+         return (middleware.proto.RequestOuterClass.GetItems) operation_;
       }
       return middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.GetItems getItems = 1;</code>
+     * <code>.middleware.proto.GetItems getItems = 2;</code>
      */
     public middleware.proto.RequestOuterClass.GetItemsOrBuilder getGetItemsOrBuilder() {
-      if (typeCase_ == 1) {
-         return (middleware.proto.RequestOuterClass.GetItems) type_;
+      if (operationCase_ == 2) {
+         return (middleware.proto.RequestOuterClass.GetItems) operation_;
       }
       return middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
     }
 
-    public static final int GETITEM_FIELD_NUMBER = 2;
+    public static final int GETITEM_FIELD_NUMBER = 3;
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      * @return Whether the getItem field is set.
      */
     public boolean hasGetItem() {
-      return typeCase_ == 2;
+      return operationCase_ == 3;
     }
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      * @return The getItem.
      */
     public middleware.proto.RequestOuterClass.GetItem getGetItem() {
-      if (typeCase_ == 2) {
-         return (middleware.proto.RequestOuterClass.GetItem) type_;
+      if (operationCase_ == 3) {
+         return (middleware.proto.RequestOuterClass.GetItem) operation_;
       }
       return middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.GetItem getItem = 2;</code>
+     * <code>.middleware.proto.GetItem getItem = 3;</code>
      */
     public middleware.proto.RequestOuterClass.GetItemOrBuilder getGetItemOrBuilder() {
-      if (typeCase_ == 2) {
-         return (middleware.proto.RequestOuterClass.GetItem) type_;
+      if (operationCase_ == 3) {
+         return (middleware.proto.RequestOuterClass.GetItem) operation_;
       }
       return middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
     }
 
-    public static final int ADDITEMTOCART_FIELD_NUMBER = 3;
+    public static final int ADDITEMTOCART_FIELD_NUMBER = 4;
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      * @return Whether the addItemToCart field is set.
      */
     public boolean hasAddItemToCart() {
-      return typeCase_ == 3;
+      return operationCase_ == 4;
     }
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      * @return The addItemToCart.
      */
     public middleware.proto.RequestOuterClass.AddItemToCart getAddItemToCart() {
-      if (typeCase_ == 3) {
-         return (middleware.proto.RequestOuterClass.AddItemToCart) type_;
+      if (operationCase_ == 4) {
+         return (middleware.proto.RequestOuterClass.AddItemToCart) operation_;
       }
       return middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+     * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
      */
     public middleware.proto.RequestOuterClass.AddItemToCartOrBuilder getAddItemToCartOrBuilder() {
-      if (typeCase_ == 3) {
-         return (middleware.proto.RequestOuterClass.AddItemToCart) type_;
+      if (operationCase_ == 4) {
+         return (middleware.proto.RequestOuterClass.AddItemToCart) operation_;
       }
       return middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
     }
 
-    public static final int REMOVEITEMFROMCART_FIELD_NUMBER = 4;
+    public static final int REMOVEITEMFROMCART_FIELD_NUMBER = 5;
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      * @return Whether the removeItemFromCart field is set.
      */
     public boolean hasRemoveItemFromCart() {
-      return typeCase_ == 4;
+      return operationCase_ == 5;
     }
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      * @return The removeItemFromCart.
      */
     public middleware.proto.RequestOuterClass.RemoveItemFromCart getRemoveItemFromCart() {
-      if (typeCase_ == 4) {
-         return (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_;
+      if (operationCase_ == 5) {
+         return (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_;
       }
       return middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+     * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
      */
     public middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder getRemoveItemFromCartOrBuilder() {
-      if (typeCase_ == 4) {
-         return (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_;
+      if (operationCase_ == 5) {
+         return (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_;
       }
       return middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
     }
 
-    public static final int GETCARTITEMS_FIELD_NUMBER = 5;
+    public static final int GETCARTITEMS_FIELD_NUMBER = 6;
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      * @return Whether the getCartItems field is set.
      */
     public boolean hasGetCartItems() {
-      return typeCase_ == 5;
+      return operationCase_ == 6;
     }
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      * @return The getCartItems.
      */
     public middleware.proto.RequestOuterClass.GetCartItems getGetCartItems() {
-      if (typeCase_ == 5) {
-         return (middleware.proto.RequestOuterClass.GetCartItems) type_;
+      if (operationCase_ == 6) {
+         return (middleware.proto.RequestOuterClass.GetCartItems) operation_;
       }
       return middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+     * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
      */
     public middleware.proto.RequestOuterClass.GetCartItemsOrBuilder getGetCartItemsOrBuilder() {
-      if (typeCase_ == 5) {
-         return (middleware.proto.RequestOuterClass.GetCartItems) type_;
+      if (operationCase_ == 6) {
+         return (middleware.proto.RequestOuterClass.GetCartItems) operation_;
       }
       return middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
     }
 
-    public static final int ORDER_FIELD_NUMBER = 6;
+    public static final int ORDER_FIELD_NUMBER = 7;
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      * @return Whether the order field is set.
      */
     public boolean hasOrder() {
-      return typeCase_ == 6;
+      return operationCase_ == 7;
     }
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      * @return The order.
      */
     public middleware.proto.RequestOuterClass.Order getOrder() {
-      if (typeCase_ == 6) {
-         return (middleware.proto.RequestOuterClass.Order) type_;
+      if (operationCase_ == 7) {
+         return (middleware.proto.RequestOuterClass.Order) operation_;
       }
       return middleware.proto.RequestOuterClass.Order.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.Order order = 6;</code>
+     * <code>.middleware.proto.Order order = 7;</code>
      */
     public middleware.proto.RequestOuterClass.OrderOrBuilder getOrderOrBuilder() {
-      if (typeCase_ == 6) {
-         return (middleware.proto.RequestOuterClass.Order) type_;
+      if (operationCase_ == 7) {
+         return (middleware.proto.RequestOuterClass.Order) operation_;
       }
       return middleware.proto.RequestOuterClass.Order.getDefaultInstance();
     }
 
-    public static final int LOGIN_FIELD_NUMBER = 7;
+    public static final int LOGIN_FIELD_NUMBER = 8;
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      * @return Whether the login field is set.
      */
     public boolean hasLogin() {
-      return typeCase_ == 7;
+      return operationCase_ == 8;
     }
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      * @return The login.
      */
     public middleware.proto.RequestOuterClass.Login getLogin() {
-      if (typeCase_ == 7) {
-         return (middleware.proto.RequestOuterClass.Login) type_;
+      if (operationCase_ == 8) {
+         return (middleware.proto.RequestOuterClass.Login) operation_;
       }
       return middleware.proto.RequestOuterClass.Login.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.Login login = 7;</code>
+     * <code>.middleware.proto.Login login = 8;</code>
      */
     public middleware.proto.RequestOuterClass.LoginOrBuilder getLoginOrBuilder() {
-      if (typeCase_ == 7) {
-         return (middleware.proto.RequestOuterClass.Login) type_;
+      if (operationCase_ == 8) {
+         return (middleware.proto.RequestOuterClass.Login) operation_;
       }
       return middleware.proto.RequestOuterClass.Login.getDefaultInstance();
-    }
-
-    public static final int RESPONSE_FIELD_NUMBER = 8;
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     * @return Whether the response field is set.
-     */
-    public boolean hasResponse() {
-      return typeCase_ == 8;
-    }
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     * @return The response.
-     */
-    public middleware.proto.RequestOuterClass.Response getResponse() {
-      if (typeCase_ == 8) {
-         return (middleware.proto.RequestOuterClass.Response) type_;
-      }
-      return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-    }
-    /**
-     * <code>.middleware.proto.Response response = 8;</code>
-     */
-    public middleware.proto.RequestOuterClass.ResponseOrBuilder getResponseOrBuilder() {
-      if (typeCase_ == 8) {
-         return (middleware.proto.RequestOuterClass.Response) type_;
-      }
-      return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
     }
 
     public static final int UUID_FIELD_NUMBER = 9;
@@ -730,29 +812,29 @@ public final class RequestOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (typeCase_ == 1) {
-        output.writeMessage(1, (middleware.proto.RequestOuterClass.GetItems) type_);
+      if (type_ != middleware.proto.RequestOuterClass.Request.Type.REQUEST.getNumber()) {
+        output.writeEnum(1, type_);
       }
-      if (typeCase_ == 2) {
-        output.writeMessage(2, (middleware.proto.RequestOuterClass.GetItem) type_);
+      if (operationCase_ == 2) {
+        output.writeMessage(2, (middleware.proto.RequestOuterClass.GetItems) operation_);
       }
-      if (typeCase_ == 3) {
-        output.writeMessage(3, (middleware.proto.RequestOuterClass.AddItemToCart) type_);
+      if (operationCase_ == 3) {
+        output.writeMessage(3, (middleware.proto.RequestOuterClass.GetItem) operation_);
       }
-      if (typeCase_ == 4) {
-        output.writeMessage(4, (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_);
+      if (operationCase_ == 4) {
+        output.writeMessage(4, (middleware.proto.RequestOuterClass.AddItemToCart) operation_);
       }
-      if (typeCase_ == 5) {
-        output.writeMessage(5, (middleware.proto.RequestOuterClass.GetCartItems) type_);
+      if (operationCase_ == 5) {
+        output.writeMessage(5, (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_);
       }
-      if (typeCase_ == 6) {
-        output.writeMessage(6, (middleware.proto.RequestOuterClass.Order) type_);
+      if (operationCase_ == 6) {
+        output.writeMessage(6, (middleware.proto.RequestOuterClass.GetCartItems) operation_);
       }
-      if (typeCase_ == 7) {
-        output.writeMessage(7, (middleware.proto.RequestOuterClass.Login) type_);
+      if (operationCase_ == 7) {
+        output.writeMessage(7, (middleware.proto.RequestOuterClass.Order) operation_);
       }
-      if (typeCase_ == 8) {
-        output.writeMessage(8, (middleware.proto.RequestOuterClass.Response) type_);
+      if (operationCase_ == 8) {
+        output.writeMessage(8, (middleware.proto.RequestOuterClass.Login) operation_);
       }
       if (!getUuidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 9, uuid_);
@@ -769,37 +851,37 @@ public final class RequestOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (typeCase_ == 1) {
+      if (type_ != middleware.proto.RequestOuterClass.Request.Type.REQUEST.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, (middleware.proto.RequestOuterClass.GetItems) type_);
+          .computeEnumSize(1, type_);
       }
-      if (typeCase_ == 2) {
+      if (operationCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (middleware.proto.RequestOuterClass.GetItem) type_);
+          .computeMessageSize(2, (middleware.proto.RequestOuterClass.GetItems) operation_);
       }
-      if (typeCase_ == 3) {
+      if (operationCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (middleware.proto.RequestOuterClass.AddItemToCart) type_);
+          .computeMessageSize(3, (middleware.proto.RequestOuterClass.GetItem) operation_);
       }
-      if (typeCase_ == 4) {
+      if (operationCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_);
+          .computeMessageSize(4, (middleware.proto.RequestOuterClass.AddItemToCart) operation_);
       }
-      if (typeCase_ == 5) {
+      if (operationCase_ == 5) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, (middleware.proto.RequestOuterClass.GetCartItems) type_);
+          .computeMessageSize(5, (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_);
       }
-      if (typeCase_ == 6) {
+      if (operationCase_ == 6) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, (middleware.proto.RequestOuterClass.Order) type_);
+          .computeMessageSize(6, (middleware.proto.RequestOuterClass.GetCartItems) operation_);
       }
-      if (typeCase_ == 7) {
+      if (operationCase_ == 7) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, (middleware.proto.RequestOuterClass.Login) type_);
+          .computeMessageSize(7, (middleware.proto.RequestOuterClass.Order) operation_);
       }
-      if (typeCase_ == 8) {
+      if (operationCase_ == 8) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, (middleware.proto.RequestOuterClass.Response) type_);
+          .computeMessageSize(8, (middleware.proto.RequestOuterClass.Login) operation_);
       }
       if (!getUuidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, uuid_);
@@ -822,43 +904,40 @@ public final class RequestOuterClass {
       }
       middleware.proto.RequestOuterClass.Request other = (middleware.proto.RequestOuterClass.Request) obj;
 
+      if (type_ != other.type_) return false;
       if (!getUuid()
           .equals(other.getUuid())) return false;
       if (!getSender()
           .equals(other.getSender())) return false;
-      if (!getTypeCase().equals(other.getTypeCase())) return false;
-      switch (typeCase_) {
-        case 1:
+      if (!getOperationCase().equals(other.getOperationCase())) return false;
+      switch (operationCase_) {
+        case 2:
           if (!getGetItems()
               .equals(other.getGetItems())) return false;
           break;
-        case 2:
+        case 3:
           if (!getGetItem()
               .equals(other.getGetItem())) return false;
           break;
-        case 3:
+        case 4:
           if (!getAddItemToCart()
               .equals(other.getAddItemToCart())) return false;
           break;
-        case 4:
+        case 5:
           if (!getRemoveItemFromCart()
               .equals(other.getRemoveItemFromCart())) return false;
           break;
-        case 5:
+        case 6:
           if (!getGetCartItems()
               .equals(other.getGetCartItems())) return false;
           break;
-        case 6:
+        case 7:
           if (!getOrder()
               .equals(other.getOrder())) return false;
           break;
-        case 7:
+        case 8:
           if (!getLogin()
               .equals(other.getLogin())) return false;
-          break;
-        case 8:
-          if (!getResponse()
-              .equals(other.getResponse())) return false;
           break;
         case 0:
         default:
@@ -874,42 +953,40 @@ public final class RequestOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
       hash = (37 * hash) + UUID_FIELD_NUMBER;
       hash = (53 * hash) + getUuid().hashCode();
       hash = (37 * hash) + SENDER_FIELD_NUMBER;
       hash = (53 * hash) + getSender().hashCode();
-      switch (typeCase_) {
-        case 1:
+      switch (operationCase_) {
+        case 2:
           hash = (37 * hash) + GETITEMS_FIELD_NUMBER;
           hash = (53 * hash) + getGetItems().hashCode();
           break;
-        case 2:
+        case 3:
           hash = (37 * hash) + GETITEM_FIELD_NUMBER;
           hash = (53 * hash) + getGetItem().hashCode();
           break;
-        case 3:
+        case 4:
           hash = (37 * hash) + ADDITEMTOCART_FIELD_NUMBER;
           hash = (53 * hash) + getAddItemToCart().hashCode();
           break;
-        case 4:
+        case 5:
           hash = (37 * hash) + REMOVEITEMFROMCART_FIELD_NUMBER;
           hash = (53 * hash) + getRemoveItemFromCart().hashCode();
           break;
-        case 5:
+        case 6:
           hash = (37 * hash) + GETCARTITEMS_FIELD_NUMBER;
           hash = (53 * hash) + getGetCartItems().hashCode();
           break;
-        case 6:
+        case 7:
           hash = (37 * hash) + ORDER_FIELD_NUMBER;
           hash = (53 * hash) + getOrder().hashCode();
           break;
-        case 7:
+        case 8:
           hash = (37 * hash) + LOGIN_FIELD_NUMBER;
           hash = (53 * hash) + getLogin().hashCode();
-          break;
-        case 8:
-          hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
-          hash = (53 * hash) + getResponse().hashCode();
           break;
         case 0:
         default:
@@ -1047,12 +1124,14 @@ public final class RequestOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        type_ = 0;
+
         uuid_ = "";
 
         sender_ = "";
 
-        typeCase_ = 0;
-        type_ = null;
+        operationCase_ = 0;
+        operation_ = null;
         return this;
       }
 
@@ -1079,65 +1158,59 @@ public final class RequestOuterClass {
       @java.lang.Override
       public middleware.proto.RequestOuterClass.Request buildPartial() {
         middleware.proto.RequestOuterClass.Request result = new middleware.proto.RequestOuterClass.Request(this);
-        if (typeCase_ == 1) {
+        result.type_ = type_;
+        if (operationCase_ == 2) {
           if (getItemsBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = getItemsBuilder_.build();
+            result.operation_ = getItemsBuilder_.build();
           }
         }
-        if (typeCase_ == 2) {
+        if (operationCase_ == 3) {
           if (getItemBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = getItemBuilder_.build();
+            result.operation_ = getItemBuilder_.build();
           }
         }
-        if (typeCase_ == 3) {
+        if (operationCase_ == 4) {
           if (addItemToCartBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = addItemToCartBuilder_.build();
+            result.operation_ = addItemToCartBuilder_.build();
           }
         }
-        if (typeCase_ == 4) {
+        if (operationCase_ == 5) {
           if (removeItemFromCartBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = removeItemFromCartBuilder_.build();
+            result.operation_ = removeItemFromCartBuilder_.build();
           }
         }
-        if (typeCase_ == 5) {
+        if (operationCase_ == 6) {
           if (getCartItemsBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = getCartItemsBuilder_.build();
+            result.operation_ = getCartItemsBuilder_.build();
           }
         }
-        if (typeCase_ == 6) {
+        if (operationCase_ == 7) {
           if (orderBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = orderBuilder_.build();
+            result.operation_ = orderBuilder_.build();
           }
         }
-        if (typeCase_ == 7) {
+        if (operationCase_ == 8) {
           if (loginBuilder_ == null) {
-            result.type_ = type_;
+            result.operation_ = operation_;
           } else {
-            result.type_ = loginBuilder_.build();
-          }
-        }
-        if (typeCase_ == 8) {
-          if (responseBuilder_ == null) {
-            result.type_ = type_;
-          } else {
-            result.type_ = responseBuilder_.build();
+            result.operation_ = loginBuilder_.build();
           }
         }
         result.uuid_ = uuid_;
         result.sender_ = sender_;
-        result.typeCase_ = typeCase_;
+        result.operationCase_ = operationCase_;
         onBuilt();
         return result;
       }
@@ -1186,6 +1259,9 @@ public final class RequestOuterClass {
 
       public Builder mergeFrom(middleware.proto.RequestOuterClass.Request other) {
         if (other == middleware.proto.RequestOuterClass.Request.getDefaultInstance()) return this;
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
+        }
         if (!other.getUuid().isEmpty()) {
           uuid_ = other.uuid_;
           onChanged();
@@ -1194,7 +1270,7 @@ public final class RequestOuterClass {
           sender_ = other.sender_;
           onChanged();
         }
-        switch (other.getTypeCase()) {
+        switch (other.getOperationCase()) {
           case GETITEMS: {
             mergeGetItems(other.getGetItems());
             break;
@@ -1223,11 +1299,7 @@ public final class RequestOuterClass {
             mergeLogin(other.getLogin());
             break;
           }
-          case RESPONSE: {
-            mergeResponse(other.getResponse());
-            break;
-          }
-          case TYPE_NOT_SET: {
+          case OPERATION_NOT_SET: {
             break;
           }
         }
@@ -1259,156 +1331,208 @@ public final class RequestOuterClass {
         }
         return this;
       }
-      private int typeCase_ = 0;
-      private java.lang.Object type_;
-      public TypeCase
-          getTypeCase() {
-        return TypeCase.forNumber(
-            typeCase_);
+      private int operationCase_ = 0;
+      private java.lang.Object operation_;
+      public OperationCase
+          getOperationCase() {
+        return OperationCase.forNumber(
+            operationCase_);
       }
 
-      public Builder clearType() {
-        typeCase_ = 0;
-        type_ = null;
+      public Builder clearOperation() {
+        operationCase_ = 0;
+        operation_ = null;
         onChanged();
         return this;
       }
 
 
+      private int type_ = 0;
+      /**
+       * <code>.middleware.proto.Request.Type type = 1;</code>
+       * @return The enum numeric value on the wire for type.
+       */
+      public int getTypeValue() {
+        return type_;
+      }
+      /**
+       * <code>.middleware.proto.Request.Type type = 1;</code>
+       * @param value The enum numeric value on the wire for type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTypeValue(int value) {
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Request.Type type = 1;</code>
+       * @return The type.
+       */
+      public middleware.proto.RequestOuterClass.Request.Type getType() {
+        @SuppressWarnings("deprecation")
+        middleware.proto.RequestOuterClass.Request.Type result = middleware.proto.RequestOuterClass.Request.Type.valueOf(type_);
+        return result == null ? middleware.proto.RequestOuterClass.Request.Type.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.middleware.proto.Request.Type type = 1;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
+       */
+      public Builder setType(middleware.proto.RequestOuterClass.Request.Type value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Request.Type type = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearType() {
+        
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetItems, middleware.proto.RequestOuterClass.GetItems.Builder, middleware.proto.RequestOuterClass.GetItemsOrBuilder> getItemsBuilder_;
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        * @return Whether the getItems field is set.
        */
       public boolean hasGetItems() {
-        return typeCase_ == 1;
+        return operationCase_ == 2;
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        * @return The getItems.
        */
       public middleware.proto.RequestOuterClass.GetItems getGetItems() {
         if (getItemsBuilder_ == null) {
-          if (typeCase_ == 1) {
-            return (middleware.proto.RequestOuterClass.GetItems) type_;
+          if (operationCase_ == 2) {
+            return (middleware.proto.RequestOuterClass.GetItems) operation_;
           }
           return middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
         } else {
-          if (typeCase_ == 1) {
+          if (operationCase_ == 2) {
             return getItemsBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public Builder setGetItems(middleware.proto.RequestOuterClass.GetItems value) {
         if (getItemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           getItemsBuilder_.setMessage(value);
         }
-        typeCase_ = 1;
+        operationCase_ = 2;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public Builder setGetItems(
           middleware.proto.RequestOuterClass.GetItems.Builder builderForValue) {
         if (getItemsBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           getItemsBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 1;
+        operationCase_ = 2;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public Builder mergeGetItems(middleware.proto.RequestOuterClass.GetItems value) {
         if (getItemsBuilder_ == null) {
-          if (typeCase_ == 1 &&
-              type_ != middleware.proto.RequestOuterClass.GetItems.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.GetItems.newBuilder((middleware.proto.RequestOuterClass.GetItems) type_)
+          if (operationCase_ == 2 &&
+              operation_ != middleware.proto.RequestOuterClass.GetItems.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.GetItems.newBuilder((middleware.proto.RequestOuterClass.GetItems) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 1) {
+          if (operationCase_ == 2) {
             getItemsBuilder_.mergeFrom(value);
           }
           getItemsBuilder_.setMessage(value);
         }
-        typeCase_ = 1;
+        operationCase_ = 2;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public Builder clearGetItems() {
         if (getItemsBuilder_ == null) {
-          if (typeCase_ == 1) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 2) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 1) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 2) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           getItemsBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public middleware.proto.RequestOuterClass.GetItems.Builder getGetItemsBuilder() {
         return getGetItemsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       public middleware.proto.RequestOuterClass.GetItemsOrBuilder getGetItemsOrBuilder() {
-        if ((typeCase_ == 1) && (getItemsBuilder_ != null)) {
+        if ((operationCase_ == 2) && (getItemsBuilder_ != null)) {
           return getItemsBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 1) {
-            return (middleware.proto.RequestOuterClass.GetItems) type_;
+          if (operationCase_ == 2) {
+            return (middleware.proto.RequestOuterClass.GetItems) operation_;
           }
           return middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetItems getItems = 1;</code>
+       * <code>.middleware.proto.GetItems getItems = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetItems, middleware.proto.RequestOuterClass.GetItems.Builder, middleware.proto.RequestOuterClass.GetItemsOrBuilder> 
           getGetItemsFieldBuilder() {
         if (getItemsBuilder_ == null) {
-          if (!(typeCase_ == 1)) {
-            type_ = middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
+          if (!(operationCase_ == 2)) {
+            operation_ = middleware.proto.RequestOuterClass.GetItems.getDefaultInstance();
           }
           getItemsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.GetItems, middleware.proto.RequestOuterClass.GetItems.Builder, middleware.proto.RequestOuterClass.GetItemsOrBuilder>(
-                  (middleware.proto.RequestOuterClass.GetItems) type_,
+                  (middleware.proto.RequestOuterClass.GetItems) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 1;
+        operationCase_ = 2;
         onChanged();;
         return getItemsBuilder_;
       }
@@ -1416,137 +1540,137 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetItem, middleware.proto.RequestOuterClass.GetItem.Builder, middleware.proto.RequestOuterClass.GetItemOrBuilder> getItemBuilder_;
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        * @return Whether the getItem field is set.
        */
       public boolean hasGetItem() {
-        return typeCase_ == 2;
+        return operationCase_ == 3;
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        * @return The getItem.
        */
       public middleware.proto.RequestOuterClass.GetItem getGetItem() {
         if (getItemBuilder_ == null) {
-          if (typeCase_ == 2) {
-            return (middleware.proto.RequestOuterClass.GetItem) type_;
+          if (operationCase_ == 3) {
+            return (middleware.proto.RequestOuterClass.GetItem) operation_;
           }
           return middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
         } else {
-          if (typeCase_ == 2) {
+          if (operationCase_ == 3) {
             return getItemBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public Builder setGetItem(middleware.proto.RequestOuterClass.GetItem value) {
         if (getItemBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           getItemBuilder_.setMessage(value);
         }
-        typeCase_ = 2;
+        operationCase_ = 3;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public Builder setGetItem(
           middleware.proto.RequestOuterClass.GetItem.Builder builderForValue) {
         if (getItemBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           getItemBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 2;
+        operationCase_ = 3;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public Builder mergeGetItem(middleware.proto.RequestOuterClass.GetItem value) {
         if (getItemBuilder_ == null) {
-          if (typeCase_ == 2 &&
-              type_ != middleware.proto.RequestOuterClass.GetItem.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.GetItem.newBuilder((middleware.proto.RequestOuterClass.GetItem) type_)
+          if (operationCase_ == 3 &&
+              operation_ != middleware.proto.RequestOuterClass.GetItem.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.GetItem.newBuilder((middleware.proto.RequestOuterClass.GetItem) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 2) {
+          if (operationCase_ == 3) {
             getItemBuilder_.mergeFrom(value);
           }
           getItemBuilder_.setMessage(value);
         }
-        typeCase_ = 2;
+        operationCase_ = 3;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public Builder clearGetItem() {
         if (getItemBuilder_ == null) {
-          if (typeCase_ == 2) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 3) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 2) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 3) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           getItemBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public middleware.proto.RequestOuterClass.GetItem.Builder getGetItemBuilder() {
         return getGetItemFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       public middleware.proto.RequestOuterClass.GetItemOrBuilder getGetItemOrBuilder() {
-        if ((typeCase_ == 2) && (getItemBuilder_ != null)) {
+        if ((operationCase_ == 3) && (getItemBuilder_ != null)) {
           return getItemBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 2) {
-            return (middleware.proto.RequestOuterClass.GetItem) type_;
+          if (operationCase_ == 3) {
+            return (middleware.proto.RequestOuterClass.GetItem) operation_;
           }
           return middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetItem getItem = 2;</code>
+       * <code>.middleware.proto.GetItem getItem = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetItem, middleware.proto.RequestOuterClass.GetItem.Builder, middleware.proto.RequestOuterClass.GetItemOrBuilder> 
           getGetItemFieldBuilder() {
         if (getItemBuilder_ == null) {
-          if (!(typeCase_ == 2)) {
-            type_ = middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
+          if (!(operationCase_ == 3)) {
+            operation_ = middleware.proto.RequestOuterClass.GetItem.getDefaultInstance();
           }
           getItemBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.GetItem, middleware.proto.RequestOuterClass.GetItem.Builder, middleware.proto.RequestOuterClass.GetItemOrBuilder>(
-                  (middleware.proto.RequestOuterClass.GetItem) type_,
+                  (middleware.proto.RequestOuterClass.GetItem) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 2;
+        operationCase_ = 3;
         onChanged();;
         return getItemBuilder_;
       }
@@ -1554,137 +1678,137 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.AddItemToCart, middleware.proto.RequestOuterClass.AddItemToCart.Builder, middleware.proto.RequestOuterClass.AddItemToCartOrBuilder> addItemToCartBuilder_;
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        * @return Whether the addItemToCart field is set.
        */
       public boolean hasAddItemToCart() {
-        return typeCase_ == 3;
+        return operationCase_ == 4;
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        * @return The addItemToCart.
        */
       public middleware.proto.RequestOuterClass.AddItemToCart getAddItemToCart() {
         if (addItemToCartBuilder_ == null) {
-          if (typeCase_ == 3) {
-            return (middleware.proto.RequestOuterClass.AddItemToCart) type_;
+          if (operationCase_ == 4) {
+            return (middleware.proto.RequestOuterClass.AddItemToCart) operation_;
           }
           return middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
         } else {
-          if (typeCase_ == 3) {
+          if (operationCase_ == 4) {
             return addItemToCartBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public Builder setAddItemToCart(middleware.proto.RequestOuterClass.AddItemToCart value) {
         if (addItemToCartBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           addItemToCartBuilder_.setMessage(value);
         }
-        typeCase_ = 3;
+        operationCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public Builder setAddItemToCart(
           middleware.proto.RequestOuterClass.AddItemToCart.Builder builderForValue) {
         if (addItemToCartBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           addItemToCartBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 3;
+        operationCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public Builder mergeAddItemToCart(middleware.proto.RequestOuterClass.AddItemToCart value) {
         if (addItemToCartBuilder_ == null) {
-          if (typeCase_ == 3 &&
-              type_ != middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.AddItemToCart.newBuilder((middleware.proto.RequestOuterClass.AddItemToCart) type_)
+          if (operationCase_ == 4 &&
+              operation_ != middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.AddItemToCart.newBuilder((middleware.proto.RequestOuterClass.AddItemToCart) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 3) {
+          if (operationCase_ == 4) {
             addItemToCartBuilder_.mergeFrom(value);
           }
           addItemToCartBuilder_.setMessage(value);
         }
-        typeCase_ = 3;
+        operationCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public Builder clearAddItemToCart() {
         if (addItemToCartBuilder_ == null) {
-          if (typeCase_ == 3) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 4) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 3) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 4) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           addItemToCartBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public middleware.proto.RequestOuterClass.AddItemToCart.Builder getAddItemToCartBuilder() {
         return getAddItemToCartFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       public middleware.proto.RequestOuterClass.AddItemToCartOrBuilder getAddItemToCartOrBuilder() {
-        if ((typeCase_ == 3) && (addItemToCartBuilder_ != null)) {
+        if ((operationCase_ == 4) && (addItemToCartBuilder_ != null)) {
           return addItemToCartBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 3) {
-            return (middleware.proto.RequestOuterClass.AddItemToCart) type_;
+          if (operationCase_ == 4) {
+            return (middleware.proto.RequestOuterClass.AddItemToCart) operation_;
           }
           return middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.AddItemToCart addItemToCart = 3;</code>
+       * <code>.middleware.proto.AddItemToCart addItemToCart = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.AddItemToCart, middleware.proto.RequestOuterClass.AddItemToCart.Builder, middleware.proto.RequestOuterClass.AddItemToCartOrBuilder> 
           getAddItemToCartFieldBuilder() {
         if (addItemToCartBuilder_ == null) {
-          if (!(typeCase_ == 3)) {
-            type_ = middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
+          if (!(operationCase_ == 4)) {
+            operation_ = middleware.proto.RequestOuterClass.AddItemToCart.getDefaultInstance();
           }
           addItemToCartBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.AddItemToCart, middleware.proto.RequestOuterClass.AddItemToCart.Builder, middleware.proto.RequestOuterClass.AddItemToCartOrBuilder>(
-                  (middleware.proto.RequestOuterClass.AddItemToCart) type_,
+                  (middleware.proto.RequestOuterClass.AddItemToCart) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 3;
+        operationCase_ = 4;
         onChanged();;
         return addItemToCartBuilder_;
       }
@@ -1692,137 +1816,137 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.RemoveItemFromCart, middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder, middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder> removeItemFromCartBuilder_;
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        * @return Whether the removeItemFromCart field is set.
        */
       public boolean hasRemoveItemFromCart() {
-        return typeCase_ == 4;
+        return operationCase_ == 5;
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        * @return The removeItemFromCart.
        */
       public middleware.proto.RequestOuterClass.RemoveItemFromCart getRemoveItemFromCart() {
         if (removeItemFromCartBuilder_ == null) {
-          if (typeCase_ == 4) {
-            return (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_;
+          if (operationCase_ == 5) {
+            return (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_;
           }
           return middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
         } else {
-          if (typeCase_ == 4) {
+          if (operationCase_ == 5) {
             return removeItemFromCartBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public Builder setRemoveItemFromCart(middleware.proto.RequestOuterClass.RemoveItemFromCart value) {
         if (removeItemFromCartBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           removeItemFromCartBuilder_.setMessage(value);
         }
-        typeCase_ = 4;
+        operationCase_ = 5;
         return this;
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public Builder setRemoveItemFromCart(
           middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder builderForValue) {
         if (removeItemFromCartBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           removeItemFromCartBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 4;
+        operationCase_ = 5;
         return this;
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public Builder mergeRemoveItemFromCart(middleware.proto.RequestOuterClass.RemoveItemFromCart value) {
         if (removeItemFromCartBuilder_ == null) {
-          if (typeCase_ == 4 &&
-              type_ != middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.RemoveItemFromCart.newBuilder((middleware.proto.RequestOuterClass.RemoveItemFromCart) type_)
+          if (operationCase_ == 5 &&
+              operation_ != middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.RemoveItemFromCart.newBuilder((middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 4) {
+          if (operationCase_ == 5) {
             removeItemFromCartBuilder_.mergeFrom(value);
           }
           removeItemFromCartBuilder_.setMessage(value);
         }
-        typeCase_ = 4;
+        operationCase_ = 5;
         return this;
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public Builder clearRemoveItemFromCart() {
         if (removeItemFromCartBuilder_ == null) {
-          if (typeCase_ == 4) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 5) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 4) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 5) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           removeItemFromCartBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder getRemoveItemFromCartBuilder() {
         return getRemoveItemFromCartFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       public middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder getRemoveItemFromCartOrBuilder() {
-        if ((typeCase_ == 4) && (removeItemFromCartBuilder_ != null)) {
+        if ((operationCase_ == 5) && (removeItemFromCartBuilder_ != null)) {
           return removeItemFromCartBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 4) {
-            return (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_;
+          if (operationCase_ == 5) {
+            return (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_;
           }
           return middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 4;</code>
+       * <code>.middleware.proto.RemoveItemFromCart removeItemFromCart = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.RemoveItemFromCart, middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder, middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder> 
           getRemoveItemFromCartFieldBuilder() {
         if (removeItemFromCartBuilder_ == null) {
-          if (!(typeCase_ == 4)) {
-            type_ = middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
+          if (!(operationCase_ == 5)) {
+            operation_ = middleware.proto.RequestOuterClass.RemoveItemFromCart.getDefaultInstance();
           }
           removeItemFromCartBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.RemoveItemFromCart, middleware.proto.RequestOuterClass.RemoveItemFromCart.Builder, middleware.proto.RequestOuterClass.RemoveItemFromCartOrBuilder>(
-                  (middleware.proto.RequestOuterClass.RemoveItemFromCart) type_,
+                  (middleware.proto.RequestOuterClass.RemoveItemFromCart) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 4;
+        operationCase_ = 5;
         onChanged();;
         return removeItemFromCartBuilder_;
       }
@@ -1830,137 +1954,137 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetCartItems, middleware.proto.RequestOuterClass.GetCartItems.Builder, middleware.proto.RequestOuterClass.GetCartItemsOrBuilder> getCartItemsBuilder_;
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        * @return Whether the getCartItems field is set.
        */
       public boolean hasGetCartItems() {
-        return typeCase_ == 5;
+        return operationCase_ == 6;
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        * @return The getCartItems.
        */
       public middleware.proto.RequestOuterClass.GetCartItems getGetCartItems() {
         if (getCartItemsBuilder_ == null) {
-          if (typeCase_ == 5) {
-            return (middleware.proto.RequestOuterClass.GetCartItems) type_;
+          if (operationCase_ == 6) {
+            return (middleware.proto.RequestOuterClass.GetCartItems) operation_;
           }
           return middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
         } else {
-          if (typeCase_ == 5) {
+          if (operationCase_ == 6) {
             return getCartItemsBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public Builder setGetCartItems(middleware.proto.RequestOuterClass.GetCartItems value) {
         if (getCartItemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           getCartItemsBuilder_.setMessage(value);
         }
-        typeCase_ = 5;
+        operationCase_ = 6;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public Builder setGetCartItems(
           middleware.proto.RequestOuterClass.GetCartItems.Builder builderForValue) {
         if (getCartItemsBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           getCartItemsBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 5;
+        operationCase_ = 6;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public Builder mergeGetCartItems(middleware.proto.RequestOuterClass.GetCartItems value) {
         if (getCartItemsBuilder_ == null) {
-          if (typeCase_ == 5 &&
-              type_ != middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.GetCartItems.newBuilder((middleware.proto.RequestOuterClass.GetCartItems) type_)
+          if (operationCase_ == 6 &&
+              operation_ != middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.GetCartItems.newBuilder((middleware.proto.RequestOuterClass.GetCartItems) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 5) {
+          if (operationCase_ == 6) {
             getCartItemsBuilder_.mergeFrom(value);
           }
           getCartItemsBuilder_.setMessage(value);
         }
-        typeCase_ = 5;
+        operationCase_ = 6;
         return this;
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public Builder clearGetCartItems() {
         if (getCartItemsBuilder_ == null) {
-          if (typeCase_ == 5) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 6) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 5) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 6) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           getCartItemsBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public middleware.proto.RequestOuterClass.GetCartItems.Builder getGetCartItemsBuilder() {
         return getGetCartItemsFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       public middleware.proto.RequestOuterClass.GetCartItemsOrBuilder getGetCartItemsOrBuilder() {
-        if ((typeCase_ == 5) && (getCartItemsBuilder_ != null)) {
+        if ((operationCase_ == 6) && (getCartItemsBuilder_ != null)) {
           return getCartItemsBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 5) {
-            return (middleware.proto.RequestOuterClass.GetCartItems) type_;
+          if (operationCase_ == 6) {
+            return (middleware.proto.RequestOuterClass.GetCartItems) operation_;
           }
           return middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.GetCartItems getCartItems = 5;</code>
+       * <code>.middleware.proto.GetCartItems getCartItems = 6;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.GetCartItems, middleware.proto.RequestOuterClass.GetCartItems.Builder, middleware.proto.RequestOuterClass.GetCartItemsOrBuilder> 
           getGetCartItemsFieldBuilder() {
         if (getCartItemsBuilder_ == null) {
-          if (!(typeCase_ == 5)) {
-            type_ = middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
+          if (!(operationCase_ == 6)) {
+            operation_ = middleware.proto.RequestOuterClass.GetCartItems.getDefaultInstance();
           }
           getCartItemsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.GetCartItems, middleware.proto.RequestOuterClass.GetCartItems.Builder, middleware.proto.RequestOuterClass.GetCartItemsOrBuilder>(
-                  (middleware.proto.RequestOuterClass.GetCartItems) type_,
+                  (middleware.proto.RequestOuterClass.GetCartItems) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 5;
+        operationCase_ = 6;
         onChanged();;
         return getCartItemsBuilder_;
       }
@@ -1968,137 +2092,137 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.Order, middleware.proto.RequestOuterClass.Order.Builder, middleware.proto.RequestOuterClass.OrderOrBuilder> orderBuilder_;
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        * @return Whether the order field is set.
        */
       public boolean hasOrder() {
-        return typeCase_ == 6;
+        return operationCase_ == 7;
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        * @return The order.
        */
       public middleware.proto.RequestOuterClass.Order getOrder() {
         if (orderBuilder_ == null) {
-          if (typeCase_ == 6) {
-            return (middleware.proto.RequestOuterClass.Order) type_;
+          if (operationCase_ == 7) {
+            return (middleware.proto.RequestOuterClass.Order) operation_;
           }
           return middleware.proto.RequestOuterClass.Order.getDefaultInstance();
         } else {
-          if (typeCase_ == 6) {
+          if (operationCase_ == 7) {
             return orderBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.Order.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public Builder setOrder(middleware.proto.RequestOuterClass.Order value) {
         if (orderBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           orderBuilder_.setMessage(value);
         }
-        typeCase_ = 6;
+        operationCase_ = 7;
         return this;
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public Builder setOrder(
           middleware.proto.RequestOuterClass.Order.Builder builderForValue) {
         if (orderBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           orderBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 6;
+        operationCase_ = 7;
         return this;
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public Builder mergeOrder(middleware.proto.RequestOuterClass.Order value) {
         if (orderBuilder_ == null) {
-          if (typeCase_ == 6 &&
-              type_ != middleware.proto.RequestOuterClass.Order.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.Order.newBuilder((middleware.proto.RequestOuterClass.Order) type_)
+          if (operationCase_ == 7 &&
+              operation_ != middleware.proto.RequestOuterClass.Order.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.Order.newBuilder((middleware.proto.RequestOuterClass.Order) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 6) {
+          if (operationCase_ == 7) {
             orderBuilder_.mergeFrom(value);
           }
           orderBuilder_.setMessage(value);
         }
-        typeCase_ = 6;
+        operationCase_ = 7;
         return this;
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public Builder clearOrder() {
         if (orderBuilder_ == null) {
-          if (typeCase_ == 6) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 7) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 6) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 7) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           orderBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public middleware.proto.RequestOuterClass.Order.Builder getOrderBuilder() {
         return getOrderFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       public middleware.proto.RequestOuterClass.OrderOrBuilder getOrderOrBuilder() {
-        if ((typeCase_ == 6) && (orderBuilder_ != null)) {
+        if ((operationCase_ == 7) && (orderBuilder_ != null)) {
           return orderBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 6) {
-            return (middleware.proto.RequestOuterClass.Order) type_;
+          if (operationCase_ == 7) {
+            return (middleware.proto.RequestOuterClass.Order) operation_;
           }
           return middleware.proto.RequestOuterClass.Order.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Order order = 6;</code>
+       * <code>.middleware.proto.Order order = 7;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.Order, middleware.proto.RequestOuterClass.Order.Builder, middleware.proto.RequestOuterClass.OrderOrBuilder> 
           getOrderFieldBuilder() {
         if (orderBuilder_ == null) {
-          if (!(typeCase_ == 6)) {
-            type_ = middleware.proto.RequestOuterClass.Order.getDefaultInstance();
+          if (!(operationCase_ == 7)) {
+            operation_ = middleware.proto.RequestOuterClass.Order.getDefaultInstance();
           }
           orderBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.Order, middleware.proto.RequestOuterClass.Order.Builder, middleware.proto.RequestOuterClass.OrderOrBuilder>(
-                  (middleware.proto.RequestOuterClass.Order) type_,
+                  (middleware.proto.RequestOuterClass.Order) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 6;
+        operationCase_ = 7;
         onChanged();;
         return orderBuilder_;
       }
@@ -2106,277 +2230,139 @@ public final class RequestOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.Login, middleware.proto.RequestOuterClass.Login.Builder, middleware.proto.RequestOuterClass.LoginOrBuilder> loginBuilder_;
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        * @return Whether the login field is set.
        */
       public boolean hasLogin() {
-        return typeCase_ == 7;
+        return operationCase_ == 8;
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        * @return The login.
        */
       public middleware.proto.RequestOuterClass.Login getLogin() {
         if (loginBuilder_ == null) {
-          if (typeCase_ == 7) {
-            return (middleware.proto.RequestOuterClass.Login) type_;
+          if (operationCase_ == 8) {
+            return (middleware.proto.RequestOuterClass.Login) operation_;
           }
           return middleware.proto.RequestOuterClass.Login.getDefaultInstance();
         } else {
-          if (typeCase_ == 7) {
+          if (operationCase_ == 8) {
             return loginBuilder_.getMessage();
           }
           return middleware.proto.RequestOuterClass.Login.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public Builder setLogin(middleware.proto.RequestOuterClass.Login value) {
         if (loginBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          type_ = value;
+          operation_ = value;
           onChanged();
         } else {
           loginBuilder_.setMessage(value);
         }
-        typeCase_ = 7;
+        operationCase_ = 8;
         return this;
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public Builder setLogin(
           middleware.proto.RequestOuterClass.Login.Builder builderForValue) {
         if (loginBuilder_ == null) {
-          type_ = builderForValue.build();
+          operation_ = builderForValue.build();
           onChanged();
         } else {
           loginBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 7;
+        operationCase_ = 8;
         return this;
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public Builder mergeLogin(middleware.proto.RequestOuterClass.Login value) {
         if (loginBuilder_ == null) {
-          if (typeCase_ == 7 &&
-              type_ != middleware.proto.RequestOuterClass.Login.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.Login.newBuilder((middleware.proto.RequestOuterClass.Login) type_)
+          if (operationCase_ == 8 &&
+              operation_ != middleware.proto.RequestOuterClass.Login.getDefaultInstance()) {
+            operation_ = middleware.proto.RequestOuterClass.Login.newBuilder((middleware.proto.RequestOuterClass.Login) operation_)
                 .mergeFrom(value).buildPartial();
           } else {
-            type_ = value;
+            operation_ = value;
           }
           onChanged();
         } else {
-          if (typeCase_ == 7) {
+          if (operationCase_ == 8) {
             loginBuilder_.mergeFrom(value);
           }
           loginBuilder_.setMessage(value);
         }
-        typeCase_ = 7;
+        operationCase_ = 8;
         return this;
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public Builder clearLogin() {
         if (loginBuilder_ == null) {
-          if (typeCase_ == 7) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 8) {
+            operationCase_ = 0;
+            operation_ = null;
             onChanged();
           }
         } else {
-          if (typeCase_ == 7) {
-            typeCase_ = 0;
-            type_ = null;
+          if (operationCase_ == 8) {
+            operationCase_ = 0;
+            operation_ = null;
           }
           loginBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public middleware.proto.RequestOuterClass.Login.Builder getLoginBuilder() {
         return getLoginFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       public middleware.proto.RequestOuterClass.LoginOrBuilder getLoginOrBuilder() {
-        if ((typeCase_ == 7) && (loginBuilder_ != null)) {
+        if ((operationCase_ == 8) && (loginBuilder_ != null)) {
           return loginBuilder_.getMessageOrBuilder();
         } else {
-          if (typeCase_ == 7) {
-            return (middleware.proto.RequestOuterClass.Login) type_;
+          if (operationCase_ == 8) {
+            return (middleware.proto.RequestOuterClass.Login) operation_;
           }
           return middleware.proto.RequestOuterClass.Login.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Login login = 7;</code>
+       * <code>.middleware.proto.Login login = 8;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.RequestOuterClass.Login, middleware.proto.RequestOuterClass.Login.Builder, middleware.proto.RequestOuterClass.LoginOrBuilder> 
           getLoginFieldBuilder() {
         if (loginBuilder_ == null) {
-          if (!(typeCase_ == 7)) {
-            type_ = middleware.proto.RequestOuterClass.Login.getDefaultInstance();
+          if (!(operationCase_ == 8)) {
+            operation_ = middleware.proto.RequestOuterClass.Login.getDefaultInstance();
           }
           loginBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
               middleware.proto.RequestOuterClass.Login, middleware.proto.RequestOuterClass.Login.Builder, middleware.proto.RequestOuterClass.LoginOrBuilder>(
-                  (middleware.proto.RequestOuterClass.Login) type_,
+                  (middleware.proto.RequestOuterClass.Login) operation_,
                   getParentForChildren(),
                   isClean());
-          type_ = null;
+          operation_ = null;
         }
-        typeCase_ = 7;
+        operationCase_ = 8;
         onChanged();;
         return loginBuilder_;
-      }
-
-      private com.google.protobuf.SingleFieldBuilderV3<
-          middleware.proto.RequestOuterClass.Response, middleware.proto.RequestOuterClass.Response.Builder, middleware.proto.RequestOuterClass.ResponseOrBuilder> responseBuilder_;
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       * @return Whether the response field is set.
-       */
-      public boolean hasResponse() {
-        return typeCase_ == 8;
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       * @return The response.
-       */
-      public middleware.proto.RequestOuterClass.Response getResponse() {
-        if (responseBuilder_ == null) {
-          if (typeCase_ == 8) {
-            return (middleware.proto.RequestOuterClass.Response) type_;
-          }
-          return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-        } else {
-          if (typeCase_ == 8) {
-            return responseBuilder_.getMessage();
-          }
-          return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public Builder setResponse(middleware.proto.RequestOuterClass.Response value) {
-        if (responseBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          type_ = value;
-          onChanged();
-        } else {
-          responseBuilder_.setMessage(value);
-        }
-        typeCase_ = 8;
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public Builder setResponse(
-          middleware.proto.RequestOuterClass.Response.Builder builderForValue) {
-        if (responseBuilder_ == null) {
-          type_ = builderForValue.build();
-          onChanged();
-        } else {
-          responseBuilder_.setMessage(builderForValue.build());
-        }
-        typeCase_ = 8;
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public Builder mergeResponse(middleware.proto.RequestOuterClass.Response value) {
-        if (responseBuilder_ == null) {
-          if (typeCase_ == 8 &&
-              type_ != middleware.proto.RequestOuterClass.Response.getDefaultInstance()) {
-            type_ = middleware.proto.RequestOuterClass.Response.newBuilder((middleware.proto.RequestOuterClass.Response) type_)
-                .mergeFrom(value).buildPartial();
-          } else {
-            type_ = value;
-          }
-          onChanged();
-        } else {
-          if (typeCase_ == 8) {
-            responseBuilder_.mergeFrom(value);
-          }
-          responseBuilder_.setMessage(value);
-        }
-        typeCase_ = 8;
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public Builder clearResponse() {
-        if (responseBuilder_ == null) {
-          if (typeCase_ == 8) {
-            typeCase_ = 0;
-            type_ = null;
-            onChanged();
-          }
-        } else {
-          if (typeCase_ == 8) {
-            typeCase_ = 0;
-            type_ = null;
-          }
-          responseBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public middleware.proto.RequestOuterClass.Response.Builder getResponseBuilder() {
-        return getResponseFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      public middleware.proto.RequestOuterClass.ResponseOrBuilder getResponseOrBuilder() {
-        if ((typeCase_ == 8) && (responseBuilder_ != null)) {
-          return responseBuilder_.getMessageOrBuilder();
-        } else {
-          if (typeCase_ == 8) {
-            return (middleware.proto.RequestOuterClass.Response) type_;
-          }
-          return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-        }
-      }
-      /**
-       * <code>.middleware.proto.Response response = 8;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          middleware.proto.RequestOuterClass.Response, middleware.proto.RequestOuterClass.Response.Builder, middleware.proto.RequestOuterClass.ResponseOrBuilder> 
-          getResponseFieldBuilder() {
-        if (responseBuilder_ == null) {
-          if (!(typeCase_ == 8)) {
-            type_ = middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-          }
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              middleware.proto.RequestOuterClass.Response, middleware.proto.RequestOuterClass.Response.Builder, middleware.proto.RequestOuterClass.ResponseOrBuilder>(
-                  (middleware.proto.RequestOuterClass.Response) type_,
-                  getParentForChildren(),
-                  isClean());
-          type_ = null;
-        }
-        typeCase_ = 8;
-        onChanged();;
-        return responseBuilder_;
       }
 
       private java.lang.Object uuid_ = "";
@@ -2624,10 +2610,10 @@ public final class RequestOuterClass {
     float getPrice();
 
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>int32 stock = 5;</code>
+     * @return The stock.
      */
-    boolean getAvailable();
+    int getStock();
   }
   /**
    * Protobuf type {@code middleware.proto.Item}
@@ -2700,7 +2686,7 @@ public final class RequestOuterClass {
             }
             case 40: {
 
-              available_ = input.readBool();
+              stock_ = input.readInt32();
               break;
             }
             default: {
@@ -2827,14 +2813,14 @@ public final class RequestOuterClass {
       return price_;
     }
 
-    public static final int AVAILABLE_FIELD_NUMBER = 5;
-    private boolean available_;
+    public static final int STOCK_FIELD_NUMBER = 5;
+    private int stock_;
     /**
-     * <code>bool available = 5;</code>
-     * @return The available.
+     * <code>int32 stock = 5;</code>
+     * @return The stock.
      */
-    public boolean getAvailable() {
-      return available_;
+    public int getStock() {
+      return stock_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2863,8 +2849,8 @@ public final class RequestOuterClass {
       if (price_ != 0F) {
         output.writeFloat(4, price_);
       }
-      if (available_ != false) {
-        output.writeBool(5, available_);
+      if (stock_ != 0) {
+        output.writeInt32(5, stock_);
       }
       unknownFields.writeTo(output);
     }
@@ -2889,9 +2875,9 @@ public final class RequestOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(4, price_);
       }
-      if (available_ != false) {
+      if (stock_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, available_);
+          .computeInt32Size(5, stock_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2917,8 +2903,8 @@ public final class RequestOuterClass {
       if (java.lang.Float.floatToIntBits(getPrice())
           != java.lang.Float.floatToIntBits(
               other.getPrice())) return false;
-      if (getAvailable()
-          != other.getAvailable()) return false;
+      if (getStock()
+          != other.getStock()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2939,9 +2925,8 @@ public final class RequestOuterClass {
       hash = (37 * hash) + PRICE_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getPrice());
-      hash = (37 * hash) + AVAILABLE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getAvailable());
+      hash = (37 * hash) + STOCK_FIELD_NUMBER;
+      hash = (53 * hash) + getStock();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3083,7 +3068,7 @@ public final class RequestOuterClass {
 
         price_ = 0F;
 
-        available_ = false;
+        stock_ = 0;
 
         return this;
       }
@@ -3115,7 +3100,7 @@ public final class RequestOuterClass {
         result.name_ = name_;
         result.description_ = description_;
         result.price_ = price_;
-        result.available_ = available_;
+        result.stock_ = stock_;
         onBuilt();
         return result;
       }
@@ -3178,8 +3163,8 @@ public final class RequestOuterClass {
         if (other.getPrice() != 0F) {
           setPrice(other.getPrice());
         }
-        if (other.getAvailable() != false) {
-          setAvailable(other.getAvailable());
+        if (other.getStock() != 0) {
+          setStock(other.getStock());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3422,32 +3407,32 @@ public final class RequestOuterClass {
         return this;
       }
 
-      private boolean available_ ;
+      private int stock_ ;
       /**
-       * <code>bool available = 5;</code>
-       * @return The available.
+       * <code>int32 stock = 5;</code>
+       * @return The stock.
        */
-      public boolean getAvailable() {
-        return available_;
+      public int getStock() {
+        return stock_;
       }
       /**
-       * <code>bool available = 5;</code>
-       * @param value The available to set.
+       * <code>int32 stock = 5;</code>
+       * @param value The stock to set.
        * @return This builder for chaining.
        */
-      public Builder setAvailable(boolean value) {
+      public Builder setStock(int value) {
         
-        available_ = value;
+        stock_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>bool available = 5;</code>
+       * <code>int32 stock = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearAvailable() {
+      public Builder clearStock() {
         
-        available_ = false;
+        stock_ = 0;
         onChanged();
         return this;
       }
@@ -3504,866 +3489,58 @@ public final class RequestOuterClass {
 
   }
 
-  public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:middleware.proto.Response)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    java.util.List<middleware.proto.RequestOuterClass.Item> 
-        getItemList();
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    middleware.proto.RequestOuterClass.Item getItem(int index);
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    int getItemCount();
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
-        getItemOrBuilderList();
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder(
-        int index);
-
-    /**
-     * <code>bool status = 2;</code>
-     * @return The status.
-     */
-    boolean getStatus();
-  }
-  /**
-   * Protobuf type {@code middleware.proto.Response}
-   */
-  public  static final class Response extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:middleware.proto.Response)
-      ResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Response.newBuilder() to construct.
-    private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Response() {
-      item_ = java.util.Collections.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Response();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private Response(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                item_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              item_.add(
-                  input.readMessage(middleware.proto.RequestOuterClass.Item.parser(), extensionRegistry));
-              break;
-            }
-            case 16: {
-
-              status_ = input.readBool();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          item_ = java.util.Collections.unmodifiableList(item_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return middleware.proto.RequestOuterClass.internal_static_middleware_proto_Response_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return middleware.proto.RequestOuterClass.internal_static_middleware_proto_Response_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              middleware.proto.RequestOuterClass.Response.class, middleware.proto.RequestOuterClass.Response.Builder.class);
-    }
-
-    public static final int ITEM_FIELD_NUMBER = 1;
-    private java.util.List<middleware.proto.RequestOuterClass.Item> item_;
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    public java.util.List<middleware.proto.RequestOuterClass.Item> getItemList() {
-      return item_;
-    }
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
-        getItemOrBuilderList() {
-      return item_;
-    }
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    public int getItemCount() {
-      return item_.size();
-    }
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    public middleware.proto.RequestOuterClass.Item getItem(int index) {
-      return item_.get(index);
-    }
-    /**
-     * <code>repeated .middleware.proto.Item item = 1;</code>
-     */
-    public middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder(
-        int index) {
-      return item_.get(index);
-    }
-
-    public static final int STATUS_FIELD_NUMBER = 2;
-    private boolean status_;
-    /**
-     * <code>bool status = 2;</code>
-     * @return The status.
-     */
-    public boolean getStatus() {
-      return status_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < item_.size(); i++) {
-        output.writeMessage(1, item_.get(i));
-      }
-      if (status_ != false) {
-        output.writeBool(2, status_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < item_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, item_.get(i));
-      }
-      if (status_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, status_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof middleware.proto.RequestOuterClass.Response)) {
-        return super.equals(obj);
-      }
-      middleware.proto.RequestOuterClass.Response other = (middleware.proto.RequestOuterClass.Response) obj;
-
-      if (!getItemList()
-          .equals(other.getItemList())) return false;
-      if (getStatus()
-          != other.getStatus()) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getItemCount() > 0) {
-        hash = (37 * hash) + ITEM_FIELD_NUMBER;
-        hash = (53 * hash) + getItemList().hashCode();
-      }
-      hash = (37 * hash) + STATUS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getStatus());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static middleware.proto.RequestOuterClass.Response parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(middleware.proto.RequestOuterClass.Response prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code middleware.proto.Response}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:middleware.proto.Response)
-        middleware.proto.RequestOuterClass.ResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return middleware.proto.RequestOuterClass.internal_static_middleware_proto_Response_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return middleware.proto.RequestOuterClass.internal_static_middleware_proto_Response_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                middleware.proto.RequestOuterClass.Response.class, middleware.proto.RequestOuterClass.Response.Builder.class);
-      }
-
-      // Construct using middleware.proto.RequestOuterClass.Response.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getItemFieldBuilder();
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        if (itemBuilder_ == null) {
-          item_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          itemBuilder_.clear();
-        }
-        status_ = false;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return middleware.proto.RequestOuterClass.internal_static_middleware_proto_Response_descriptor;
-      }
-
-      @java.lang.Override
-      public middleware.proto.RequestOuterClass.Response getDefaultInstanceForType() {
-        return middleware.proto.RequestOuterClass.Response.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public middleware.proto.RequestOuterClass.Response build() {
-        middleware.proto.RequestOuterClass.Response result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public middleware.proto.RequestOuterClass.Response buildPartial() {
-        middleware.proto.RequestOuterClass.Response result = new middleware.proto.RequestOuterClass.Response(this);
-        int from_bitField0_ = bitField0_;
-        if (itemBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
-            item_ = java.util.Collections.unmodifiableList(item_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.item_ = item_;
-        } else {
-          result.item_ = itemBuilder_.build();
-        }
-        result.status_ = status_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof middleware.proto.RequestOuterClass.Response) {
-          return mergeFrom((middleware.proto.RequestOuterClass.Response)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(middleware.proto.RequestOuterClass.Response other) {
-        if (other == middleware.proto.RequestOuterClass.Response.getDefaultInstance()) return this;
-        if (itemBuilder_ == null) {
-          if (!other.item_.isEmpty()) {
-            if (item_.isEmpty()) {
-              item_ = other.item_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureItemIsMutable();
-              item_.addAll(other.item_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.item_.isEmpty()) {
-            if (itemBuilder_.isEmpty()) {
-              itemBuilder_.dispose();
-              itemBuilder_ = null;
-              item_ = other.item_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              itemBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getItemFieldBuilder() : null;
-            } else {
-              itemBuilder_.addAllMessages(other.item_);
-            }
-          }
-        }
-        if (other.getStatus() != false) {
-          setStatus(other.getStatus());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        middleware.proto.RequestOuterClass.Response parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (middleware.proto.RequestOuterClass.Response) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<middleware.proto.RequestOuterClass.Item> item_ =
-        java.util.Collections.emptyList();
-      private void ensureItemIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          item_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>(item_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> itemBuilder_;
-
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public java.util.List<middleware.proto.RequestOuterClass.Item> getItemList() {
-        if (itemBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(item_);
-        } else {
-          return itemBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public int getItemCount() {
-        if (itemBuilder_ == null) {
-          return item_.size();
-        } else {
-          return itemBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public middleware.proto.RequestOuterClass.Item getItem(int index) {
-        if (itemBuilder_ == null) {
-          return item_.get(index);
-        } else {
-          return itemBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder setItem(
-          int index, middleware.proto.RequestOuterClass.Item value) {
-        if (itemBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureItemIsMutable();
-          item_.set(index, value);
-          onChanged();
-        } else {
-          itemBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder setItem(
-          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
-        if (itemBuilder_ == null) {
-          ensureItemIsMutable();
-          item_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          itemBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder addItem(middleware.proto.RequestOuterClass.Item value) {
-        if (itemBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureItemIsMutable();
-          item_.add(value);
-          onChanged();
-        } else {
-          itemBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder addItem(
-          int index, middleware.proto.RequestOuterClass.Item value) {
-        if (itemBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureItemIsMutable();
-          item_.add(index, value);
-          onChanged();
-        } else {
-          itemBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder addItem(
-          middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
-        if (itemBuilder_ == null) {
-          ensureItemIsMutable();
-          item_.add(builderForValue.build());
-          onChanged();
-        } else {
-          itemBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder addItem(
-          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
-        if (itemBuilder_ == null) {
-          ensureItemIsMutable();
-          item_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          itemBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder addAllItem(
-          java.lang.Iterable<? extends middleware.proto.RequestOuterClass.Item> values) {
-        if (itemBuilder_ == null) {
-          ensureItemIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, item_);
-          onChanged();
-        } else {
-          itemBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder clearItem() {
-        if (itemBuilder_ == null) {
-          item_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          itemBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public Builder removeItem(int index) {
-        if (itemBuilder_ == null) {
-          ensureItemIsMutable();
-          item_.remove(index);
-          onChanged();
-        } else {
-          itemBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public middleware.proto.RequestOuterClass.Item.Builder getItemBuilder(
-          int index) {
-        return getItemFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder(
-          int index) {
-        if (itemBuilder_ == null) {
-          return item_.get(index);  } else {
-          return itemBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
-           getItemOrBuilderList() {
-        if (itemBuilder_ != null) {
-          return itemBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(item_);
-        }
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public middleware.proto.RequestOuterClass.Item.Builder addItemBuilder() {
-        return getItemFieldBuilder().addBuilder(
-            middleware.proto.RequestOuterClass.Item.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public middleware.proto.RequestOuterClass.Item.Builder addItemBuilder(
-          int index) {
-        return getItemFieldBuilder().addBuilder(
-            index, middleware.proto.RequestOuterClass.Item.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .middleware.proto.Item item = 1;</code>
-       */
-      public java.util.List<middleware.proto.RequestOuterClass.Item.Builder> 
-           getItemBuilderList() {
-        return getItemFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> 
-          getItemFieldBuilder() {
-        if (itemBuilder_ == null) {
-          itemBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder>(
-                  item_,
-                  ((bitField0_ & 0x00000001) != 0),
-                  getParentForChildren(),
-                  isClean());
-          item_ = null;
-        }
-        return itemBuilder_;
-      }
-
-      private boolean status_ ;
-      /**
-       * <code>bool status = 2;</code>
-       * @return The status.
-       */
-      public boolean getStatus() {
-        return status_;
-      }
-      /**
-       * <code>bool status = 2;</code>
-       * @param value The status to set.
-       * @return This builder for chaining.
-       */
-      public Builder setStatus(boolean value) {
-        
-        status_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool status = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearStatus() {
-        
-        status_ = false;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:middleware.proto.Response)
-    }
-
-    // @@protoc_insertion_point(class_scope:middleware.proto.Response)
-    private static final middleware.proto.RequestOuterClass.Response DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new middleware.proto.RequestOuterClass.Response();
-    }
-
-    public static middleware.proto.RequestOuterClass.Response getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Response>
-        PARSER = new com.google.protobuf.AbstractParser<Response>() {
-      @java.lang.Override
-      public Response parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Response(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Response> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Response> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public middleware.proto.RequestOuterClass.Response getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface GetItemsOrBuilder extends
       // @@protoc_insertion_point(interface_extends:middleware.proto.GetItems)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    java.util.List<middleware.proto.RequestOuterClass.Item> 
+        getItemsList();
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    middleware.proto.RequestOuterClass.Item getItems(int index);
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    int getItemsCount();
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+        getItemsOrBuilderList();
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code middleware.proto.GetItems}
@@ -4378,6 +3555,7 @@ public final class RequestOuterClass {
       super(builder);
     }
     private GetItems() {
+      items_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -4400,6 +3578,7 @@ public final class RequestOuterClass {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -4410,6 +3589,15 @@ public final class RequestOuterClass {
             case 0:
               done = true;
               break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                items_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              items_.add(
+                  input.readMessage(middleware.proto.RequestOuterClass.Item.parser(), extensionRegistry));
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -4425,6 +3613,9 @@ public final class RequestOuterClass {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          items_ = java.util.Collections.unmodifiableList(items_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -4442,6 +3633,66 @@ public final class RequestOuterClass {
               middleware.proto.RequestOuterClass.GetItems.class, middleware.proto.RequestOuterClass.GetItems.Builder.class);
     }
 
+    public static final int ITEMS_FIELD_NUMBER = 1;
+    private java.util.List<middleware.proto.RequestOuterClass.Item> items_;
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    public java.util.List<middleware.proto.RequestOuterClass.Item> getItemsList() {
+      return items_;
+    }
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+        getItemsOrBuilderList() {
+      return items_;
+    }
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    public int getItemsCount() {
+      return items_.size();
+    }
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    public middleware.proto.RequestOuterClass.Item getItems(int index) {
+      return items_.get(index);
+    }
+    /**
+     * <pre>
+     * Request
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 1;</code>
+     */
+    public middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+        int index) {
+      return items_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4456,6 +3707,9 @@ public final class RequestOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      for (int i = 0; i < items_.size(); i++) {
+        output.writeMessage(1, items_.get(i));
+      }
       unknownFields.writeTo(output);
     }
 
@@ -4465,6 +3719,10 @@ public final class RequestOuterClass {
       if (size != -1) return size;
 
       size = 0;
+      for (int i = 0; i < items_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, items_.get(i));
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -4480,6 +3738,8 @@ public final class RequestOuterClass {
       }
       middleware.proto.RequestOuterClass.GetItems other = (middleware.proto.RequestOuterClass.GetItems) obj;
 
+      if (!getItemsList()
+          .equals(other.getItemsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4491,6 +3751,10 @@ public final class RequestOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (getItemsCount() > 0) {
+        hash = (37 * hash) + ITEMS_FIELD_NUMBER;
+        hash = (53 * hash) + getItemsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4619,11 +3883,18 @@ public final class RequestOuterClass {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getItemsFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          itemsBuilder_.clear();
+        }
         return this;
       }
 
@@ -4650,6 +3921,16 @@ public final class RequestOuterClass {
       @java.lang.Override
       public middleware.proto.RequestOuterClass.GetItems buildPartial() {
         middleware.proto.RequestOuterClass.GetItems result = new middleware.proto.RequestOuterClass.GetItems(this);
+        int from_bitField0_ = bitField0_;
+        if (itemsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            items_ = java.util.Collections.unmodifiableList(items_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.items_ = items_;
+        } else {
+          result.items_ = itemsBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -4698,6 +3979,32 @@ public final class RequestOuterClass {
 
       public Builder mergeFrom(middleware.proto.RequestOuterClass.GetItems other) {
         if (other == middleware.proto.RequestOuterClass.GetItems.getDefaultInstance()) return this;
+        if (itemsBuilder_ == null) {
+          if (!other.items_.isEmpty()) {
+            if (items_.isEmpty()) {
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureItemsIsMutable();
+              items_.addAll(other.items_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.items_.isEmpty()) {
+            if (itemsBuilder_.isEmpty()) {
+              itemsBuilder_.dispose();
+              itemsBuilder_ = null;
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              itemsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getItemsFieldBuilder() : null;
+            } else {
+              itemsBuilder_.addAllMessages(other.items_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -4725,6 +4032,337 @@ public final class RequestOuterClass {
           }
         }
         return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<middleware.proto.RequestOuterClass.Item> items_ =
+        java.util.Collections.emptyList();
+      private void ensureItemsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          items_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>(items_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> itemsBuilder_;
+
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public java.util.List<middleware.proto.RequestOuterClass.Item> getItemsList() {
+        if (itemsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(items_);
+        } else {
+          return itemsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public int getItemsCount() {
+        if (itemsBuilder_ == null) {
+          return items_.size();
+        } else {
+          return itemsBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item getItems(int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);
+        } else {
+          return itemsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder setItems(
+          int index, middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.set(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder setItems(
+          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder addItems(middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder addItems(
+          int index, middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder addItems(
+          middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder addItems(
+          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder addAllItems(
+          java.lang.Iterable<? extends middleware.proto.RequestOuterClass.Item> values) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, items_);
+          onChanged();
+        } else {
+          itemsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder clearItems() {
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          itemsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public Builder removeItems(int index) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.remove(index);
+          onChanged();
+        } else {
+          itemsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder getItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+          int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);  } else {
+          return itemsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+           getItemsOrBuilderList() {
+        if (itemsBuilder_ != null) {
+          return itemsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(items_);
+        }
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder addItemsBuilder() {
+        return getItemsFieldBuilder().addBuilder(
+            middleware.proto.RequestOuterClass.Item.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder addItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().addBuilder(
+            index, middleware.proto.RequestOuterClass.Item.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Request
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 1;</code>
+       */
+      public java.util.List<middleware.proto.RequestOuterClass.Item.Builder> 
+           getItemsBuilderList() {
+        return getItemsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> 
+          getItemsFieldBuilder() {
+        if (itemsBuilder_ == null) {
+          itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder>(
+                  items_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          items_ = null;
+        }
+        return itemsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -4784,24 +4422,41 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 itemId = 1;</code>
      * @return The itemId.
      */
     int getItemId();
 
     /**
-     * <code>string name = 2;</code>
-     * @return The name.
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     * @return Whether the item field is set.
      */
-    java.lang.String getName();
+    boolean hasItem();
     /**
-     * <code>string name = 2;</code>
-     * @return The bytes for name.
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     * @return The item.
      */
-    com.google.protobuf.ByteString
-        getNameBytes();
-
-    public middleware.proto.RequestOuterClass.GetItem.TypeCase getTypeCase();
+    middleware.proto.RequestOuterClass.Item getItem();
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     */
+    middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder();
   }
   /**
    * Protobuf type {@code middleware.proto.GetItem}
@@ -4849,14 +4504,21 @@ public final class RequestOuterClass {
               done = true;
               break;
             case 8: {
-              typeCase_ = 1;
-              type_ = input.readInt32();
+
+              itemId_ = input.readInt32();
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-              typeCase_ = 2;
-              type_ = s;
+              middleware.proto.RequestOuterClass.Item.Builder subBuilder = null;
+              if (item_ != null) {
+                subBuilder = item_.toBuilder();
+              }
+              item_ = input.readMessage(middleware.proto.RequestOuterClass.Item.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(item_);
+                item_ = subBuilder.buildPartial();
+              }
+
               break;
             }
             default: {
@@ -4891,102 +4553,53 @@ public final class RequestOuterClass {
               middleware.proto.RequestOuterClass.GetItem.class, middleware.proto.RequestOuterClass.GetItem.Builder.class);
     }
 
-    private int typeCase_ = 0;
-    private java.lang.Object type_;
-    public enum TypeCase
-        implements com.google.protobuf.Internal.EnumLite,
-            com.google.protobuf.AbstractMessage.InternalOneOfEnum {
-      ITEMID(1),
-      NAME(2),
-      TYPE_NOT_SET(0);
-      private final int value;
-      private TypeCase(int value) {
-        this.value = value;
-      }
-      /**
-       * @param value The number of the enum to look for.
-       * @return The enum associated with the given number.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static TypeCase valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static TypeCase forNumber(int value) {
-        switch (value) {
-          case 1: return ITEMID;
-          case 2: return NAME;
-          case 0: return TYPE_NOT_SET;
-          default: return null;
-        }
-      }
-      public int getNumber() {
-        return this.value;
-      }
-    };
-
-    public TypeCase
-    getTypeCase() {
-      return TypeCase.forNumber(
-          typeCase_);
-    }
-
     public static final int ITEMID_FIELD_NUMBER = 1;
+    private int itemId_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 itemId = 1;</code>
      * @return The itemId.
      */
     public int getItemId() {
-      if (typeCase_ == 1) {
-        return (java.lang.Integer) type_;
-      }
-      return 0;
+      return itemId_;
     }
 
-    public static final int NAME_FIELD_NUMBER = 2;
+    public static final int ITEM_FIELD_NUMBER = 2;
+    private middleware.proto.RequestOuterClass.Item item_;
     /**
-     * <code>string name = 2;</code>
-     * @return The name.
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     * @return Whether the item field is set.
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = "";
-      if (typeCase_ == 2) {
-        ref = type_;
-      }
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (typeCase_ == 2) {
-          type_ = s;
-        }
-        return s;
-      }
+    public boolean hasItem() {
+      return item_ != null;
     }
     /**
-     * <code>string name = 2;</code>
-     * @return The bytes for name.
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     * @return The item.
      */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = "";
-      if (typeCase_ == 2) {
-        ref = type_;
-      }
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        if (typeCase_ == 2) {
-          type_ = b;
-        }
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public middleware.proto.RequestOuterClass.Item getItem() {
+      return item_ == null ? middleware.proto.RequestOuterClass.Item.getDefaultInstance() : item_;
+    }
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>.middleware.proto.Item item = 2;</code>
+     */
+    public middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder() {
+      return getItem();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5003,12 +4616,11 @@ public final class RequestOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (typeCase_ == 1) {
-        output.writeInt32(
-            1, (int)((java.lang.Integer) type_));
+      if (itemId_ != 0) {
+        output.writeInt32(1, itemId_);
       }
-      if (typeCase_ == 2) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, type_);
+      if (item_ != null) {
+        output.writeMessage(2, getItem());
       }
       unknownFields.writeTo(output);
     }
@@ -5019,13 +4631,13 @@ public final class RequestOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (typeCase_ == 1) {
+      if (itemId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(
-              1, (int)((java.lang.Integer) type_));
+          .computeInt32Size(1, itemId_);
       }
-      if (typeCase_ == 2) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, type_);
+      if (item_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getItem());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5042,18 +4654,12 @@ public final class RequestOuterClass {
       }
       middleware.proto.RequestOuterClass.GetItem other = (middleware.proto.RequestOuterClass.GetItem) obj;
 
-      if (!getTypeCase().equals(other.getTypeCase())) return false;
-      switch (typeCase_) {
-        case 1:
-          if (getItemId()
-              != other.getItemId()) return false;
-          break;
-        case 2:
-          if (!getName()
-              .equals(other.getName())) return false;
-          break;
-        case 0:
-        default:
+      if (getItemId()
+          != other.getItemId()) return false;
+      if (hasItem() != other.hasItem()) return false;
+      if (hasItem()) {
+        if (!getItem()
+            .equals(other.getItem())) return false;
       }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -5066,17 +4672,11 @@ public final class RequestOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      switch (typeCase_) {
-        case 1:
-          hash = (37 * hash) + ITEMID_FIELD_NUMBER;
-          hash = (53 * hash) + getItemId();
-          break;
-        case 2:
-          hash = (37 * hash) + NAME_FIELD_NUMBER;
-          hash = (53 * hash) + getName().hashCode();
-          break;
-        case 0:
-        default:
+      hash = (37 * hash) + ITEMID_FIELD_NUMBER;
+      hash = (53 * hash) + getItemId();
+      if (hasItem()) {
+        hash = (37 * hash) + ITEM_FIELD_NUMBER;
+        hash = (53 * hash) + getItem().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -5211,8 +4811,14 @@ public final class RequestOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        typeCase_ = 0;
-        type_ = null;
+        itemId_ = 0;
+
+        if (itemBuilder_ == null) {
+          item_ = null;
+        } else {
+          item_ = null;
+          itemBuilder_ = null;
+        }
         return this;
       }
 
@@ -5239,13 +4845,12 @@ public final class RequestOuterClass {
       @java.lang.Override
       public middleware.proto.RequestOuterClass.GetItem buildPartial() {
         middleware.proto.RequestOuterClass.GetItem result = new middleware.proto.RequestOuterClass.GetItem(this);
-        if (typeCase_ == 1) {
-          result.type_ = type_;
+        result.itemId_ = itemId_;
+        if (itemBuilder_ == null) {
+          result.item_ = item_;
+        } else {
+          result.item_ = itemBuilder_.build();
         }
-        if (typeCase_ == 2) {
-          result.type_ = type_;
-        }
-        result.typeCase_ = typeCase_;
         onBuilt();
         return result;
       }
@@ -5294,20 +4899,11 @@ public final class RequestOuterClass {
 
       public Builder mergeFrom(middleware.proto.RequestOuterClass.GetItem other) {
         if (other == middleware.proto.RequestOuterClass.GetItem.getDefaultInstance()) return this;
-        switch (other.getTypeCase()) {
-          case ITEMID: {
-            setItemId(other.getItemId());
-            break;
-          }
-          case NAME: {
-            typeCase_ = 2;
-            type_ = other.type_;
-            onChanged();
-            break;
-          }
-          case TYPE_NOT_SET: {
-            break;
-          }
+        if (other.getItemId() != 0) {
+          setItemId(other.getItemId());
+        }
+        if (other.hasItem()) {
+          mergeItem(other.getItem());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5337,141 +4933,202 @@ public final class RequestOuterClass {
         }
         return this;
       }
-      private int typeCase_ = 0;
-      private java.lang.Object type_;
-      public TypeCase
-          getTypeCase() {
-        return TypeCase.forNumber(
-            typeCase_);
-      }
 
-      public Builder clearType() {
-        typeCase_ = 0;
-        type_ = null;
-        onChanged();
-        return this;
-      }
-
-
+      private int itemId_ ;
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 itemId = 1;</code>
        * @return The itemId.
        */
       public int getItemId() {
-        if (typeCase_ == 1) {
-          return (java.lang.Integer) type_;
-        }
-        return 0;
+        return itemId_;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 itemId = 1;</code>
        * @param value The itemId to set.
        * @return This builder for chaining.
        */
       public Builder setItemId(int value) {
-        typeCase_ = 1;
-        type_ = value;
+        
+        itemId_ = value;
         onChanged();
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 itemId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearItemId() {
-        if (typeCase_ == 1) {
-          typeCase_ = 0;
-          type_ = null;
-          onChanged();
-        }
+        
+        itemId_ = 0;
+        onChanged();
         return this;
       }
 
+      private middleware.proto.RequestOuterClass.Item item_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> itemBuilder_;
       /**
-       * <code>string name = 2;</code>
-       * @return The name.
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       * @return Whether the item field is set.
        */
-      public java.lang.String getName() {
-        java.lang.Object ref = "";
-        if (typeCase_ == 2) {
-          ref = type_;
-        }
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (typeCase_ == 2) {
-            type_ = s;
-          }
-          return s;
+      public boolean hasItem() {
+        return itemBuilder_ != null || item_ != null;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       * @return The item.
+       */
+      public middleware.proto.RequestOuterClass.Item getItem() {
+        if (itemBuilder_ == null) {
+          return item_ == null ? middleware.proto.RequestOuterClass.Item.getDefaultInstance() : item_;
         } else {
-          return (java.lang.String) ref;
+          return itemBuilder_.getMessage();
         }
       }
       /**
-       * <code>string name = 2;</code>
-       * @return The bytes for name.
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
        */
-      public com.google.protobuf.ByteString
-          getNameBytes() {
-        java.lang.Object ref = "";
-        if (typeCase_ == 2) {
-          ref = type_;
-        }
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          if (typeCase_ == 2) {
-            type_ = b;
+      public Builder setItem(middleware.proto.RequestOuterClass.Item value) {
+        if (itemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
           }
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string name = 2;</code>
-       * @param value The name to set.
-       * @return This builder for chaining.
-       */
-      public Builder setName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  typeCase_ = 2;
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string name = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearName() {
-        if (typeCase_ == 2) {
-          typeCase_ = 0;
-          type_ = null;
+          item_ = value;
           onChanged();
+        } else {
+          itemBuilder_.setMessage(value);
         }
+
         return this;
       }
       /**
-       * <code>string name = 2;</code>
-       * @param value The bytes for name to set.
-       * @return This builder for chaining.
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
        */
-      public Builder setNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        typeCase_ = 2;
-        type_ = value;
-        onChanged();
+      public Builder setItem(
+          middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemBuilder_ == null) {
+          item_ = builderForValue.build();
+          onChanged();
+        } else {
+          itemBuilder_.setMessage(builderForValue.build());
+        }
+
         return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       */
+      public Builder mergeItem(middleware.proto.RequestOuterClass.Item value) {
+        if (itemBuilder_ == null) {
+          if (item_ != null) {
+            item_ =
+              middleware.proto.RequestOuterClass.Item.newBuilder(item_).mergeFrom(value).buildPartial();
+          } else {
+            item_ = value;
+          }
+          onChanged();
+        } else {
+          itemBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       */
+      public Builder clearItem() {
+        if (itemBuilder_ == null) {
+          item_ = null;
+          onChanged();
+        } else {
+          item_ = null;
+          itemBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder getItemBuilder() {
+        
+        onChanged();
+        return getItemFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.ItemOrBuilder getItemOrBuilder() {
+        if (itemBuilder_ != null) {
+          return itemBuilder_.getMessageOrBuilder();
+        } else {
+          return item_ == null ?
+              middleware.proto.RequestOuterClass.Item.getDefaultInstance() : item_;
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>.middleware.proto.Item item = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> 
+          getItemFieldBuilder() {
+        if (itemBuilder_ == null) {
+          itemBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder>(
+                  getItem(),
+                  getParentForChildren(),
+                  isClean());
+          item_ = null;
+        }
+        return itemBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -5531,6 +5188,10 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
@@ -5541,6 +5202,16 @@ public final class RequestOuterClass {
      * @return The itemId.
      */
     int getItemId();
+
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    boolean getAnswer();
   }
   /**
    * Protobuf type {@code middleware.proto.AddItemToCart}
@@ -5597,6 +5268,11 @@ public final class RequestOuterClass {
               itemId_ = input.readInt32();
               break;
             }
+            case 24: {
+
+              answer_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -5632,6 +5308,10 @@ public final class RequestOuterClass {
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
@@ -5647,6 +5327,20 @@ public final class RequestOuterClass {
      */
     public int getItemId() {
       return itemId_;
+    }
+
+    public static final int ANSWER_FIELD_NUMBER = 3;
+    private boolean answer_;
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    public boolean getAnswer() {
+      return answer_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5669,6 +5363,9 @@ public final class RequestOuterClass {
       if (itemId_ != 0) {
         output.writeInt32(2, itemId_);
       }
+      if (answer_ != false) {
+        output.writeBool(3, answer_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5685,6 +5382,10 @@ public final class RequestOuterClass {
       if (itemId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, itemId_);
+      }
+      if (answer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, answer_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5705,6 +5406,8 @@ public final class RequestOuterClass {
           != other.getUserId()) return false;
       if (getItemId()
           != other.getItemId()) return false;
+      if (getAnswer()
+          != other.getAnswer()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -5720,6 +5423,9 @@ public final class RequestOuterClass {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + ITEMID_FIELD_NUMBER;
       hash = (53 * hash) + getItemId();
+      hash = (37 * hash) + ANSWER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAnswer());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5857,6 +5563,8 @@ public final class RequestOuterClass {
 
         itemId_ = 0;
 
+        answer_ = false;
+
         return this;
       }
 
@@ -5885,6 +5593,7 @@ public final class RequestOuterClass {
         middleware.proto.RequestOuterClass.AddItemToCart result = new middleware.proto.RequestOuterClass.AddItemToCart(this);
         result.userId_ = userId_;
         result.itemId_ = itemId_;
+        result.answer_ = answer_;
         onBuilt();
         return result;
       }
@@ -5939,6 +5648,9 @@ public final class RequestOuterClass {
         if (other.getItemId() != 0) {
           setItemId(other.getItemId());
         }
+        if (other.getAnswer() != false) {
+          setAnswer(other.getAnswer());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -5970,6 +5682,10 @@ public final class RequestOuterClass {
 
       private int userId_ ;
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return The userId.
        */
@@ -5977,6 +5693,10 @@ public final class RequestOuterClass {
         return userId_;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
@@ -5988,6 +5708,10 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return This builder for chaining.
        */
@@ -6024,6 +5748,48 @@ public final class RequestOuterClass {
       public Builder clearItemId() {
         
         itemId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean answer_ ;
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return The answer.
+       */
+      public boolean getAnswer() {
+        return answer_;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @param value The answer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAnswer(boolean value) {
+        
+        answer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAnswer() {
+        
+        answer_ = false;
         onChanged();
         return this;
       }
@@ -6085,6 +5851,10 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
@@ -6095,6 +5865,16 @@ public final class RequestOuterClass {
      * @return The itemId.
      */
     int getItemId();
+
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    boolean getAnswer();
   }
   /**
    * Protobuf type {@code middleware.proto.RemoveItemFromCart}
@@ -6151,6 +5931,11 @@ public final class RequestOuterClass {
               itemId_ = input.readInt32();
               break;
             }
+            case 24: {
+
+              answer_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -6186,6 +5971,10 @@ public final class RequestOuterClass {
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
@@ -6201,6 +5990,20 @@ public final class RequestOuterClass {
      */
     public int getItemId() {
       return itemId_;
+    }
+
+    public static final int ANSWER_FIELD_NUMBER = 3;
+    private boolean answer_;
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    public boolean getAnswer() {
+      return answer_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6223,6 +6026,9 @@ public final class RequestOuterClass {
       if (itemId_ != 0) {
         output.writeInt32(2, itemId_);
       }
+      if (answer_ != false) {
+        output.writeBool(3, answer_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6239,6 +6045,10 @@ public final class RequestOuterClass {
       if (itemId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, itemId_);
+      }
+      if (answer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, answer_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6259,6 +6069,8 @@ public final class RequestOuterClass {
           != other.getUserId()) return false;
       if (getItemId()
           != other.getItemId()) return false;
+      if (getAnswer()
+          != other.getAnswer()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6274,6 +6086,9 @@ public final class RequestOuterClass {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + ITEMID_FIELD_NUMBER;
       hash = (53 * hash) + getItemId();
+      hash = (37 * hash) + ANSWER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAnswer());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6411,6 +6226,8 @@ public final class RequestOuterClass {
 
         itemId_ = 0;
 
+        answer_ = false;
+
         return this;
       }
 
@@ -6439,6 +6256,7 @@ public final class RequestOuterClass {
         middleware.proto.RequestOuterClass.RemoveItemFromCart result = new middleware.proto.RequestOuterClass.RemoveItemFromCart(this);
         result.userId_ = userId_;
         result.itemId_ = itemId_;
+        result.answer_ = answer_;
         onBuilt();
         return result;
       }
@@ -6493,6 +6311,9 @@ public final class RequestOuterClass {
         if (other.getItemId() != 0) {
           setItemId(other.getItemId());
         }
+        if (other.getAnswer() != false) {
+          setAnswer(other.getAnswer());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -6524,6 +6345,10 @@ public final class RequestOuterClass {
 
       private int userId_ ;
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return The userId.
        */
@@ -6531,6 +6356,10 @@ public final class RequestOuterClass {
         return userId_;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
@@ -6542,6 +6371,10 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return This builder for chaining.
        */
@@ -6578,6 +6411,48 @@ public final class RequestOuterClass {
       public Builder clearItemId() {
         
         itemId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean answer_ ;
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return The answer.
+       */
+      public boolean getAnswer() {
+        return answer_;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @param value The answer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAnswer(boolean value) {
+        
+        answer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAnswer() {
+        
+        answer_ = false;
         onChanged();
         return this;
       }
@@ -6639,10 +6514,58 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
     int getUserId();
+
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    java.util.List<middleware.proto.RequestOuterClass.Item> 
+        getItemsList();
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    middleware.proto.RequestOuterClass.Item getItems(int index);
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    int getItemsCount();
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+        getItemsOrBuilderList();
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code middleware.proto.GetCartItems}
@@ -6657,6 +6580,7 @@ public final class RequestOuterClass {
       super(builder);
     }
     private GetCartItems() {
+      items_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -6679,6 +6603,7 @@ public final class RequestOuterClass {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -6692,6 +6617,15 @@ public final class RequestOuterClass {
             case 8: {
 
               userId_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                items_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              items_.add(
+                  input.readMessage(middleware.proto.RequestOuterClass.Item.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -6709,6 +6643,9 @@ public final class RequestOuterClass {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          items_ = java.util.Collections.unmodifiableList(items_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -6729,11 +6666,70 @@ public final class RequestOuterClass {
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
     public int getUserId() {
       return userId_;
+    }
+
+    public static final int ITEMS_FIELD_NUMBER = 2;
+    private java.util.List<middleware.proto.RequestOuterClass.Item> items_;
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    public java.util.List<middleware.proto.RequestOuterClass.Item> getItemsList() {
+      return items_;
+    }
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+        getItemsOrBuilderList() {
+      return items_;
+    }
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    public int getItemsCount() {
+      return items_.size();
+    }
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    public middleware.proto.RequestOuterClass.Item getItems(int index) {
+      return items_.get(index);
+    }
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>repeated .middleware.proto.Item items = 2;</code>
+     */
+    public middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+        int index) {
+      return items_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -6753,6 +6749,9 @@ public final class RequestOuterClass {
       if (userId_ != 0) {
         output.writeInt32(1, userId_);
       }
+      for (int i = 0; i < items_.size(); i++) {
+        output.writeMessage(2, items_.get(i));
+      }
       unknownFields.writeTo(output);
     }
 
@@ -6765,6 +6764,10 @@ public final class RequestOuterClass {
       if (userId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, userId_);
+      }
+      for (int i = 0; i < items_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, items_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -6783,6 +6786,8 @@ public final class RequestOuterClass {
 
       if (getUserId()
           != other.getUserId()) return false;
+      if (!getItemsList()
+          .equals(other.getItemsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -6796,6 +6801,10 @@ public final class RequestOuterClass {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + USERID_FIELD_NUMBER;
       hash = (53 * hash) + getUserId();
+      if (getItemsCount() > 0) {
+        hash = (37 * hash) + ITEMS_FIELD_NUMBER;
+        hash = (53 * hash) + getItemsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6924,6 +6933,7 @@ public final class RequestOuterClass {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getItemsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -6931,6 +6941,12 @@ public final class RequestOuterClass {
         super.clear();
         userId_ = 0;
 
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          itemsBuilder_.clear();
+        }
         return this;
       }
 
@@ -6957,7 +6973,17 @@ public final class RequestOuterClass {
       @java.lang.Override
       public middleware.proto.RequestOuterClass.GetCartItems buildPartial() {
         middleware.proto.RequestOuterClass.GetCartItems result = new middleware.proto.RequestOuterClass.GetCartItems(this);
+        int from_bitField0_ = bitField0_;
         result.userId_ = userId_;
+        if (itemsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            items_ = java.util.Collections.unmodifiableList(items_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.items_ = items_;
+        } else {
+          result.items_ = itemsBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -7009,6 +7035,32 @@ public final class RequestOuterClass {
         if (other.getUserId() != 0) {
           setUserId(other.getUserId());
         }
+        if (itemsBuilder_ == null) {
+          if (!other.items_.isEmpty()) {
+            if (items_.isEmpty()) {
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureItemsIsMutable();
+              items_.addAll(other.items_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.items_.isEmpty()) {
+            if (itemsBuilder_.isEmpty()) {
+              itemsBuilder_.dispose();
+              itemsBuilder_ = null;
+              items_ = other.items_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              itemsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getItemsFieldBuilder() : null;
+            } else {
+              itemsBuilder_.addAllMessages(other.items_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -7037,9 +7089,14 @@ public final class RequestOuterClass {
         }
         return this;
       }
+      private int bitField0_;
 
       private int userId_ ;
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return The userId.
        */
@@ -7047,6 +7104,10 @@ public final class RequestOuterClass {
         return userId_;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
@@ -7058,6 +7119,10 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return This builder for chaining.
        */
@@ -7066,6 +7131,318 @@ public final class RequestOuterClass {
         userId_ = 0;
         onChanged();
         return this;
+      }
+
+      private java.util.List<middleware.proto.RequestOuterClass.Item> items_ =
+        java.util.Collections.emptyList();
+      private void ensureItemsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          items_ = new java.util.ArrayList<middleware.proto.RequestOuterClass.Item>(items_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> itemsBuilder_;
+
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public java.util.List<middleware.proto.RequestOuterClass.Item> getItemsList() {
+        if (itemsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(items_);
+        } else {
+          return itemsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public int getItemsCount() {
+        if (itemsBuilder_ == null) {
+          return items_.size();
+        } else {
+          return itemsBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item getItems(int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);
+        } else {
+          return itemsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder setItems(
+          int index, middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.set(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder setItems(
+          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder addItems(middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder addItems(
+          int index, middleware.proto.RequestOuterClass.Item value) {
+        if (itemsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureItemsIsMutable();
+          items_.add(index, value);
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder addItems(
+          middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder addItems(
+          int index, middleware.proto.RequestOuterClass.Item.Builder builderForValue) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          itemsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder addAllItems(
+          java.lang.Iterable<? extends middleware.proto.RequestOuterClass.Item> values) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, items_);
+          onChanged();
+        } else {
+          itemsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder clearItems() {
+        if (itemsBuilder_ == null) {
+          items_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          itemsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public Builder removeItems(int index) {
+        if (itemsBuilder_ == null) {
+          ensureItemsIsMutable();
+          items_.remove(index);
+          onChanged();
+        } else {
+          itemsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder getItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.ItemOrBuilder getItemsOrBuilder(
+          int index) {
+        if (itemsBuilder_ == null) {
+          return items_.get(index);  } else {
+          return itemsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public java.util.List<? extends middleware.proto.RequestOuterClass.ItemOrBuilder> 
+           getItemsOrBuilderList() {
+        if (itemsBuilder_ != null) {
+          return itemsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(items_);
+        }
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder addItemsBuilder() {
+        return getItemsFieldBuilder().addBuilder(
+            middleware.proto.RequestOuterClass.Item.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public middleware.proto.RequestOuterClass.Item.Builder addItemsBuilder(
+          int index) {
+        return getItemsFieldBuilder().addBuilder(
+            index, middleware.proto.RequestOuterClass.Item.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>repeated .middleware.proto.Item items = 2;</code>
+       */
+      public java.util.List<middleware.proto.RequestOuterClass.Item.Builder> 
+           getItemsBuilderList() {
+        return getItemsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder> 
+          getItemsFieldBuilder() {
+        if (itemsBuilder_ == null) {
+          itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              middleware.proto.RequestOuterClass.Item, middleware.proto.RequestOuterClass.Item.Builder, middleware.proto.RequestOuterClass.ItemOrBuilder>(
+                  items_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          items_ = null;
+        }
+        return itemsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -7125,10 +7502,24 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
     int getUserId();
+
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 2;</code>
+     * @return The answer.
+     */
+    boolean getAnswer();
   }
   /**
    * Protobuf type {@code middleware.proto.Order}
@@ -7180,6 +7571,11 @@ public final class RequestOuterClass {
               userId_ = input.readInt32();
               break;
             }
+            case 16: {
+
+              answer_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -7215,11 +7611,29 @@ public final class RequestOuterClass {
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>int32 userId = 1;</code>
      * @return The userId.
      */
     public int getUserId() {
       return userId_;
+    }
+
+    public static final int ANSWER_FIELD_NUMBER = 2;
+    private boolean answer_;
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 2;</code>
+     * @return The answer.
+     */
+    public boolean getAnswer() {
+      return answer_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -7239,6 +7653,9 @@ public final class RequestOuterClass {
       if (userId_ != 0) {
         output.writeInt32(1, userId_);
       }
+      if (answer_ != false) {
+        output.writeBool(2, answer_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -7251,6 +7668,10 @@ public final class RequestOuterClass {
       if (userId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, userId_);
+      }
+      if (answer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, answer_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7269,6 +7690,8 @@ public final class RequestOuterClass {
 
       if (getUserId()
           != other.getUserId()) return false;
+      if (getAnswer()
+          != other.getAnswer()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -7282,6 +7705,9 @@ public final class RequestOuterClass {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + USERID_FIELD_NUMBER;
       hash = (53 * hash) + getUserId();
+      hash = (37 * hash) + ANSWER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAnswer());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7417,6 +7843,8 @@ public final class RequestOuterClass {
         super.clear();
         userId_ = 0;
 
+        answer_ = false;
+
         return this;
       }
 
@@ -7444,6 +7872,7 @@ public final class RequestOuterClass {
       public middleware.proto.RequestOuterClass.Order buildPartial() {
         middleware.proto.RequestOuterClass.Order result = new middleware.proto.RequestOuterClass.Order(this);
         result.userId_ = userId_;
+        result.answer_ = answer_;
         onBuilt();
         return result;
       }
@@ -7495,6 +7924,9 @@ public final class RequestOuterClass {
         if (other.getUserId() != 0) {
           setUserId(other.getUserId());
         }
+        if (other.getAnswer() != false) {
+          setAnswer(other.getAnswer());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -7526,6 +7958,10 @@ public final class RequestOuterClass {
 
       private int userId_ ;
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return The userId.
        */
@@ -7533,6 +7969,10 @@ public final class RequestOuterClass {
         return userId_;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
@@ -7544,12 +7984,58 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>int32 userId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserId() {
         
         userId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean answer_ ;
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 2;</code>
+       * @return The answer.
+       */
+      public boolean getAnswer() {
+        return answer_;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 2;</code>
+       * @param value The answer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAnswer(boolean value) {
+        
+        answer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAnswer() {
+        
+        answer_ = false;
         onChanged();
         return this;
       }
@@ -7611,11 +8097,19 @@ public final class RequestOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>string username = 1;</code>
      * @return The username.
      */
     java.lang.String getUsername();
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
@@ -7633,6 +8127,22 @@ public final class RequestOuterClass {
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
+
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    boolean getAnswer();
+
+    /**
+     * <code>int32 id = 4;</code>
+     * @return The id.
+     */
+    int getId();
   }
   /**
    * Protobuf type {@code middleware.proto.Login}
@@ -7693,6 +8203,16 @@ public final class RequestOuterClass {
               password_ = s;
               break;
             }
+            case 24: {
+
+              answer_ = input.readBool();
+              break;
+            }
+            case 32: {
+
+              id_ = input.readInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -7728,6 +8248,10 @@ public final class RequestOuterClass {
     public static final int USERNAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object username_;
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>string username = 1;</code>
      * @return The username.
      */
@@ -7744,6 +8268,10 @@ public final class RequestOuterClass {
       }
     }
     /**
+     * <pre>
+     * Request
+     * </pre>
+     *
      * <code>string username = 1;</code>
      * @return The bytes for username.
      */
@@ -7797,6 +8325,30 @@ public final class RequestOuterClass {
       }
     }
 
+    public static final int ANSWER_FIELD_NUMBER = 3;
+    private boolean answer_;
+    /**
+     * <pre>
+     * Reply
+     * </pre>
+     *
+     * <code>bool answer = 3;</code>
+     * @return The answer.
+     */
+    public boolean getAnswer() {
+      return answer_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 4;
+    private int id_;
+    /**
+     * <code>int32 id = 4;</code>
+     * @return The id.
+     */
+    public int getId() {
+      return id_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7817,6 +8369,12 @@ public final class RequestOuterClass {
       if (!getPasswordBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
       }
+      if (answer_ != false) {
+        output.writeBool(3, answer_);
+      }
+      if (id_ != 0) {
+        output.writeInt32(4, id_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -7831,6 +8389,14 @@ public final class RequestOuterClass {
       }
       if (!getPasswordBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
+      }
+      if (answer_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, answer_);
+      }
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, id_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7851,6 +8417,10 @@ public final class RequestOuterClass {
           .equals(other.getUsername())) return false;
       if (!getPassword()
           .equals(other.getPassword())) return false;
+      if (getAnswer()
+          != other.getAnswer()) return false;
+      if (getId()
+          != other.getId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -7866,6 +8436,11 @@ public final class RequestOuterClass {
       hash = (53 * hash) + getUsername().hashCode();
       hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
       hash = (53 * hash) + getPassword().hashCode();
+      hash = (37 * hash) + ANSWER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getAnswer());
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -8003,6 +8578,10 @@ public final class RequestOuterClass {
 
         password_ = "";
 
+        answer_ = false;
+
+        id_ = 0;
+
         return this;
       }
 
@@ -8031,6 +8610,8 @@ public final class RequestOuterClass {
         middleware.proto.RequestOuterClass.Login result = new middleware.proto.RequestOuterClass.Login(this);
         result.username_ = username_;
         result.password_ = password_;
+        result.answer_ = answer_;
+        result.id_ = id_;
         onBuilt();
         return result;
       }
@@ -8087,6 +8668,12 @@ public final class RequestOuterClass {
           password_ = other.password_;
           onChanged();
         }
+        if (other.getAnswer() != false) {
+          setAnswer(other.getAnswer());
+        }
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -8118,6 +8705,10 @@ public final class RequestOuterClass {
 
       private java.lang.Object username_ = "";
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>string username = 1;</code>
        * @return The username.
        */
@@ -8134,6 +8725,10 @@ public final class RequestOuterClass {
         }
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>string username = 1;</code>
        * @return The bytes for username.
        */
@@ -8151,6 +8746,10 @@ public final class RequestOuterClass {
         }
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>string username = 1;</code>
        * @param value The username to set.
        * @return This builder for chaining.
@@ -8166,6 +8765,10 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>string username = 1;</code>
        * @return This builder for chaining.
        */
@@ -8176,6 +8779,10 @@ public final class RequestOuterClass {
         return this;
       }
       /**
+       * <pre>
+       * Request
+       * </pre>
+       *
        * <code>string username = 1;</code>
        * @param value The bytes for username to set.
        * @return This builder for chaining.
@@ -8267,6 +8874,78 @@ public final class RequestOuterClass {
         onChanged();
         return this;
       }
+
+      private boolean answer_ ;
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return The answer.
+       */
+      public boolean getAnswer() {
+        return answer_;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @param value The answer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAnswer(boolean value) {
+        
+        answer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Reply
+       * </pre>
+       *
+       * <code>bool answer = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAnswer() {
+        
+        answer_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>int32 id = 4;</code>
+       * @return The id.
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>int32 id = 4;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 id = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -8331,11 +9010,6 @@ public final class RequestOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_middleware_proto_Item_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_middleware_proto_Response_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_middleware_proto_Response_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_middleware_proto_GetItems_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -8380,29 +9054,32 @@ public final class RequestOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\025request/request.proto\022\020middleware.prot" +
-      "o\"\307\003\n\007Request\022.\n\010getItems\030\001 \001(\0132\032.middle" +
-      "ware.proto.GetItemsH\000\022,\n\007getItem\030\002 \001(\0132\031" +
-      ".middleware.proto.GetItemH\000\0228\n\raddItemTo" +
-      "Cart\030\003 \001(\0132\037.middleware.proto.AddItemToC" +
-      "artH\000\022B\n\022removeItemFromCart\030\004 \001(\0132$.midd" +
-      "leware.proto.RemoveItemFromCartH\000\0226\n\014get" +
-      "CartItems\030\005 \001(\0132\036.middleware.proto.GetCa" +
-      "rtItemsH\000\022(\n\005order\030\006 \001(\0132\027.middleware.pr" +
-      "oto.OrderH\000\022(\n\005login\030\007 \001(\0132\027.middleware." +
-      "proto.LoginH\000\022.\n\010response\030\010 \001(\0132\032.middle" +
-      "ware.proto.ResponseH\000\022\014\n\004uuid\030\t \001(\t\022\016\n\006s" +
-      "ender\030\n \001(\tB\006\n\004type\"W\n\004Item\022\n\n\002id\030\001 \001(\005\022" +
-      "\014\n\004name\030\002 \001(\t\022\023\n\013description\030\003 \001(\t\022\r\n\005pr" +
-      "ice\030\004 \001(\002\022\021\n\tavailable\030\005 \001(\010\"@\n\010Response" +
-      "\022$\n\004item\030\001 \003(\0132\026.middleware.proto.Item\022\016" +
-      "\n\006status\030\002 \001(\010\"\n\n\010GetItems\"3\n\007GetItem\022\020\n" +
-      "\006itemId\030\001 \001(\005H\000\022\016\n\004name\030\002 \001(\tH\000B\006\n\004type\"" +
-      "/\n\rAddItemToCart\022\016\n\006userId\030\001 \001(\005\022\016\n\006item" +
-      "Id\030\002 \001(\005\"4\n\022RemoveItemFromCart\022\016\n\006userId" +
-      "\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\"\036\n\014GetCartItems\022\016" +
-      "\n\006userId\030\001 \001(\005\"\027\n\005Order\022\016\n\006userId\030\001 \001(\005\"" +
-      "+\n\005Login\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002" +
-      " \001(\tb\006proto3"
+      "o\"\352\003\n\007Request\022,\n\004type\030\001 \001(\0162\036.middleware" +
+      ".proto.Request.Type\022.\n\010getItems\030\002 \001(\0132\032." +
+      "middleware.proto.GetItemsH\000\022,\n\007getItem\030\003" +
+      " \001(\0132\031.middleware.proto.GetItemH\000\0228\n\radd" +
+      "ItemToCart\030\004 \001(\0132\037.middleware.proto.AddI" +
+      "temToCartH\000\022B\n\022removeItemFromCart\030\005 \001(\0132" +
+      "$.middleware.proto.RemoveItemFromCartH\000\022" +
+      "6\n\014getCartItems\030\006 \001(\0132\036.middleware.proto" +
+      ".GetCartItemsH\000\022(\n\005order\030\007 \001(\0132\027.middlew" +
+      "are.proto.OrderH\000\022(\n\005login\030\010 \001(\0132\027.middl" +
+      "eware.proto.LoginH\000\022\014\n\004uuid\030\t \001(\t\022\016\n\006sen" +
+      "der\030\n \001(\t\"\036\n\004Type\022\013\n\007REQUEST\020\000\022\t\n\005REPLY\020" +
+      "\001B\013\n\toperation\"S\n\004Item\022\n\n\002id\030\001 \001(\005\022\014\n\004na" +
+      "me\030\002 \001(\t\022\023\n\013description\030\003 \001(\t\022\r\n\005price\030\004" +
+      " \001(\002\022\r\n\005stock\030\005 \001(\005\"1\n\010GetItems\022%\n\005items" +
+      "\030\001 \003(\0132\026.middleware.proto.Item\"?\n\007GetIte" +
+      "m\022\016\n\006itemId\030\001 \001(\005\022$\n\004item\030\002 \001(\0132\026.middle" +
+      "ware.proto.Item\"?\n\rAddItemToCart\022\016\n\006user" +
+      "Id\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\016\n\006answer\030\003 \001(\010" +
+      "\"D\n\022RemoveItemFromCart\022\016\n\006userId\030\001 \001(\005\022\016" +
+      "\n\006itemId\030\002 \001(\005\022\016\n\006answer\030\003 \001(\010\"E\n\014GetCar" +
+      "tItems\022\016\n\006userId\030\001 \001(\005\022%\n\005items\030\002 \003(\0132\026." +
+      "middleware.proto.Item\"\'\n\005Order\022\016\n\006userId" +
+      "\030\001 \001(\005\022\016\n\006answer\030\002 \001(\010\"G\n\005Login\022\020\n\010usern" +
+      "ame\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\016\n\006answer\030\003 " +
+      "\001(\010\022\n\n\002id\030\004 \001(\005b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -8413,61 +9090,55 @@ public final class RequestOuterClass {
     internal_static_middleware_proto_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Request_descriptor,
-        new java.lang.String[] { "GetItems", "GetItem", "AddItemToCart", "RemoveItemFromCart", "GetCartItems", "Order", "Login", "Response", "Uuid", "Sender", "Type", });
+        new java.lang.String[] { "Type", "GetItems", "GetItem", "AddItemToCart", "RemoveItemFromCart", "GetCartItems", "Order", "Login", "Uuid", "Sender", "Operation", });
     internal_static_middleware_proto_Item_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_middleware_proto_Item_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Item_descriptor,
-        new java.lang.String[] { "Id", "Name", "Description", "Price", "Available", });
-    internal_static_middleware_proto_Response_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_middleware_proto_Response_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_middleware_proto_Response_descriptor,
-        new java.lang.String[] { "Item", "Status", });
+        new java.lang.String[] { "Id", "Name", "Description", "Price", "Stock", });
     internal_static_middleware_proto_GetItems_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(2);
     internal_static_middleware_proto_GetItems_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_GetItems_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Items", });
     internal_static_middleware_proto_GetItem_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_middleware_proto_GetItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_GetItem_descriptor,
-        new java.lang.String[] { "ItemId", "Name", "Type", });
+        new java.lang.String[] { "ItemId", "Item", });
     internal_static_middleware_proto_AddItemToCart_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_middleware_proto_AddItemToCart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_AddItemToCart_descriptor,
-        new java.lang.String[] { "UserId", "ItemId", });
+        new java.lang.String[] { "UserId", "ItemId", "Answer", });
     internal_static_middleware_proto_RemoveItemFromCart_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_middleware_proto_RemoveItemFromCart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_RemoveItemFromCart_descriptor,
-        new java.lang.String[] { "UserId", "ItemId", });
+        new java.lang.String[] { "UserId", "ItemId", "Answer", });
     internal_static_middleware_proto_GetCartItems_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_middleware_proto_GetCartItems_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_GetCartItems_descriptor,
-        new java.lang.String[] { "UserId", });
+        new java.lang.String[] { "UserId", "Items", });
     internal_static_middleware_proto_Order_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_middleware_proto_Order_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Order_descriptor,
-        new java.lang.String[] { "UserId", });
+        new java.lang.String[] { "UserId", "Answer", });
     internal_static_middleware_proto_Login_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_middleware_proto_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Login_descriptor,
-        new java.lang.String[] { "Username", "Password", });
+        new java.lang.String[] { "Username", "Password", "Answer", "Id", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

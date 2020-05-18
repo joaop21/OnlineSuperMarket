@@ -4,7 +4,7 @@ public class Client {
 
     public static void main(String[] args) {
 
-        // ClientInterface.start();
+        ClientInterface.start();
 
     }
 }

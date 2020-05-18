@@ -20,7 +20,8 @@ public class QueryCart {
                 return null;
             }
             PreparedStatement pstat = conn.prepareStatement(
-                    "SELECT begin, active FROM Customer WHERE customerid=" + userId);
+                    "SELECT begin, active FROM Customer WHERE customerid=?");
+            pstat.setInt(1, userId);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
@@ -50,7 +51,8 @@ public class QueryCart {
                 return false;
             }
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT active FROM Cart WHERE customerid = "+userId);
+                    "SELECT active FROM Cart WHERE customerid=?");
+            ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
@@ -61,12 +63,13 @@ public class QueryCart {
                     boolean active = rs.getBoolean("active");
                     if (!active) {
                         PreparedStatement ps1 = conn.prepareStatement(
-                                "UPDATE Cart SET begin=NOW(), active=? WHERE customerid=" + userId);
+                                "UPDATE Cart SET begin=NOW(), active=? WHERE customerid=?");
                         ps1.setBoolean(1, true);
+                        ps1.setInt(2, userId);
                         int updated = ps1.executeUpdate();
                     }
                     PreparedStatement pstat = conn.prepareStatement(
-                            "INSERT IGNORE INTO Cart_Item(CartCustomerid, Itemid) VALUES(?,?,?)");
+                            "INSERT IGNORE INTO Cart_Item(CartCustomerid, Itemid) VALUES(?,?)");
                     pstat.setInt(1, userId);
                     pstat.setInt(2, itemId);
                     int inserted = pstat.executeUpdate();
@@ -83,12 +86,12 @@ public class QueryCart {
         return false;
     }
 
-    public static void removeItemFromCart(int userId, int itemId){
+    public static boolean removeItemFromCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return;
+                return false;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM Cart_Item WHERE CartCustomerid=? AND Itemid=?");
@@ -98,11 +101,14 @@ public class QueryCart {
             if (updated > 0){
                 conn.commit();
             }
+            return true;
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
         }
+
+        return false;
     }
 
     public static List getCartItemsID(int userId){

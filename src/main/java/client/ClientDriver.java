@@ -50,17 +50,17 @@ public class ClientDriver {
 
             try {
 
-                System.out.println("Connecting to load balancer!");
+                //System.out.println("Connecting to load balancer!");
 
                 // Connecting to a load balancer
                 getLoadBalancer();
 
-                System.out.println("Connected to load balancer!");
+                //System.out.println("Connected to load balancer!");
 
                 // Receiving message
                 Message message = Message.parseFrom(ClientDriver.loadBalancerSocketIO.read());
 
-                System.out.println("Received message from Load Balancer!");
+                //System.out.println("Received message from Load Balancer!");
 
                 // Shutting down load balancer connection
                 ClientDriver.shutdownLoadBalancerConnection();
@@ -70,7 +70,7 @@ public class ClientDriver {
                     String address =message.getAssignment().getServerInfo().getAddress();
                     int port = message.getAssignment().getServerInfo().getPort();
 
-                    System.out.println("Server Info -> Address : " + address + " ; Port : " + port + " ;");
+                    //System.out.println("Server Info -> Address : " + address + " ; Port : " + port + " ;");
 
                     // Updating Socket info
                     ClientDriver.serverSocket = new Socket(address, port);
@@ -79,7 +79,7 @@ public class ClientDriver {
                 } else {
 
                     // Error message from Load Balancer
-                    System.out.println("Couldn't retrieve Server Info: " +  message.getAssignment().getError().getType());
+                    //System.out.println("Couldn't retrieve Server Info: " +  message.getAssignment().getError().getType());
 
                     // Shutting down load balancer & server connection
                     ClientDriver.shutdownLoadBalancerConnection();
@@ -104,14 +104,14 @@ public class ClientDriver {
 
     public static Message request (Message message) {
 
-        System.out.println("Connecting to server!");
+        //System.out.println("Connecting to server!");
 
         // Connecting to a server
         getServer();
 
         try {
 
-            System.out.println("Connected to server!");
+            //System.out.println("Connected to server!");
 
             // Sending message to server
             ClientDriver.serverSocketIO.write(message.toByteArray());
