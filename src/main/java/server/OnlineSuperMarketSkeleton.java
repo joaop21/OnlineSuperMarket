@@ -2,12 +2,14 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
+import database.QueryCart;
 import database.QueryCustomer;
 import database.QueryItem;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
 import middleware.spread.SpreadConnector;
 
+import javax.management.Query;
 import java.util.List;
 import java.util.Set;
 
@@ -24,34 +26,22 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     }
 
     @Override
-    public Item getItem(String itemName) {
-        return null;
-    }
+    public boolean addItemToCart(int userId, int itemId) { return QueryCart.addItemToCart(userId, itemId); }
 
     @Override
-    public boolean addItemToCart(int userId, int itemId) {
-        System.out.println(userId + " : " + itemId);
-        return true;
-    }
+    public boolean removeItemFromCart(int userId, int itemId) { return QueryCart.removeItemFromCart(userId, itemId); }
 
     @Override
-    public void removeItemFromCart(int userId, int itemId) {
-
-    }
-
-    @Override
-    public List<Item> getCartItems(int userId) {
-        return null;
-    }
+    public List<Item> getCartItems(int userId) { return QueryCart.getCartItems(userId); }
 
     @Override
     public boolean order(int userId) {
-        return false;
+        return QueryCart.order(userId);
     }
 
     @Override
     public int login(String username, String password) {
-        return -1;
+        return QueryCustomer.checkPassword(username, password);
     }
 
     @Override
@@ -61,7 +51,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
         while((msg = RequestManager.getNextRequest()) != null){
 
-            switch(msg.getRequest().getTypeCase()){
+            switch(msg.getRequest().getOperationCase()){
 
                 case ADDITEMTOCART:
                     Message msg1 = Message.newBuilder()

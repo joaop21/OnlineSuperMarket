@@ -6,14 +6,12 @@ import middleware.gateway.Skeleton;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.RequestOuterClass;
-import middleware.server.Pair;
 import middleware.socket.SocketIO;
 import middleware.spread.SpreadConnector;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,52 +33,165 @@ public class ClientManager extends Skeleton {
         while(true){
             try {
                 Message msg = Message.parseFrom(this.socketIO.read());
-                switch (msg.getRequest().getTypeCase()){
+                switch (msg.getRequest().getOperationCase()){
 
                     case GETITEMS:
-                        socketIO.write(createResponse(osm.getItems()).toByteArray());
+                        socketIO.write(
+                                getGetItemsResponse(msg, osm.getItems()).toByteArray());
                         break;
-
                     case GETITEM:
-                        RequestOuterClass.GetItem getItem = msg.getRequest().getGetItem();
-                        Item res2 = null;
-                        switch (getItem.getTypeCase()){
-
-                            case ITEMID:
-                                res2 = osm.getItem(getItem.getItemId());
-                                break;
-
-                            case NAME:
-                                res2 = osm.getItem(getItem.getName());
-                                break;
-
-                        }
-                        socketIO.write(createResponse(res2).toByteArray());
+                        socketIO.write(
+                                getGetItemResponse(msg, osm.getItem(msg.getRequest().getGetItem().getItemId())).toByteArray());
                         break;
-
                     case ADDITEMTOCART:
-
+                        socketIO.write(
+                                getAddItemToCartResponse(msg, osm.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
+                                        msg.getRequest().getAddItemToCart().getItemId())).toByteArray());
+                        break;
                     case REMOVEITEMFROMCART:
-
+                        socketIO.write(
+                                getRemItemFromCart(msg, osm.addItemToCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
+                                    msg.getRequest().getRemoveItemFromCart().getItemId())).toByteArray());
+                        break;
                     case ORDER:
-                        Message response_message1 = RequestManager.publishRequest(msg);
-                        socketIO.write(createResponse(response_message1.getReplication().getUpdates().getStatus()).toByteArray());
+                        socketIO.write(
+                                getOrderResponse(msg, osm.order(msg.getRequest().getOrder().getUserId())).toByteArray());
                         break;
 
                     case GETCARTITEMS:
-                        List<Item> res3 = osm.getCartItems(msg.getRequest().getGetCartItems().getUserId());
-                        // send response
+                        socketIO.write(
+                                getGetCartItemsResponse(msg, osm.getCartItems(msg.getRequest().getGetCartItems().getUserId())).toByteArray());
                         break;
 
                     case LOGIN:
-                        RequestOuterClass.Login login = msg.getRequest().getLogin();
-                        socketIO.write(createResponse(osm.login(login.getUsername(), login.getPassword())).toByteArray());
+                        socketIO.write(
+                                getLoginResponse(msg, osm.login(msg.getRequest().getLogin().getUsername(),
+                                        msg.getRequest().getLogin().getPassword())).toByteArray());
                         break;
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private Message getGetItemsResponse(Message msg, List<Item> items) {
+
+        RequestOuterClass.GetItems.Builder getItems = RequestOuterClass.GetItems.newBuilder();
+
+        for (Item item: items)
+            getItems.addItems(
+                    RequestOuterClass.Item.newBuilder()
+                            .setId(item.getId())
+                            .setName(item.getName())
+                            .setDescription(item.getDescription())
+                            .setPrice(item.getPrice())
+                            .setStock(item.getStock())
+                            .build());
+
+        return Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setType(RequestOuterClass.Request.Type.REPLY)
+                            .setGetItems(getItems.build())
+                            .build())
+                    .build();
+
+    }
+
+    private Message getGetItemResponse(Message msg, Item item) {
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setGetItem(RequestOuterClass.GetItem.newBuilder()
+                                .setItem(RequestOuterClass.Item.newBuilder()
+                                        .setId(item.getId())
+                                        .setName(item.getName())
+                                        .setDescription(item.getDescription())
+                                        .setPrice(item.getPrice())
+                                        .setStock(item.getStock())
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+
+    }
+
+    private Message getAddItemToCartResponse(Message msg, boolean addItemToCart) {
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setAddItemToCart(RequestOuterClass.AddItemToCart.newBuilder()
+                                .setAnswer(addItemToCart)
+                                .build())
+                        .build())
+                .build();
+
+    }
+
+    private Message getRemItemFromCart(Message msg, boolean remItemFromCart) {
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setRemoveItemFromCart(RequestOuterClass.RemoveItemFromCart.newBuilder()
+                                .setAnswer(remItemFromCart)
+                                .build())
+                        .build())
+                .build();
+
+    }
+
+    private Message getOrderResponse(Message msg, boolean ordered) {
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setOrder(RequestOuterClass.Order.newBuilder()
+                                .setAnswer(ordered)
+                                .build())
+                        .build())
+                .build();
+
+    }
+
+    private Message getGetCartItemsResponse(Message msg, List<Item> cartItems) {
+
+        RequestOuterClass.GetCartItems.Builder getCartItems = RequestOuterClass.GetCartItems.newBuilder();
+
+        for (Item item: cartItems)
+            getCartItems.addItems(
+                    RequestOuterClass.Item.newBuilder()
+                            .setId(item.getId())
+                            .setName(item.getName())
+                            .setDescription(item.getDescription())
+                            .setPrice(item.getPrice())
+                            .setStock(item.getStock())
+                            .build());
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setGetCartItems(getCartItems.build())
+                        .build())
+                .build();
+
+    }
+
+    private Message getLoginResponse(Message msg, int login) {
+
+        return Message.newBuilder()
+                .setRequest(RequestOuterClass.Request.newBuilder()
+                        .setType(RequestOuterClass.Request.Type.REPLY)
+                        .setLogin(RequestOuterClass.Login.newBuilder()
+                                .setAnswer(login >= 0)
+                                .setId(login)
+                                .build())
+                        .build())
+                .build();
+
     }
 
     public void informLoadBalancer(){
@@ -102,61 +213,5 @@ public class ClientManager extends Skeleton {
 
     }
 
-    public Message createResponse(List<Item> items){
-        List<RequestOuterClass.Item> res_items = new ArrayList<>();
-        for(Item item : items){
-            res_items.add(constructItem(item));
-        }
-
-        return Message.newBuilder()
-                .setRequest(RequestOuterClass.Request.newBuilder()
-                        .setResponse(RequestOuterClass.Response.newBuilder()
-                                .addAllItem(res_items)
-                                .setStatus(true)
-                                .build())
-                        .build())
-                .build();
-    }
-
-    public Message createResponse(Item item){
-        return Message.newBuilder()
-                .setRequest(RequestOuterClass.Request.newBuilder()
-                        .setResponse(RequestOuterClass.Response.newBuilder()
-                                .addItem(constructItem(item))
-                                .setStatus(true)
-                                .build())
-                        .build())
-                .build();
-    }
-
-    public Message createResponse(boolean status){
-        return Message.newBuilder()
-                .setRequest(RequestOuterClass.Request.newBuilder()
-                        .setResponse(RequestOuterClass.Response.newBuilder()
-                                .setStatus(status)
-                                .build())
-                        .build())
-                .build();
-    }
-
-    public Message createResponse(int status){
-        return Message.newBuilder()
-                .setRequest(RequestOuterClass.Request.newBuilder()
-                        .setResponse(RequestOuterClass.Response.newBuilder()
-                                .setStatus(status > 0)
-                                .build())
-                        .build())
-                .build();
-    }
-
-    private RequestOuterClass.Item constructItem(Item item){
-        return RequestOuterClass.Item.newBuilder()
-                .setId(item.getId())
-                .setName(item.getName())
-                .setDescription(item.getDescription())
-                .setPrice(item.getPrice())
-                .setAvailable(item.getStock()>=1)
-                .build();
-    }
 
 }

@@ -83,12 +83,12 @@ public class QueryCart {
         return false;
     }
 
-    public static void removeItemFromCart(int userId, int itemId){
+    public static boolean removeItemFromCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return;
+                return false;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM Cart_Item WHERE CartCustomerid=? AND Itemid=?");
@@ -98,11 +98,14 @@ public class QueryCart {
             if (updated > 0){
                 conn.commit();
             }
+            return true;
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
         }
+
+        return false;
     }
 
     public static List getCartItemsID(int userId){

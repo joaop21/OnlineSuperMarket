@@ -4,67 +4,105 @@ package middleware.proto;
 
 message Request {
 
-    oneof type {
+    enum Type {
 
-        GetItems getItems = 1;
-        GetItem getItem = 2;
-        AddItemToCart addItemToCart = 3;
-        RemoveItemFromCart removeItemFromCart = 4;
-        GetCartItems getCartItems = 5;
-        Order order = 6;
-        Login login = 7;
-        Response response = 8;
+        REQUEST = 0;
+        REPLY = 1;
 
     }
+
+    Type type = 1;
+
+    oneof operation {
+
+        GetItems getItems = 2;
+        GetItem getItem = 3;
+        AddItemToCart addItemToCart = 4;
+        RemoveItemFromCart removeItemFromCart = 5;
+        GetCartItems getCartItems = 6;
+        Order order = 7;
+        Login login = 8;
+
+    }
+
     string uuid = 9;
     string sender = 10;
 }
 
 message Item {
+
     int32 id = 1;
     string name = 2;
     string description = 3;
     float price = 4;
-    bool available = 5;
+    int32 stock = 5;
+
 }
 
-message Response {
-    repeated Item item = 1;
-    bool status = 2;
-}
+message GetItems{
 
-message GetItems{}
+    // Request
+    // Reply
+    repeated Item items = 1;
+
+}
 
 message GetItem{
 
-    oneof type {
+    // Request
+    int32 itemId = 1;
 
-        int32 itemId = 1;
-        string name = 2;
-
-    }
+    // Reply
+    Item item = 2;
 
 }
 
 message AddItemToCart{
+
+    // Request
     int32 userId = 1;
     int32 itemId = 2;
+
+    // Reply
+    bool answer = 3;
 }
 
 message RemoveItemFromCart {
+
+    // Request
     int32 userId = 1;
     int32 itemId = 2;
+
+    // Reply
+    bool answer = 3;
 }
 
 message GetCartItems {
+
+    // Request
     int32 userId = 1;
+
+    // Reply
+    repeated Item items = 2;
+
 }
 
 message Order {
+
+    // Request
     int32 userId = 1;
+
+    // Reply
+    bool answer = 2;
 }
 
 message Login {
+
+    // Request
     string username = 1;
     string password = 2;
+
+    // Reply
+    bool answer = 3;
+    int32 id = 4;
 }
