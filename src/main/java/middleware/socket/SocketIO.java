@@ -17,10 +17,16 @@ public class SocketIO {
 
         // Getting length of data
         int len = this.socket.getInputStream().read();
+
+        // Throwing exception when Socket is closed
+        if (len == -1) throw new IOException("Socket Closed.");
+
         // Creating buffer of said size (DANGEROUS!)
         byte[] data = new byte[len];
+
         // Reading to buffer
-        this.socket.getInputStream().read(data);
+        if (this.socket.getInputStream().read(data) == -1)
+            throw new IOException("Socket Closed.");
 
         return data;
 
