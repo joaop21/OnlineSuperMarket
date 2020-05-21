@@ -25,12 +25,18 @@ public class QueryCart {
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
+                pstat.close();
+                rs.close();
+                conn.close();
                 return null;
             }
             else {
                 do {
                     Timestamp begin = rs.getTimestamp("begin");
                     boolean active = rs.getBoolean("active");
+                    pstat.close();
+                    rs.close();
+                    conn.close();
                     return new Cart(userId, begin, active);
                 }
                 while (rs.next());
@@ -39,8 +45,8 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     public static boolean addItemToCart(int userId, int itemId){
@@ -56,6 +62,9 @@ public class QueryCart {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
+                ps.close();
+                rs.close();
+                conn.close();
                 return false;
             }
             else {
@@ -67,6 +76,7 @@ public class QueryCart {
                         ps1.setBoolean(1, true);
                         ps1.setInt(2, userId);
                         int updated = ps1.executeUpdate();
+                        ps1.close();
                     }
                     PreparedStatement pstat = conn.prepareStatement(
                             "INSERT IGNORE INTO Cart_Item(CartCustomerid, Itemid) VALUES(?,?)");
@@ -74,6 +84,8 @@ public class QueryCart {
                     pstat.setInt(2, itemId);
                     int inserted = pstat.executeUpdate();
                     conn.commit();
+                    pstat.close();
+                    conn.close();
                     return inserted > 0;
                 }
                 while (rs.next());
@@ -82,8 +94,8 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public static boolean removeItemFromCart(int userId, int itemId){
@@ -98,14 +110,19 @@ public class QueryCart {
             ps.setInt(1, userId);
             ps.setInt(2, itemId);
             int updated = ps.executeUpdate();
-            if (updated > 0){
-                conn.commit();
+
+            conn.commit();
+            ps.close();
+            conn.close();
+
+            if (updated > 0) {
+                return true;
             }
-            return true;
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return false;
         }
 
         return false;
@@ -117,7 +134,7 @@ public class QueryCart {
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return null;
+                return result;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT Itemid FROM Cart_Item WHERE CartCustomerid=?");
@@ -125,6 +142,9 @@ public class QueryCart {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
+                ps.close();
+                rs.close();
+                conn.close();
                 return result;
             }
             else {
@@ -132,11 +152,16 @@ public class QueryCart {
                     int itemId = rs.getInt("Itemid");
                     result.add(itemId);
                 } while (rs.next());
+
+                ps.close();
+                rs.close();
+                conn.close();
             }
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return result;
         }
         return result;
     }
@@ -147,7 +172,7 @@ public class QueryCart {
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return null;
+                return result;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT Itemid FROM Cart_Item WHERE CartCustomerid=?");
@@ -155,6 +180,10 @@ public class QueryCart {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
+
+                ps.close();
+                rs.close();
+                conn.close();
                 return result;
             }
             else {
@@ -167,7 +196,11 @@ public class QueryCart {
                     ResultSet rsaux = pstat.executeQuery();
                     if (!rsaux.next()) {
                         System.out.println("There is no Item with that ID.");
-                        return null;
+
+                        pstat.close();
+                        rsaux.close();
+                        conn.close();
+                        return result;
                     }
                     else {
                         do {
@@ -178,13 +211,21 @@ public class QueryCart {
                             result.add(new Item(itemId, name, description, price, stock));
                         }
                         while (rsaux.next());
+
+                        pstat.close();
+                        rsaux.close();
                     }
                 } while (rs.next());
+
+                ps.close();
+                rs.close();
+                conn.close();
             }
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return result;
         }
         return result;
     }
@@ -204,6 +245,10 @@ public class QueryCart {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that ID.");
+
+                ps.close();
+                rs.close();
+                conn.close();
                 return false;
             }
             else {
@@ -216,6 +261,12 @@ public class QueryCart {
                     ResultSet rsaux = pstat.executeQuery();
                     if (!rsaux.next()) {
                         System.out.println("There is no Item with that ID.");
+
+                        ps.close();
+                        rs.close();
+                        pstat.close();
+                        rsaux.close();
+                        conn.close();
                         return false;
                     }
                     else {
@@ -226,14 +277,25 @@ public class QueryCart {
                             update.setInt(1, stock - 1);
                             update.setInt(2, itemId);
                             int updated = update.executeUpdate();
+
+                            update.close();
                         }
                         // ERROR !! The item has no stock: rollback and return false
                         else {
                             conn.rollback(spt);
+
+                            ps.close();
+                            rs.close();
+                            pstat.close();
+                            rsaux.close();
+                            conn.close();
                             return false;
                         }
                     }
                 } while (rs.next());
+
+                ps.close();
+                rs.close();
             }
             // SUCCESS !!
             // Remove items from cart and set it to inactive
@@ -253,17 +315,28 @@ public class QueryCart {
                 }
                 else {
                     conn.rollback(spt);
+                    conn.commit();
+
+                    delete.close();
+                    update.close();
+                    conn.close();
                     return false;
                 }
             }
             else {
                 conn.rollback(spt);
+
+                delete.close();
+                conn.close();
                 return false;
             }
+
+            conn.close();
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
+            return false;
         }
         return true;
     }
