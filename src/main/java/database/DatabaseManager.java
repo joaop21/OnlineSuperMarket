@@ -81,7 +81,9 @@ public class DatabaseManager {
 
     public static Connection getConnection(String url){
         try {
-            return DriverManager.getConnection(url, "SA", "");
+            Connection conn = DriverManager.getConnection(url, "SA", "");
+            conn.setAutoCommit(false);
+            return conn;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,7 +121,7 @@ public class DatabaseManager {
             ps5.setString(1, "Papel Higiénico");
             ps5.setString(2, "Papel Higiénico contra o COVID-19");
             ps5.setFloat(3, 100);
-            ps5.setInt(4, 10);
+            ps5.setInt(4, 2);
             ps5.executeUpdate();
 
             // Populate Customers' Carts
