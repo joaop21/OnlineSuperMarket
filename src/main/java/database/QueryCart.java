@@ -78,6 +78,7 @@ public class QueryCart {
                         ps1.setTimestamp(1, time);
                         ps1.setBoolean(2, true);
                         ps1.setInt(3, userId);
+                        System.out.println(ps1.toString());
                         int updated = ps1.executeUpdate();
                         if (updated > 0){
                             List<FieldValue> vals = new ArrayList<>();

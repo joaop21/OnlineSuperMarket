@@ -3,10 +3,7 @@ package database;
 import org.hsqldb.HsqlException;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class DatabaseManager {
@@ -151,6 +148,19 @@ public class DatabaseManager {
         }
     }
 
+    private static Object getValue(Object value) {
+        if (value == null){
+            return "NULL";
+        }
+        if (value instanceof Integer || value instanceof Boolean) {
+            return value;
+        }
+        else if (value instanceof Timestamp || value instanceof String){
+            return "\'" + value + "\'";
+        }
+        else return value;
+    }
+
     private static String buildSQLInsert(String table, List<FieldValue> vals){
         StringBuilder query = new StringBuilder("INSERT INTO ");
         query.append(table).append("(");
@@ -164,7 +174,7 @@ public class DatabaseManager {
             }
         }
         for(int i=0; i<vals.size(); i++){
-            query.append(vals.get(i).getValue());
+            query.append(getValue(vals.get(i).getValue()));
             if (i != vals.size() - 1){
                 query.append(",");
             }
@@ -180,7 +190,8 @@ public class DatabaseManager {
         query.append(table).append(" SET ");
         for(int i=0; i<vals.size(); i++){
             FieldValue fv = vals.get(i);
-            query.append(fv.getField()).append("=").append(fv.getValue());
+            query.append(fv.getField()).append("=");
+            query.append(getValue(fv.getValue()));
             if (i != vals.size() - 1){
                 query.append(", ");
             }
@@ -190,7 +201,8 @@ public class DatabaseManager {
         }
         for(int i=0; i<where.size(); i++){
             FieldValue fv = where.get(i);
-            query.append(fv.getField()).append("=").append(fv.getValue());
+            query.append(fv.getField()).append("=");
+            query.append(getValue(fv.getValue()));
             if (i != where.size() - 1){
                 query.append(" AND ");
             }
@@ -203,7 +215,8 @@ public class DatabaseManager {
         query.append(table).append(" WHERE ");
         for(int i=0; i<where.size(); i++){
             FieldValue fv = where.get(i);
-            query.append(fv.getField()).append("=").append(fv.getValue());
+            query.append(fv.getField()).append("=");
+            query.append(getValue(fv.getValue()));
             if (i != where.size() - 1){
                 query.append(" AND ");
             }
