@@ -2,14 +2,11 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
-import database.QueryCart;
-import database.QueryCustomer;
-import database.QueryItem;
+import database.*;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
 import middleware.spread.SpreadConnector;
 
-import javax.management.Query;
 import java.util.List;
 import java.util.Set;
 
@@ -26,17 +23,27 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     }
 
     @Override
-    public boolean addItemToCart(int userId, int itemId) { return QueryCart.addItemToCart(userId, itemId); }
+    public boolean addItemToCart(int userId, int itemId) {
+        List mods = QueryCart.addItemToCart(userId, itemId);
+        // DatabaseManager.loadModifications(mods);
+        return mods != null && !mods.isEmpty();
+    }
 
     @Override
-    public boolean removeItemFromCart(int userId, int itemId) { return QueryCart.removeItemFromCart(userId, itemId); }
+    public boolean removeItemFromCart(int userId, int itemId) {
+        List mods = QueryCart.removeItemFromCart(userId, itemId);
+        // DatabaseManager.loadModifications(mods);
+        return mods != null && !mods.isEmpty();
+    }
 
     @Override
-    public List<Item> getCartItems(int userId) { return QueryCart.getCartItems(userId); }
+    public List getCartItems(int userId) { return QueryCart.getCartItems(userId); }
 
     @Override
     public boolean order(int userId) {
-        return QueryCart.order(userId);
+        List mods = QueryCart.order(userId);
+        // DatabaseManager.loadModifications(mods);
+        return mods != null && !mods.isEmpty();
     }
 
     @Override

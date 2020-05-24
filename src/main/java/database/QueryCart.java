@@ -49,12 +49,13 @@ public class QueryCart {
         }
     }
 
-    public static boolean addItemToCart(int userId, int itemId){
+    public static List addItemToCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
+        List<DatabaseModification> modifications = new ArrayList<>();
         try {
             if (conn == null){
                 System.out.println("No DB connection.");
-                return false;
+                return null;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT active FROM Cart WHERE customerid=?");
@@ -65,17 +66,29 @@ public class QueryCart {
                 ps.close();
                 rs.close();
                 conn.close();
-                return false;
+                return null;
             }
             else {
                 do {
                     boolean active = rs.getBoolean("active");
                     if (!active) {
                         PreparedStatement ps1 = conn.prepareStatement(
-                                "UPDATE Cart SET begin=NOW(), active=? WHERE customerid=?");
-                        ps1.setBoolean(1, true);
-                        ps1.setInt(2, userId);
+                                "UPDATE Cart SET begin=?, active=? WHERE customerid=?");
+                        Timestamp time = new Timestamp(System.currentTimeMillis());
+                        ps1.setTimestamp(1, time);
+                        ps1.setBoolean(2, true);
+                        ps1.setInt(3, userId);
+                        System.out.println(ps1.toString());
                         int updated = ps1.executeUpdate();
+                        if (updated > 0){
+                            List<FieldValue> vals = new ArrayList<>();
+                            vals.add(new FieldValue("begin", time));
+                            vals.add(new FieldValue("active", true));
+                            List<FieldValue> where = new ArrayList<>();
+                            where.add(new FieldValue("customerid", userId));
+                            DatabaseModification mod = new DatabaseModification(1, "Cart", vals, where);
+                            modifications.add(mod);
+                        }
                         ps1.close();
                     }
                     PreparedStatement pstat = conn.prepareStatement(
@@ -86,7 +99,13 @@ public class QueryCart {
                     conn.commit();
                     pstat.close();
                     conn.close();
-                    return inserted > 0;
+                    if (inserted > 0){
+                        List<FieldValue> vals = new ArrayList<>();
+                        vals.add(new FieldValue("CartCustomerid", userId));
+                        vals.add(new FieldValue("Itemid", itemId));
+                        DatabaseModification mod = new DatabaseModification(0, "Cart_Item", vals, null);
+                        modifications.add(mod);
+                    }
                 }
                 while (rs.next());
             }
@@ -94,38 +113,45 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return false;
+            return null;
         }
+
+        return modifications;
     }
 
-    public static boolean removeItemFromCart(int userId, int itemId){
+    public static List removeItemFromCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
+        List<DatabaseModification> modifications = new ArrayList<>();
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return false;
+                return null;
             }
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM Cart_Item WHERE CartCustomerid=? AND Itemid=?");
             ps.setInt(1, userId);
             ps.setInt(2, itemId);
-            int updated = ps.executeUpdate();
+            int deleted = ps.executeUpdate();
 
             conn.commit();
             ps.close();
             conn.close();
 
-            if (updated > 0) {
-                return true;
+            if (deleted > 0) {
+                List<FieldValue> where = new ArrayList<>();
+                where.add(new FieldValue("CartCustomerid", userId));
+                where.add(new FieldValue("Itemid", itemId));
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", null, where);
+                modifications.add(mod);
             }
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return false;
+            return null;
         }
 
-        return false;
+        return modifications;
     }
 
     public static List getCartItemsID(int userId){
@@ -230,12 +256,13 @@ public class QueryCart {
         return result;
     }
 
-    public static boolean order(int userId){
+    public static List order(int userId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
+        List<DatabaseModification> modifications = new ArrayList<>();
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return false;
+                return null;
             }
             Savepoint spt = conn.setSavepoint();
 
@@ -249,7 +276,7 @@ public class QueryCart {
                 ps.close();
                 rs.close();
                 conn.close();
-                return false;
+                return null;
             }
             else {
                 do {
@@ -267,7 +294,7 @@ public class QueryCart {
                         pstat.close();
                         rsaux.close();
                         conn.close();
-                        return false;
+                        return null;
                     }
                     else {
                         int stock = rsaux.getInt("stock");
@@ -277,6 +304,14 @@ public class QueryCart {
                             update.setInt(1, stock - 1);
                             update.setInt(2, itemId);
                             int updated = update.executeUpdate();
+                            if (updated > 0){
+                                List<FieldValue> where = new ArrayList<>();
+                                List<FieldValue> vals = new ArrayList<>();
+                                where.add(new FieldValue("id", itemId));
+                                vals.add(new FieldValue("stock", stock-1));
+                                DatabaseModification mod = new DatabaseModification(1, "Item", vals, where);
+                                modifications.add(mod);
+                            }
 
                             update.close();
                         }
@@ -289,7 +324,7 @@ public class QueryCart {
                             pstat.close();
                             rsaux.close();
                             conn.close();
-                            return false;
+                            return null;
                         }
                     }
                 } while (rs.next());
@@ -304,6 +339,11 @@ public class QueryCart {
             delete.setInt(1, userId);
             int deleted = delete.executeUpdate();
             if (deleted > 0) {
+                List<FieldValue> where = new ArrayList<>();
+                where.add(new FieldValue("CartCustomerid", userId));
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", null, where);
+                modifications.add(mod);
+
                 PreparedStatement update = conn.prepareStatement(
                         "UPDATE Cart SET active=?, begin=? WHERE Customerid=?");
                 update.setBoolean(1, false);
@@ -312,6 +352,14 @@ public class QueryCart {
                 int updated = update.executeUpdate();
                 if (updated > 0){
                     conn.commit();
+
+                    List<FieldValue> where1 = new ArrayList<>();
+                    where1.add(new FieldValue("Customerid", userId));
+                    List<FieldValue> vals = new ArrayList<>();
+                    vals.add(new FieldValue("active", false));
+                    vals.add(new FieldValue("begin", null));
+                    DatabaseModification mod1 = new DatabaseModification(1, "Cart", vals, where1);
+                    modifications.add(mod1);
                 }
                 else {
                     conn.rollback(spt);
@@ -320,7 +368,7 @@ public class QueryCart {
                     delete.close();
                     update.close();
                     conn.close();
-                    return false;
+                    return null;
                 }
             }
             else {
@@ -328,7 +376,7 @@ public class QueryCart {
 
                 delete.close();
                 conn.close();
-                return false;
+                return null;
             }
 
             conn.close();
@@ -336,8 +384,8 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return true;
+        return modifications;
     }
 }
