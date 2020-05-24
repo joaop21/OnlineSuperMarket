@@ -2,10 +2,12 @@ package database;
 
 import org.hsqldb.HsqlException;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DatabaseManager {
 
@@ -146,6 +148,132 @@ public class DatabaseManager {
         catch(SQLException e){
             System.out.println("Something went wrong while populating the DB.");
             e.printStackTrace();
+        }
+    }
+
+    private static String buildSQLInsert(String table, List<FieldValue> vals){
+        StringBuilder query = new StringBuilder("INSERT INTO ");
+        query.append(table).append("(");
+        for(int i=0; i<vals.size(); i++){
+            query.append(vals.get(i).getField());
+            if (i != vals.size() - 1){
+                query.append(",");
+            }
+            else{
+                query.append(") VALUES(");
+            }
+        }
+        for(int i=0; i<vals.size(); i++){
+            query.append(vals.get(i).getValue());
+            if (i != vals.size() - 1){
+                query.append(",");
+            }
+            else{
+                query.append(")");
+            }
+        }
+        return query.toString();
+    }
+
+    private static String buildSQLUpdate(String table, List<FieldValue> vals, List<FieldValue> where){
+        StringBuilder query = new StringBuilder("UPDATE ");
+        query.append(table).append(" SET ");
+        for(int i=0; i<vals.size(); i++){
+            FieldValue fv = vals.get(i);
+            query.append(fv.getField()).append("=").append(fv.getValue());
+            if (i != vals.size() - 1){
+                query.append(", ");
+            }
+            else{
+                query.append(" WHERE ");
+            }
+        }
+        for(int i=0; i<where.size(); i++){
+            FieldValue fv = where.get(i);
+            query.append(fv.getField()).append("=").append(fv.getValue());
+            if (i != where.size() - 1){
+                query.append(" AND ");
+            }
+        }
+        return query.toString();
+    }
+
+    private static String buildSQLDelete(String table, List<FieldValue> where){
+        StringBuilder query = new StringBuilder("DELETE FROM ");
+        query.append(table).append(" WHERE ");
+        for(int i=0; i<where.size(); i++){
+            FieldValue fv = where.get(i);
+            query.append(fv.getField()).append("=").append(fv.getValue());
+            if (i != where.size() - 1){
+                query.append(" AND ");
+            }
+        }
+        return query.toString();
+    }
+
+    public static void loadModifications(List<DatabaseModification> mods){
+        Connection conn = DatabaseManager.getConnection(DB_URL);
+        if (conn == null){
+            System.out.println("No connection.");
+            return;
+        }
+        for(DatabaseModification mod : mods){
+            switch(mod.getType()){
+                // INSERT
+                case 0:
+                    System.out.println("INSERT");
+                    String insertQuery = buildSQLInsert(mod.getTable(), mod.getMods());
+                    System.out.println(insertQuery);
+                    try{
+                        PreparedStatement ps = conn.prepareStatement(insertQuery);
+                        int inserted = ps.executeUpdate();
+                        if (inserted > 0)
+                            System.out.println("Inserted new row in "+mod.getTable());
+                    }
+                    catch(SQLException e){
+                        System.out.println("An error occurred while executing the SQL query.");
+                        e.printStackTrace();
+                        return;
+                    }
+                    break;
+                // UPDATE
+                case 1:
+                    System.out.println("UPDATE");
+                    String updateQuery = buildSQLUpdate(mod.getTable(), mod.getMods(), mod.getWhere());
+                    System.out.println(updateQuery);
+                    try{
+                        PreparedStatement ps = conn.prepareStatement(updateQuery);
+                        int updated = ps.executeUpdate();
+                        if (updated > 0)
+                            System.out.println("Updated "+updated+" rows in "+mod.getTable());
+                    }
+                    catch(SQLException e){
+                        System.out.println("An error occurred while executing the SQL query.");
+                        e.printStackTrace();
+                        return;
+                    }
+                    break;
+                // DELETE
+                case 2:
+                    System.out.println("DELETE");
+                    String deleteQuery = buildSQLDelete(mod.getTable(), mod.getWhere());
+                    System.out.println(deleteQuery);
+                    try{
+                        PreparedStatement ps = conn.prepareStatement(deleteQuery);
+                        int deleted = ps.executeUpdate();
+                        if (deleted > 0)
+                            System.out.println("Deleted "+deleted+" rows in "+mod.getTable());
+                    }
+                    catch(SQLException e){
+                        System.out.println("An error occurred while executing the SQL query.");
+                        e.printStackTrace();
+                        return;
+                    }
+                    break;
+                default:
+                    System.out.println("Operation not supported");
+                    return;
+            }
         }
     }
 }
