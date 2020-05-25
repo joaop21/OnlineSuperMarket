@@ -2,11 +2,14 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
+import com.google.protobuf.Timestamp;
 import database.*;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
 import middleware.spread.SpreadConnector;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -24,14 +27,14 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
     @Override
     public boolean addItemToCart(int userId, int itemId) {
-        List mods = QueryCart.addItemToCart(userId, itemId);
+        List<DatabaseModification> mods = QueryCart.addItemToCart(userId, itemId);
         // DatabaseManager.loadModifications(mods);
         return mods != null && !mods.isEmpty();
     }
 
     @Override
     public boolean removeItemFromCart(int userId, int itemId) {
-        List mods = QueryCart.removeItemFromCart(userId, itemId);
+        List<DatabaseModification> mods = QueryCart.removeItemFromCart(userId, itemId);
         // DatabaseManager.loadModifications(mods);
         return mods != null && !mods.isEmpty();
     }
@@ -61,6 +64,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
             switch(msg.getRequest().getOperationCase()){
 
                 case ADDITEMTOCART:
+                    /*
                     Message msg1 = Message.newBuilder()
                             .setReplication(ReplicationOuterClass.Replication.newBuilder()
                                     .setUpdates(ReplicationOuterClass.DatabaseUpdates.newBuilder()
@@ -77,22 +81,120 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                                     .build())
                             .build();
                     SpreadConnector.cast(msg1.toByteArray(), Set.of("Servers"));
-                    // send to db
-                    // get and send replication message
+                    */
+
+                    List<DatabaseModification> mods1 = QueryCart.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
+                            msg.getRequest().getAddItemToCart().getItemId());
+
+                    assert mods1 != null;
+                    SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
                     break;
 
                 case REMOVEITEMFROMCART:
-                    // send to db
-                    // get and send replication message
+                    List<DatabaseModification> mods2 = QueryCart.removeItemFromCart(msg.getRequest().getAddItemToCart().getUserId(),
+                            msg.getRequest().getAddItemToCart().getItemId());
+
+                    assert mods2 != null;
+                    SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
                     break;
 
                 case ORDER:
-                    // send to db
-                    // get and send replication message
+                    List<DatabaseModification> mods3 = QueryCart.order(msg.getRequest().getAddItemToCart().getUserId());
+
+                    assert mods3 != null;
+                    SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
                     break;
 
             }
         }
+    }
+
+    public Message constructFromModifications(Message msg, List<DatabaseModification> mods){
+
+        List<ReplicationOuterClass.DatabaseModifications.Modification> modificationsprotos = new ArrayList<>();
+
+        for (DatabaseModification modification : mods ){
+
+            ReplicationOuterClass.DatabaseModifications.Modification mod =
+                    ReplicationOuterClass.DatabaseModifications.Modification.newBuilder()
+                            .setType(modification.getType())
+                            .setTable(modification.getTable())
+                            .addAllMods(constructListFieldValues(modification.getMods()))
+                            .addAllWhere(constructListFieldValues(modification.getWhere()))
+                            .build();
+
+            modificationsprotos.add(mod);
+
+        }
+
+        return Message.newBuilder()
+                .setReplication(ReplicationOuterClass.Replication.newBuilder()
+                        .setModifications(ReplicationOuterClass.DatabaseModifications.newBuilder()
+                                .setStatus(!mods.isEmpty())
+                                .setSender(msg.getRequest().getSender())
+                                .setRequestUuid(msg.getRequest().getUuid())
+                                .addAllModifications(modificationsprotos)
+                                .build())
+                        .build())
+                .build();
 
     }
+
+    private List<ReplicationOuterClass.DatabaseModifications.Modification.FieldValue> constructListFieldValues(List<FieldValue> list) {
+
+        List<ReplicationOuterClass.DatabaseModifications.Modification.FieldValue> res = new ArrayList<>();
+
+        for(FieldValue fv : list) {
+
+            ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fvproto =
+                    ReplicationOuterClass.DatabaseModifications.Modification.FieldValue.newBuilder()
+                            .setField(fv.getField())
+                            .build();
+
+            switch(fv.getType()){
+
+                case INTEGER:
+                    fvproto = fvproto.toBuilder()
+                            .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.INTEGER)
+                            .setValueInt((Integer) fv.getValue())
+                            .build();
+                    break;
+
+                case STRING:
+                    fvproto = fvproto.toBuilder()
+                            .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.STRING)
+                            .setValueString((String) fv.getValue())
+                            .build();
+                    break;
+
+                case BOOLEAN:
+                    fvproto = fvproto.toBuilder()
+                            .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN)
+                            .setValueBool((Boolean) fv.getValue())
+                            .build();
+                    break;
+
+                case TIMESTAMP:
+                    fvproto = fvproto.toBuilder()
+                            .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.TIMESTAMP)
+                            .setValueTimestamp(((Timestamp) fv.getValue()).getNanos())
+                            .build();
+                    break;
+
+                case NULL:
+                    fvproto = fvproto.toBuilder()
+                            .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.NULL)
+                            .build();
+                    break;
+
+            }
+
+            res.add(fvproto);
+
+        }
+
+        return res;
+
+    }
+
 }

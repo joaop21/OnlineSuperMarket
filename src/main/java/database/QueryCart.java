@@ -49,7 +49,7 @@ public class QueryCart {
         }
     }
 
-    public static List addItemToCart(int userId, int itemId){
+    public static List<DatabaseModification> addItemToCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         List<DatabaseModification> modifications = new ArrayList<>();
         try {
@@ -82,10 +82,10 @@ public class QueryCart {
                         int updated = ps1.executeUpdate();
                         if (updated > 0){
                             List<FieldValue> vals = new ArrayList<>();
-                            vals.add(new FieldValue("begin", time));
-                            vals.add(new FieldValue("active", true));
+                            vals.add(new FieldValue("begin", time, ValueType.TIMESTAMP));
+                            vals.add(new FieldValue("active", true, ValueType.BOOLEAN));
                             List<FieldValue> where = new ArrayList<>();
-                            where.add(new FieldValue("customerid", userId));
+                            where.add(new FieldValue("customerid", userId, ValueType.INTEGER));
                             DatabaseModification mod = new DatabaseModification(1, "Cart", vals, where);
                             modifications.add(mod);
                         }
@@ -101,9 +101,9 @@ public class QueryCart {
                     conn.close();
                     if (inserted > 0){
                         List<FieldValue> vals = new ArrayList<>();
-                        vals.add(new FieldValue("CartCustomerid", userId));
-                        vals.add(new FieldValue("Itemid", itemId));
-                        DatabaseModification mod = new DatabaseModification(0, "Cart_Item", vals, null);
+                        vals.add(new FieldValue("CartCustomerid", userId, ValueType.INTEGER));
+                        vals.add(new FieldValue("Itemid", itemId, ValueType.INTEGER));
+                        DatabaseModification mod = new DatabaseModification(0, "Cart_Item", vals, new ArrayList<>());
                         modifications.add(mod);
                     }
                 }
@@ -119,7 +119,7 @@ public class QueryCart {
         return modifications;
     }
 
-    public static List removeItemFromCart(int userId, int itemId){
+    public static List<DatabaseModification> removeItemFromCart(int userId, int itemId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         List<DatabaseModification> modifications = new ArrayList<>();
         try {
@@ -139,9 +139,9 @@ public class QueryCart {
 
             if (deleted > 0) {
                 List<FieldValue> where = new ArrayList<>();
-                where.add(new FieldValue("CartCustomerid", userId));
-                where.add(new FieldValue("Itemid", itemId));
-                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", null, where);
+                where.add(new FieldValue("CartCustomerid", userId, ValueType.INTEGER));
+                where.add(new FieldValue("Itemid", itemId, ValueType.INTEGER));
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", new ArrayList<>(), where);
                 modifications.add(mod);
             }
         }
@@ -256,7 +256,7 @@ public class QueryCart {
         return result;
     }
 
-    public static List order(int userId){
+    public static List<DatabaseModification> order(int userId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         List<DatabaseModification> modifications = new ArrayList<>();
         try {
@@ -307,8 +307,8 @@ public class QueryCart {
                             if (updated > 0){
                                 List<FieldValue> where = new ArrayList<>();
                                 List<FieldValue> vals = new ArrayList<>();
-                                where.add(new FieldValue("id", itemId));
-                                vals.add(new FieldValue("stock", stock-1));
+                                where.add(new FieldValue("id", itemId, ValueType.INTEGER));
+                                vals.add(new FieldValue("stock", stock-1, ValueType.INTEGER));
                                 DatabaseModification mod = new DatabaseModification(1, "Item", vals, where);
                                 modifications.add(mod);
                             }
@@ -340,8 +340,8 @@ public class QueryCart {
             int deleted = delete.executeUpdate();
             if (deleted > 0) {
                 List<FieldValue> where = new ArrayList<>();
-                where.add(new FieldValue("CartCustomerid", userId));
-                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", null, where);
+                where.add(new FieldValue("CartCustomerid", userId, ValueType.INTEGER));
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item",  new ArrayList<>(), where);
                 modifications.add(mod);
 
                 PreparedStatement update = conn.prepareStatement(
@@ -354,10 +354,10 @@ public class QueryCart {
                     conn.commit();
 
                     List<FieldValue> where1 = new ArrayList<>();
-                    where1.add(new FieldValue("Customerid", userId));
+                    where1.add(new FieldValue("Customerid", userId, ValueType.INTEGER));
                     List<FieldValue> vals = new ArrayList<>();
-                    vals.add(new FieldValue("active", false));
-                    vals.add(new FieldValue("begin", null));
+                    vals.add(new FieldValue("active", false, ValueType.BOOLEAN));
+                    vals.add(new FieldValue("begin", null, ValueType.NULL));
                     DatabaseModification mod1 = new DatabaseModification(1, "Cart", vals, where1);
                     modifications.add(mod1);
                 }

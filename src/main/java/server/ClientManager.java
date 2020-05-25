@@ -44,16 +44,21 @@ public class ClientManager extends Skeleton {
                                 getGetItemResponse(msg, osm.getItem(msg.getRequest().getGetItem().getItemId())).toByteArray());
                         break;
                     case ADDITEMTOCART:
-                        socketIO.write(
-                                getAddItemToCartResponse(msg, osm.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
-                                        msg.getRequest().getAddItemToCart().getItemId())).toByteArray());
+                        Message response_message1 = RequestManager.publishRequest(msg);
+                        socketIO.write(getAddItemToCartResponse(msg, response_message1.getReplication().getModifications().getStatus()).toByteArray());
+                        // erroneous behaviour
+                        //socketIO.write(
+                                //getAddItemToCartResponse(msg, osm.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
+                                        //msg.getRequest().getAddItemToCart().getItemId())).toByteArray());
                         break;
                     case REMOVEITEMFROMCART:
+                        // erroneous behaviour
                         socketIO.write(
                                 getRemItemFromCart(msg, osm.removeItemFromCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
                                     msg.getRequest().getRemoveItemFromCart().getItemId())).toByteArray());
                         break;
                     case ORDER:
+                        // erroneous behaviour
                         socketIO.write(
                                 getOrderResponse(msg, osm.order(msg.getRequest().getOrder().getUserId())).toByteArray());
                         break;

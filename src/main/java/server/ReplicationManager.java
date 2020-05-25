@@ -28,7 +28,7 @@ public class ReplicationManager implements Runnable {
         while((msg = messageListener.getNextReplication()) != null){
 
             Replication repl = msg.getThird().getReplication();
-            Pair<String,String> pair = new Pair<>(repl.getUpdates().getSender(), repl.getUpdates().getRequestUuid());
+            Pair<String,String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
             RequestManager.putResponse(pair, msg.getThird());
 
             if(!msg.getFirst()){

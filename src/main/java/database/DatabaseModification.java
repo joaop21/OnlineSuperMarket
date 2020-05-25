@@ -2,24 +2,6 @@ package database;
 
 import java.util.List;
 
-class FieldValue{
-    private String field;
-    private Object value;
-
-    public FieldValue(String field, Object value){
-        this.field = field;
-        this.value = value;
-    }
-
-    public String getField(){
-        return this.field;
-    }
-
-    public Object getValue(){
-        return this.value;
-    }
-}
-
 public class DatabaseModification {
     private int type; // 0: INSERT, 1: UPDATE; 2: DELETE
     private String table;
