@@ -292,6 +292,7 @@ public class DatabaseManager {
         }
 
         try {
+            conn.commit();
             conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
