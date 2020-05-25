@@ -2,13 +2,12 @@ package server;
 
 import application.Item;
 import application.OnlineSuperMarket;
-import com.google.protobuf.Timestamp;
 import database.*;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
 import middleware.spread.SpreadConnector;
 
-import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -177,7 +176,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                 case TIMESTAMP:
                     fvproto = fvproto.toBuilder()
                             .setType(ReplicationOuterClass.DatabaseModifications.Modification.Type.TIMESTAMP)
-                            .setValueTimestamp(((Timestamp) fv.getValue()).getNanos())
+                            .setValueTimestamp(((Timestamp) fv.getValue()).getTime())
                             .build();
                     break;
 
