@@ -241,6 +241,7 @@ public class DatabaseManager {
                         int inserted = ps.executeUpdate();
                         if (inserted > 0)
                             System.out.println("Inserted new row in "+mod.getTable());
+                        ps.close();
                     }
                     catch(SQLException e){
                         System.out.println("An error occurred while executing the SQL query.");
@@ -258,6 +259,7 @@ public class DatabaseManager {
                         int updated = ps.executeUpdate();
                         if (updated > 0)
                             System.out.println("Updated "+updated+" rows in "+mod.getTable());
+                        ps.close();
                     }
                     catch(SQLException e){
                         System.out.println("An error occurred while executing the SQL query.");
@@ -275,6 +277,7 @@ public class DatabaseManager {
                         int deleted = ps.executeUpdate();
                         if (deleted > 0)
                             System.out.println("Deleted "+deleted+" rows in "+mod.getTable());
+                        ps.close();
                     }
                     catch(SQLException e){
                         System.out.println("An error occurred while executing the SQL query.");
@@ -287,5 +290,12 @@ public class DatabaseManager {
                     return;
             }
         }
+
+        try {
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
