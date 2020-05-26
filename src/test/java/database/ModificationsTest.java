@@ -1,95 +1,28 @@
-package server;
+package database;
 
-import application.Item;
-import application.OnlineSuperMarket;
-import database.*;
-import middleware.proto.MessageOuterClass.Message;
+import middleware.proto.MessageOuterClass;
 import middleware.proto.ReplicationOuterClass;
-import middleware.spread.SpreadConnector;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
+public class ModificationsTest {
 
-    @Override
-    public List<Item> getItems() {
-        return QueryItem.getItems();
+    public static void main(String[] args) {
+
+        DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/9999/onlinesupermarket");
+
+        List<DatabaseModification> mods = QueryCart.addItemToCart(0, 0);
+
+        assert mods != null;
+        MessageOuterClass.Message msg = constructFromModifications(mods);
+        System.out.println(msg);
+
     }
 
-    @Override
-    public Item getItem(int itemId) {
-        return QueryItem.getItem(itemId);
-    }
-
-    @Override
-    public boolean addItemToCart(int userId, int itemId) {
-        List<DatabaseModification> mods = QueryCart.addItemToCart(userId, itemId);
-        // DatabaseManager.loadModifications(mods);
-        return mods != null && !mods.isEmpty();
-    }
-
-    @Override
-    public boolean removeItemFromCart(int userId, int itemId) {
-        List<DatabaseModification> mods = QueryCart.removeItemFromCart(userId, itemId);
-        // DatabaseManager.loadModifications(mods);
-        return mods != null && !mods.isEmpty();
-    }
-
-    @Override
-    public List getCartItems(int userId) { return QueryCart.getCartItems(userId); }
-
-    @Override
-    public boolean order(int userId) {
-        List mods = QueryCart.order(userId);
-        // DatabaseManager.loadModifications(mods);
-        return mods != null && !mods.isEmpty();
-    }
-
-    @Override
-    public int login(String username, String password) {
-        return QueryCustomer.checkPassword(username, password);
-    }
-
-    @Override
-    public void run() {
-
-        Message msg;
-
-        while((msg = RequestManager.getNextRequest()) != null){
-
-            switch(msg.getRequest().getOperationCase()){
-
-                case ADDITEMTOCART:
-                    List<DatabaseModification> mods1 = QueryCart.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
-                            msg.getRequest().getAddItemToCart().getItemId());
-
-                    assert mods1 != null;
-                    SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
-                    break;
-
-                case REMOVEITEMFROMCART:
-                    List<DatabaseModification> mods2 = QueryCart.removeItemFromCart(msg.getRequest().getAddItemToCart().getUserId(),
-                            msg.getRequest().getAddItemToCart().getItemId());
-
-                    assert mods2 != null;
-                    SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
-                    break;
-
-                case ORDER:
-                    List<DatabaseModification> mods3 = QueryCart.order(msg.getRequest().getAddItemToCart().getUserId());
-
-                    assert mods3 != null;
-                    SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
-                    break;
-
-            }
-        }
-    }
-
-    public Message constructFromModifications(Message msg, List<DatabaseModification> mods){
+    public static MessageOuterClass.Message constructFromModifications(List<DatabaseModification> mods){
 
         List<ReplicationOuterClass.DatabaseModifications.Modification> modificationsprotos = new ArrayList<>();
 
@@ -107,12 +40,12 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
         }
 
-        return Message.newBuilder()
+        return MessageOuterClass.Message.newBuilder()
                 .setReplication(ReplicationOuterClass.Replication.newBuilder()
                         .setModifications(ReplicationOuterClass.DatabaseModifications.newBuilder()
                                 .setStatus(!mods.isEmpty())
-                                .setSender(msg.getRequest().getSender())
-                                .setRequestUuid(msg.getRequest().getUuid())
+                                .setSender("sender")
+                                .setRequestUuid("uuid")
                                 .addAllModifications(modificationsprotos)
                                 .build())
                         .build())
@@ -120,7 +53,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
     }
 
-    private List<ReplicationOuterClass.DatabaseModifications.Modification.FieldValue> constructListFieldValues(List<FieldValue> list) {
+    private static List<ReplicationOuterClass.DatabaseModifications.Modification.FieldValue> constructListFieldValues(List<FieldValue> list) {
 
         List<ReplicationOuterClass.DatabaseModifications.Modification.FieldValue> res = new ArrayList<>();
 

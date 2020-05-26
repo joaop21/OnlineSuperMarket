@@ -7,7 +7,7 @@ message Replication {
     oneof type {
 
         ServerLoads loads = 1;
-        DatabaseUpdates updates = 2;
+        DatabaseModifications modifications = 2;
 
     }
 
@@ -33,7 +33,7 @@ message ServerLoads {
 
 }
 
-message DatabaseUpdates{
+message DatabaseModifications{
 
     bool status = 1;
     repeated Modification modifications = 2;
@@ -42,15 +42,34 @@ message DatabaseUpdates{
 
     message Modification {
 
-        string table = 1;
-        int32 id = 2;
-        string field = 3;
+        int32 type = 1;
+        string table = 2;
+        repeated FieldValue mods = 3;
+        repeated FieldValue where = 4;
 
-        oneof fieldType {
+        message FieldValue {
 
-            int32 valueInt = 4;
-            string valueString = 5;
-            bool valueBool = 6;
+            string field = 1;
+            Type type = 2;
+
+            oneof valueType {
+
+                int32 valueInt = 3;
+                string valueString = 4;
+                int64 valueTimestamp = 5;
+                bool valueBool = 6;
+
+            }
+
+        }
+
+        enum Type {
+
+            INTEGER = 0;
+            STRING = 1;
+            TIMESTAMP = 2;
+            BOOLEAN = 3;
+            NULL = 4;
 
         }
 
