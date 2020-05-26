@@ -161,7 +161,7 @@ public class DatabaseManager {
     }
 
     private static String buildSQLInsert(String table, List<FieldValue> vals){
-        StringBuilder query = new StringBuilder("INSERT INTO ");
+        StringBuilder query = new StringBuilder("INSERT IGNORE INTO ");
         query.append(table).append("(");
         for(int i=0; i<vals.size(); i++){
             query.append(vals.get(i).getField());

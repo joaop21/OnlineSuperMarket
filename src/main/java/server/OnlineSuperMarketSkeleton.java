@@ -63,25 +63,6 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
             switch(msg.getRequest().getOperationCase()){
 
                 case ADDITEMTOCART:
-                    /*
-                    Message msg1 = Message.newBuilder()
-                            .setReplication(ReplicationOuterClass.Replication.newBuilder()
-                                    .setUpdates(ReplicationOuterClass.DatabaseUpdates.newBuilder()
-                                            .setStatus(true)
-                                            .setSender(msg.getRequest().getSender())
-                                            .setRequestUuid(msg.getRequest().getUuid())
-                                            .addModifications( ReplicationOuterClass.DatabaseUpdates.Modification.newBuilder()
-                                                    .setTable("Cart_Item")
-                                                    .setId(1)
-                                                    .setField("Itemid")
-                                                    .setValueInt(2)
-                                                    .build())
-                                            .build())
-                                    .build())
-                            .build();
-                    SpreadConnector.cast(msg1.toByteArray(), Set.of("Servers"));
-                    */
-
                     List<DatabaseModification> mods1 = QueryCart.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
                             msg.getRequest().getAddItemToCart().getItemId());
 
