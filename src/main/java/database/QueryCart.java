@@ -324,7 +324,7 @@ public class QueryCart {
                             pstat.close();
                             rsaux.close();
                             conn.close();
-                            return null;
+                            return new ArrayList<>();
                         }
                     }
                 } while (rs.next());

@@ -39,28 +39,28 @@ public class ClientManager extends Skeleton {
                         socketIO.write(
                                 getGetItemsResponse(msg, osm.getItems()).toByteArray());
                         break;
+
                     case GETITEM:
                         socketIO.write(
                                 getGetItemResponse(msg, osm.getItem(msg.getRequest().getGetItem().getItemId())).toByteArray());
                         break;
+
                     case ADDITEMTOCART:
                         Message response_message1 = RequestManager.publishRequest(msg);
                         socketIO.write(getAddItemToCartResponse(msg, response_message1.getReplication().getModifications().getStatus()).toByteArray());
-                        // erroneous behaviour
-                        //socketIO.write(
-                                //getAddItemToCartResponse(msg, osm.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
-                                        //msg.getRequest().getAddItemToCart().getItemId())).toByteArray());
                         break;
+
                     case REMOVEITEMFROMCART:
                         // erroneous behaviour
-                        socketIO.write(
-                                getRemItemFromCart(msg, osm.removeItemFromCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
-                                    msg.getRequest().getRemoveItemFromCart().getItemId())).toByteArray());
+                        Message response_message2 = RequestManager.publishRequest(msg);
+                        socketIO.write(getRemItemFromCart(msg, response_message2.getReplication().getModifications().getStatus()).toByteArray());
                         break;
+
                     case ORDER:
                         // erroneous behaviour
+                        Message response_message3 = RequestManager.publishRequest(msg);
                         socketIO.write(
-                                getOrderResponse(msg, osm.order(msg.getRequest().getOrder().getUserId())).toByteArray());
+                                getOrderResponse(msg, response_message3.getReplication().getModifications().getStatus()).toByteArray());
                         break;
 
                     case GETCARTITEMS:
