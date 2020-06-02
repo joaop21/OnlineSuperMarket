@@ -27,6 +27,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private String myself;
     private boolean first_message = true;
     private boolean primary = false;
+    private boolean recovery = true;
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -133,7 +134,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             if (this.first_message) {  // I joined
 
-                this.first_message = false;
                 this.myself = info.getJoined().toString();
 
                 if (info.getMembers().length > 1){
@@ -146,14 +146,26 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             leader_fifo.add(info.getJoined().toString());
         }
-        else if(info.isCausedByDisconnect())
+        else if (info.isCausedByDisconnect())
             this.leader_fifo.removeIf(member -> member.equals(info.getDisconnected().toString()));
 
         else if (info.isCausedByLeave())
             this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
 
+        // check if i am the primary server
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
             this.primary = true;
+
+        // check if i need recovery
+        if (!this.primary && this.first_message && this.recovery) {
+
+            this.first_message = false;
+            // initialize thread for recovery
+
+        }
+
+
+
 
     }
 
