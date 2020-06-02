@@ -55,7 +55,7 @@ public class QueryCart {
         try {
             if (conn == null){
                 System.out.println("No DB connection.");
-                return null;
+                return new ArrayList<>();
             }
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT active FROM Cart WHERE customerid=?");
@@ -66,7 +66,7 @@ public class QueryCart {
                 ps.close();
                 rs.close();
                 conn.close();
-                return null;
+                return new ArrayList<>();
             }
             else {
                 do {
@@ -113,7 +113,7 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
 
         return modifications;
@@ -125,7 +125,7 @@ public class QueryCart {
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return null;
+                return new ArrayList<>();
             }
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM Cart_Item WHERE CartCustomerid=? AND Itemid=?");
@@ -148,7 +148,7 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
 
         return modifications;
@@ -262,7 +262,7 @@ public class QueryCart {
         try {
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return null;
+                return new ArrayList<>();
             }
             Savepoint spt = conn.setSavepoint();
 
@@ -276,7 +276,7 @@ public class QueryCart {
                 ps.close();
                 rs.close();
                 conn.close();
-                return null;
+                return new ArrayList<>();
             }
             else {
                 do {
@@ -294,7 +294,7 @@ public class QueryCart {
                         pstat.close();
                         rsaux.close();
                         conn.close();
-                        return null;
+                        return new ArrayList<>();
                     }
                     else {
                         int stock = rsaux.getInt("stock");
@@ -368,7 +368,7 @@ public class QueryCart {
                     delete.close();
                     update.close();
                     conn.close();
-                    return null;
+                    return new ArrayList<>();
                 }
             }
             else {
@@ -376,7 +376,7 @@ public class QueryCart {
 
                 delete.close();
                 conn.close();
-                return null;
+                return new ArrayList<>();
             }
 
             conn.close();
@@ -384,7 +384,7 @@ public class QueryCart {
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
         return modifications;
     }
