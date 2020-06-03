@@ -5,6 +5,7 @@ import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
+import server.RecoveryManager;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
@@ -16,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
-    private SocketInfo serverInfo;
+    private final SocketInfo serverInfo;
     
     private final ConcurrentQueue<Triplet<Boolean, Long, Message>> request_queue = new ConcurrentQueue<>();
     private final ConcurrentQueue<Triplet<Boolean, Long, Message>> replication_queue = new ConcurrentQueue<>();
@@ -156,16 +157,27 @@ public class ServerMessageListener implements AdvancedMessageListener {
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
             this.primary = true;
 
-        // check if i need recovery
+
+        // check if i need recovery or to recover someone
         if (!this.primary && this.first_message && this.recovery) {
 
             this.first_message = false;
-            // initialize thread for recovery
+
+            // get the size of the DB
+            int lines = RecoveryManager.getCurrentSize(this.serverInfo.getPort());
+
+            // initialize thread for being recovered
 
         }
+        // there is somebody that needs recovery
+        else if (this.primary && !this.first_message) {
 
+            // choose someone to do recover or even myself
 
-
+        }
+        // it was me that joined, and i'm primary, nobody needs recovery
+        else if (this.primary && this.first_message)
+            this.first_message = false;
 
     }
 
