@@ -54,15 +54,20 @@ public class QueryCustomer {
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Customer with that username.");
+                conn.close();
                 return -2;
             }
             else {
                 do {
                     String customerPassword = rs.getString("password");
-                    if (customerPassword.equals(password))
+                    if (customerPassword.equals(password)) {
+                        conn.close();
                         return rs.getInt("id");
-                    else
+                    }
+                    else {
+                        conn.close();
                         return -3;
+                    }
                 }
                 while (rs.next());
             }

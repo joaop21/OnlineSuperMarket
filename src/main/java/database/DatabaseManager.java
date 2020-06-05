@@ -1,6 +1,7 @@
 package database;
 
 import org.hsqldb.HsqlException;
+import server.RecoveryManager;
 
 import java.sql.*;
 import java.util.List;

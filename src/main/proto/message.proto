@@ -3,6 +3,7 @@ syntax = "proto3";
 import "assignment/assignment.proto";
 import "request/request.proto";
 import "replication/replication.proto";
+import "recovery/recovery.proto";
 
 package middleware.proto;
 
@@ -12,7 +13,8 @@ message Message {
 
         Assignment assignment = 1;
         Request request = 2;
-        Replication replication = 4;
+        Replication replication = 3;
+        Recovery recovery = 4;
 
     }
 
