@@ -154,6 +154,40 @@ public class QueryCart {
         return modifications;
     }
 
+    public static List<DatabaseModification> cleanCart(int userId){
+
+        Connection conn = DatabaseManager.getConnection(DB_URL);
+        List<DatabaseModification> modifications = new ArrayList<>();
+        try {
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return new ArrayList<>();
+            }
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM Cart_Item WHERE CartCustomerid=?");
+            ps.setInt(1, userId);
+            int deleted = ps.executeUpdate();
+
+            conn.commit();
+            ps.close();
+            conn.close();
+
+            if (deleted > 0) {
+                List<FieldValue> where = new ArrayList<>();
+                where.add(new FieldValue("CartCustomerid", userId, ValueType.INTEGER));
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", new ArrayList<>(), where);
+                modifications.add(mod);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println("An error occurred while executing the SQL query.");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
+        return modifications;
+    }
+
     public static List getCartItemsID(int userId){
         Connection conn = DatabaseManager.getConnection(DB_URL);
         List<Integer> result = new ArrayList<>();

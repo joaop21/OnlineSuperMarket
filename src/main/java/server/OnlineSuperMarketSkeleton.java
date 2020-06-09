@@ -5,12 +5,11 @@ import application.OnlineSuperMarket;
 import database.*;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
+import middleware.proto.RequestOuterClass;
 import middleware.spread.SpreadConnector;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
@@ -34,6 +33,13 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     @Override
     public boolean removeItemFromCart(int userId, int itemId) {
         List<DatabaseModification> mods = QueryCart.removeItemFromCart(userId, itemId);
+        // DatabaseManager.loadModifications(mods);
+        return mods != null && !mods.isEmpty();
+    }
+
+    @Override
+    public boolean cleanCart(int userId) {
+        List<DatabaseModification> mods = QueryCart.cleanCart(userId);
         // DatabaseManager.loadModifications(mods);
         return mods != null && !mods.isEmpty();
     }
@@ -67,6 +73,37 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                             msg.getRequest().getAddItemToCart().getItemId());
 
                     assert mods1 != null;
+
+                    // Checking for creating of a cart
+                    for (DatabaseModification dbm : mods1)
+                        if (dbm.getType() == 1 /* UPDATE */ && dbm.getTable().toUpperCase().equals("CART"))
+                            for (FieldValue fv : dbm.getMods())
+                                if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
+                                    System.out.println("A CART WAS CREATED! (detected from changes to DB in primary)");
+                                    // Creating timer for deleting cart items
+                                    /*final int userId = msg.getRequest().getAddItemToCart().getUserId();
+                                    TimerTask task = new TimerTask() {
+                                        public void run() {
+
+                                            Message message = Message.newBuilder()
+                                                    .setRequest(RequestOuterClass.Request.newBuilder()
+                                                            .setType(RequestOuterClass.Request.Type.REQUEST)
+                                                            .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
+                                                                    .setUserId(userId)
+                                                                    .build())
+                                                            .build())
+                                                    .build();
+
+                                            Req
+                                        }
+                                    };
+                                    Timer timer = new Timer("Timer");
+
+                                    long delay = 1000L;
+                                    timer.schedule(task, delay);*/
+
+                                }
+
                     SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
                     break;
 
@@ -78,11 +115,18 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
                     break;
 
-                case ORDER:
-                    List<DatabaseModification> mods3 = QueryCart.order(msg.getRequest().getOrder().getUserId());
+                case CLEANCART:
+                    List<DatabaseModification> mods3 = QueryCart.cleanCart(msg.getRequest().getCleanCart().getUserId());
 
                     assert mods3 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
+                    break;
+
+                case ORDER:
+                    List<DatabaseModification> mods4 = QueryCart.order(msg.getRequest().getOrder().getUserId());
+
+                    assert mods4 != null;
+                    SpreadConnector.cast(constructFromModifications(msg, mods4).toByteArray(), Set.of("Servers"));
                     break;
 
             }

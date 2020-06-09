@@ -64,8 +64,9 @@ public class ClientInterface {
             System.out.println("# 2 - Search Item (by id)");;
             System.out.println("# 3 - Add Item to Cart");;
             System.out.println("# 4 - Remove Item from Cart");;
-            System.out.println("# 5 - Show Cart");;
-            System.out.println("# 6 - Complete order");;
+            System.out.println("# 5 - Clean Cart");;
+            System.out.println("# 6 - Show Cart");;
+            System.out.println("# 7 - Complete order");;
 
             System.out.println("#####################################################");
 
@@ -89,9 +90,12 @@ public class ClientInterface {
                     remScreen();
                     return;
                 case 5:
-                    cartScreen();
+                    cleanScreen();
                     return;
                 case 6:
+                    cartScreen();
+                    return;
+                case 7:
                     orderScreen();
                     return;
                 default:
@@ -244,6 +248,20 @@ public class ClientInterface {
 
         }
 
+    }
+
+    private static void cleanScreen() {
+
+        boolean cleaned = new ClientStub().cleanCart(ClientInterface.userID);
+
+        System.out.println("####################### Cart ########################");
+
+        if (cleaned) System.out.println("# Cart is empty.");
+        else System.out.println("# Couldn't delete items from cart.");
+
+        System.out.println("#####################################################");
+
+        menuScreen();
     }
 
     private static void cartScreen() {

@@ -12,6 +12,8 @@ import java.util.Set;
 
 public class Server {
 
+    public static final int TMAX = 60; // Time to delete a cart in seconds
+
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
 
         // Getting server port from args[0]

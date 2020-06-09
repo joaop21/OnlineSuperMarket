@@ -40,7 +40,7 @@ public class ReplicationManager implements Runnable {
             Pair<String,String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
             RequestManager.putResponse(pair, msg.getThird());
 
-            if(!msg.getFirst()){
+            if(!msg.getFirst()) {
 
                 // System.out.println(repl);
                 // System.out.println("It misses update the db");
@@ -48,11 +48,14 @@ public class ReplicationManager implements Runnable {
                 List<DatabaseModification> modifs = constructModification(repl.getModifications());
                 DatabaseManager.loadModifications(modifs);
 
-            } /*else {
+            }
 
-                System.out.println("replication from myself: " + repl);
-
-            }*/
+            // Checking for creation of a cart
+            for (ReplicationOuterClass.DatabaseModifications.Modification mod: repl.getModifications().getModificationsList())
+                if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART"))
+                    for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
+                        if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
+                            System.out.println("A CART WAS CREATED! (detected from replication message)");
 
         }
 
