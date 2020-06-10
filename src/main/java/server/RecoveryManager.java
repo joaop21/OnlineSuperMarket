@@ -81,40 +81,6 @@ public class RecoveryManager {
 
     }
 
-    /**
-     *
-    public static void recover(int port, RecoveryOuterClass.Lines lines_proto) {
-
-        try {
-
-            Writer output = new BufferedWriter(new FileWriter("databases/" + port + "/onlinesupermarket.script", true));
-            List<RecoveryOuterClass.Lines.Line> lines = lines_proto.getLinesList();
-
-            int counter = lines_proto.getMin() + 1;
-            for(RecoveryOuterClass.Lines.Line line : lines){
-
-                if(line.getNumber() == counter)
-                    if(line.getData().charAt(line.getData().length()-1) != '\n')
-                        output.append(line.getData()).append(String.valueOf('\n'));
-                    else
-                        output.append(line.getData());
-                else
-                    System.out.println("Lines are not sorted. Be careful.");
-
-                counter++;
-            }
-
-            output.close();
-
-            // Checkpointing the DB
-            checkpointing();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }*/
-
     public static boolean checkpointing() {
 
         Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
