@@ -4,26 +4,15 @@ package middleware.proto;
 
 message Recovery {
 
-    oneof type {
+    Type type = 1;
+    repeated Line lines = 2;
 
-        NumberOfLines numberOfLines = 1;
-        Lines lines = 2;
+    enum Type {
+
+        ALL_DB = 0;
+        INCREMENTAL = 1;
 
     }
-
-}
-
-message NumberOfLines {
-
-    int32 lines = 1;
-
-}
-
-message Lines {
-
-    repeated Line lines = 1;
-    int32 min = 2;
-    int32 max = 3;
 
     message Line {
 

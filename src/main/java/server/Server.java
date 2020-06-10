@@ -30,7 +30,7 @@ public class Server {
         // Adding listener to connector
         SpreadConnector.addListener(serverMessageListener);
         // Initializing connector
-        SpreadConnector.initialize();
+        SpreadConnector.initialize(port);
 
         // Initializing RequestManager and run it
         new Thread(RequestManager.initialize(serverMessageListener)).start();

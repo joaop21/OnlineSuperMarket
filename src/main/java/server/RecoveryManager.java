@@ -1,12 +1,17 @@
 package server;
 
 import database.DatabaseManager;
+import middleware.proto.MessageOuterClass;
 import middleware.proto.RecoveryOuterClass;
 import middleware.server.Pair;
+import middleware.spread.SpreadConnector;
+import org.apache.commons.io.FileUtils;
+import spread.SpreadGroup;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -77,7 +82,7 @@ public class RecoveryManager {
     }
 
     /**
-     * */
+     *
     public static void recover(int port, RecoveryOuterClass.Lines lines_proto) {
 
         try {
@@ -108,9 +113,9 @@ public class RecoveryManager {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    private static boolean checkpointing() {
+    public static boolean checkpointing() {
 
         Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
 
@@ -133,6 +138,158 @@ public class RecoveryManager {
             e.printStackTrace();
         }
         return true;
+    }
+
+    // also does checkpoint
+    public static void backup(String port) {
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("BACKUP DATABASE TO " + "'backup/" + port + "/'" + " BLOCKING AS FILES");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void deleteBackup(int port, String member) {
+
+        try {
+
+            FileUtils.deleteDirectory(new File("databases/" + port + "/backup/" + member + "/"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static boolean checkIfBackupExists(int port, String member) {
+
+        Path path = Paths.get("databases/" + port + "/backup/" + member + "/");
+
+        return Files.exists(path);
+
+    }
+
+    public static void compareAndSend(int port, SpreadGroup member){
+
+        // COMPARING
+        List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
+
+        try {
+
+            Process p = Runtime.getRuntime().exec("diff databases/" + port + "/backup/" + member.toString() +
+                    "/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            int index = 1;
+            String s;
+            while ((s = br.readLine()) != null) {
+
+                lines.add(RecoveryOuterClass.Recovery.Line.newBuilder().setNumber(index).setData(s).build());
+
+                index++;
+            }
+
+            p.waitFor();
+            p.destroy();
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+
+        // SENDING
+        MessageOuterClass.Message msg = MessageOuterClass.Message.newBuilder()
+                .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                        .setType(RecoveryOuterClass.Recovery.Type.INCREMENTAL)
+                        .addAllLines(lines)
+                        .build())
+                .build();
+
+        SpreadConnector.send(msg.toByteArray(), member);
+    }
+
+    public static void createPatchFile(int port, MessageOuterClass.Message message) {
+
+        try {
+
+            Path path = Paths.get("recovery/" + port);
+            Files.createDirectories(path);
+
+            File f = new File("recovery/" + port + "/recovery.patch");
+            if (!f.exists())
+                f.createNewFile();
+
+            BufferedWriter br = new BufferedWriter(new FileWriter(f));
+            for(RecoveryOuterClass.Recovery.Line line : message.getRecovery().getLinesList()) {
+                br.write(line.getData());
+                br.newLine();
+            }
+
+            br.flush();
+            br.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void patching(int port) {
+
+        try {
+
+            Process p = Runtime.getRuntime().exec("patch databases/" + port +
+                    "/onlinesupermarket.script recovery/" + port + "/recovery.patch");
+
+            p.waitFor();
+            p.destroy();
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void shutdown() {
+
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("SHUTDOWN");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) {

@@ -14,12 +14,12 @@ public class DatabaseManager {
     public static void createDatabase(String url){
         DB_URL = url;
         try {
-            Connection conn = DriverManager.getConnection(url+";ifexists=true", "SA", "");
+            Connection conn = DriverManager.getConnection(url+";ifexists=true;", "SA", "");
             conn.close();
             System.out.println("DB already exists. You cannot create a new one with the same name.");
         } catch (SQLException | HsqlException e1){
             try {
-                Connection conn = DriverManager.getConnection(url, "SA", "");
+                Connection conn = DriverManager.getConnection(url+";", "SA", "");
 
                 PreparedStatement pstat = conn.prepareStatement("SET DATABASE SQL SYNTAX MYS TRUE;");
                 pstat.executeUpdate();
