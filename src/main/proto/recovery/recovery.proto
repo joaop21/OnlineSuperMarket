@@ -9,8 +9,8 @@ message Recovery {
 
     enum Type {
 
-        ALL_DB = 0;
-        INCREMENTAL = 1;
+        INITIAL_DB = 0;
+        BACKUP = 1;
 
     }
 

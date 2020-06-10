@@ -17,7 +17,7 @@ public class Server {
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
 
-        DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + port + "/onlinesupermarket");
+        // DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + port + "/onlinesupermarket");
 
         // Setting socket info
         SocketInfo serverInfo = new SocketInfo("localhost", port);
@@ -31,6 +31,9 @@ public class Server {
         SpreadConnector.addListener(serverMessageListener);
         // Initializing connector
         SpreadConnector.initialize(port);
+
+        // Wait for server to recover
+        serverMessageListener.waitToRecover();
 
         // Initializing RequestManager and run it
         new Thread(RequestManager.initialize(serverMessageListener)).start();

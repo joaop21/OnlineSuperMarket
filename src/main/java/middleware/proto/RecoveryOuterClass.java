@@ -157,24 +157,24 @@ public final class RecoveryOuterClass {
     public enum Type
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>ALL_DB = 0;</code>
+       * <code>INITIAL_DB = 0;</code>
        */
-      ALL_DB(0),
+      INITIAL_DB(0),
       /**
-       * <code>INCREMENTAL = 1;</code>
+       * <code>BACKUP = 1;</code>
        */
-      INCREMENTAL(1),
+      BACKUP(1),
       UNRECOGNIZED(-1),
       ;
 
       /**
-       * <code>ALL_DB = 0;</code>
+       * <code>INITIAL_DB = 0;</code>
        */
-      public static final int ALL_DB_VALUE = 0;
+      public static final int INITIAL_DB_VALUE = 0;
       /**
-       * <code>INCREMENTAL = 1;</code>
+       * <code>BACKUP = 1;</code>
        */
-      public static final int INCREMENTAL_VALUE = 1;
+      public static final int BACKUP_VALUE = 1;
 
 
       public final int getNumber() {
@@ -201,8 +201,8 @@ public final class RecoveryOuterClass {
        */
       public static Type forNumber(int value) {
         switch (value) {
-          case 0: return ALL_DB;
-          case 1: return INCREMENTAL;
+          case 0: return INITIAL_DB;
+          case 1: return BACKUP;
           default: return null;
         }
       }
@@ -957,7 +957,7 @@ public final class RecoveryOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.ALL_DB.getNumber()) {
+      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.INITIAL_DB.getNumber()) {
         output.writeEnum(1, type_);
       }
       for (int i = 0; i < lines_.size(); i++) {
@@ -972,7 +972,7 @@ public final class RecoveryOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.ALL_DB.getNumber()) {
+      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.INITIAL_DB.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, type_);
       }
@@ -1664,12 +1664,12 @@ public final class RecoveryOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016recovery.proto\022\020middleware.proto\"\264\001\n\010R" +
+      "\n\016recovery.proto\022\020middleware.proto\"\263\001\n\010R" +
       "ecovery\022-\n\004type\030\001 \001(\0162\037.middleware.proto" +
       ".Recovery.Type\022.\n\005lines\030\002 \003(\0132\037.middlewa" +
       "re.proto.Recovery.Line\032$\n\004Line\022\016\n\006number" +
-      "\030\001 \001(\005\022\014\n\004data\030\002 \001(\t\"#\n\004Type\022\n\n\006ALL_DB\020\000" +
-      "\022\017\n\013INCREMENTAL\020\001b\006proto3"
+      "\030\001 \001(\005\022\014\n\004data\030\002 \001(\t\"\"\n\004Type\022\016\n\nINITIAL_" +
+      "DB\020\000\022\n\n\006BACKUP\020\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

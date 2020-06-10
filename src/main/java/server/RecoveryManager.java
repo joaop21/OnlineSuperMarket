@@ -185,15 +185,31 @@ public class RecoveryManager {
 
     }
 
-    public static void compareAndSend(int port, SpreadGroup member){
+    public static void compareBackupAndSend(int port, SpreadGroup member){
+
+        String command = "diff databases/" + port + "/backup/" + member.toString() +
+                "/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
+
+        compareAndSend(command, member, RecoveryOuterClass.Recovery.Type.BACKUP);
+
+    }
+
+    public static void compareInitialAndSend(int port, SpreadGroup member){
+
+        String command = "diff databases/" + port + "/backup/initial/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
+
+        compareAndSend(command, member, RecoveryOuterClass.Recovery.Type.INITIAL_DB);
+
+    }
+
+    private static void compareAndSend(String command, SpreadGroup member, RecoveryOuterClass.Recovery.Type type) {
 
         // COMPARING
         List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
 
         try {
 
-            Process p = Runtime.getRuntime().exec("diff databases/" + port + "/backup/" + member.toString() +
-                    "/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script");
+            Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -216,12 +232,13 @@ public class RecoveryManager {
         // SENDING
         MessageOuterClass.Message msg = MessageOuterClass.Message.newBuilder()
                 .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
-                        .setType(RecoveryOuterClass.Recovery.Type.INCREMENTAL)
+                        .setType(type)
                         .addAllLines(lines)
                         .build())
                 .build();
 
         SpreadConnector.send(msg.toByteArray(), member);
+
     }
 
     public static void createPatchFile(int port, MessageOuterClass.Message message) {
@@ -251,12 +268,29 @@ public class RecoveryManager {
 
     }
 
-    public static void patching(int port) {
+    public static void patchingBackup(int port) {
+
+        String command = "patch databases/" + port + "/onlinesupermarket.script recovery/" + port + "/recovery.patch";
+
+        exec(command);
+
+    }
+
+    public static void patchingInitial(int port) {
+
+        String command1 = "cp databases/" + port + "/backup/initial/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
+        exec(command1);
+
+        String command2 = "patch databases/" + port + "/onlinesupermarket.script recovery/" + port + "/recovery.patch";
+        exec(command2);
+
+    }
+
+    private static void exec(String command) {
 
         try {
 
-            Process p = Runtime.getRuntime().exec("patch databases/" + port +
-                    "/onlinesupermarket.script recovery/" + port + "/recovery.patch");
+            Process p = Runtime.getRuntime().exec(command);
 
             p.waitFor();
             p.destroy();
@@ -289,6 +323,12 @@ public class RecoveryManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static boolean directoryExists(String path){
+
+        return Files.exists(Paths.get(path));
 
     }
 

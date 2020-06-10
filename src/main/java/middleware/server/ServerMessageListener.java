@@ -4,7 +4,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import database.DatabaseManager;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
-import middleware.proto.RecoveryOuterClass;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import server.RecoveryManager;
@@ -34,13 +33,16 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private final Lock replication_lock = new ReentrantLock();
     private final Condition empty_replication_queue = this.replication_lock.newCondition();
 
+    /* Info for primary selection */
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
     private boolean first_message = true;
     private boolean primary = false;
 
-    private Map<String,Integer> need_recovery = new HashMap<>();
+    /* Info for recovery */
     private boolean recovery = true;
+    private final Lock recovery_lock = new ReentrantLock();
+    private final Condition recovered = this.recovery_lock.newCondition();
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -79,7 +81,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    private void handleAssignmentMessage(SpreadMessage spreadMessage, Message message) throws InvalidProtocolBufferException {
+    private void handleAssignmentMessage(SpreadMessage spreadMessage, Message message) {
 
         System.out.println("Received Assignment Message!");
 
@@ -126,29 +128,43 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     private void handleRecoveryMessage(SpreadMessage spreadMessage, Message message) {
 
-        if (!spreadMessage.getSender().toString().equals(this.myself)){
+        if (this.recovery && !spreadMessage.getSender().toString().equals(this.myself)){
 
             switch (message.getRecovery().getType()) {
 
-                case ALL_DB:
+                case INITIAL_DB:
+                    System.out.println("\nRECOVER FROM THE BEGINNING\n");
+                    // Create patch file
+                    RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
+
+                    // shutdown and patch
+                    RecoveryManager.shutdown();
+                    RecoveryManager.patchingInitial(this.serverInfo.getPort());
+
+                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+
                     break;
 
-                case INCREMENTAL:
-                    System.out.println("\nINCREMENTAL RECEIVED\n");
-                    System.out.println(message.toString());
+                case BACKUP:
+                    System.out.println("\nRECOVER FROM A BACKUP\n");
 
                     // Create patch file
                     RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
 
                     // shutdown and patch
                     RecoveryManager.shutdown();
-                    RecoveryManager.patching(this.serverInfo.getPort());
+                    RecoveryManager.patchingBackup(this.serverInfo.getPort());
 
                     DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
                     break;
 
             }
+
+            this.recovery_lock.lock();
+            this.recovery = false;
+            this.recovered.signal();
+            this.recovery_lock.unlock();
 
         }
 
@@ -178,6 +194,14 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     public void handleServerInfo (MembershipInfo info) {
 
+        updateHierarchy(info);
+
+        handleRecover(info);
+
+    }
+
+    private void updateHierarchy(MembershipInfo info) {
+
         if (info.isCausedByJoin()) {
 
             if (this.first_message) {  // I joined
@@ -204,55 +228,82 @@ public class ServerMessageListener implements AdvancedMessageListener {
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
             this.primary = true;
 
+    }
+
+    private void handleRecover(MembershipInfo info) {
 
         // check if i need recovery or to recover someone
         if (info.isCausedByJoin()) {
 
             if (!this.primary && this.first_message && this.recovery) {
 
-                System.out.println("\nNeed Recover\n");
                 this.first_message = false;
 
-                // INSPECT LOG OF MODIFICATIONS
-                // INSPECT DATABASE LOG
+                if(!RecoveryManager.directoryExists("databases/" + this.serverInfo.getPort() + "/")) {
 
-                /* ANCIENT CODE
-                // get the size of the DB
-                Message msg = constructRecoveryNumberOfLines(RecoveryManager.getCurrentSize(this.serverInfo.getPort()));
-                // send to group my info
-                SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));*/
+                    // create a database
+                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+
+                    // make a backup
+                    RecoveryManager.backup("initial");
+
+                } else {
+
+                    // Open DB makes an automatic checkpoint
+                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+
+                    // INSPECT LOG OF MODIFICATIONS
+                    // INSPECT DATABASE LOG
+
+                }
 
             }
 
             // it was me that joined, and i'm primary, nobody needs recovery
-            else if (this.primary && this.first_message)
+            else if (this.primary && this.first_message) {
+
                 this.first_message = false;
+
+                // Create a database
+                DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+
+                // Make a backup
+                RecoveryManager.backup("initial");
+
+                // Recovered
+                this.recovery_lock.lock();
+                this.recovery = false;
+                this.recovered.signal();
+                this.recovery_lock.unlock();
+            }
 
             // there is somebody that needs recovery
             else {
 
                 String member = info.getJoined().toString();
 
+                // Wait for the replication queue to be empty
+                waitToEmpty();
+
+                // Checkpointing current DB
+                RecoveryManager.checkpointing();
+
                 if(RecoveryManager.checkIfBackupExists(this.serverInfo.getPort(), member)){
 
-                    // Wait for the replication queue to be empty
-                    waitToEmpty();
-
-                    // Checkpointing current DB
-                    RecoveryManager.checkpointing();
-
                     // Compare and send differences
-                    RecoveryManager.compareAndSend(this.serverInfo.getPort(), info.getJoined());
+                    RecoveryManager.compareBackupAndSend(this.serverInfo.getPort(), info.getJoined());
 
                     // Delete backup
                     RecoveryManager.deleteBackup(this.serverInfo.getPort(), member);
 
                 } else {
+
                     // Backup doesnt exist
+                    // Send changes in DB from the start
+                    RecoveryManager.compareInitialAndSend(this.serverInfo.getPort(), info.getJoined());
+
                 }
 
-
-                // this.need_recovery.put(info.getJoined().toString(), RecoveryManager.getCurrentSize(this.serverInfo.getPort()));
             }
 
         } else if (info.isCausedByDisconnect()){
@@ -306,13 +357,25 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    /*private Message constructRecoveryNumberOfLines(int lines) {
-        return Message.newBuilder()
-                .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
-                        .setNumberOfLines(RecoveryOuterClass.NumberOfLines.newBuilder()
-                                .setLines(lines)
-                                .build())
-                        .build())
-                .build();
-    }*/
+    public void waitToRecover() {
+
+        try {
+
+            this.recovery_lock.lock();
+
+            while(this.recovery)
+                this.recovered.await();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            this.recovery_lock.unlock();
+
+        }
+
+    }
+
 }
