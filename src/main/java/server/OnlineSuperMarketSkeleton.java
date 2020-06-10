@@ -81,26 +81,18 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                                 if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
                                     System.out.println("A CART WAS CREATED! (detected from changes to DB in primary)");
                                     // Creating timer for deleting cart items
-                                    /*final int userId = msg.getRequest().getAddItemToCart().getUserId();
+                                    final int userId = msg.getRequest().getAddItemToCart().getUserId();
+                                    final Message message = msg;
                                     TimerTask task = new TimerTask() {
                                         public void run() {
 
-                                            Message message = Message.newBuilder()
-                                                    .setRequest(RequestOuterClass.Request.newBuilder()
-                                                            .setType(RequestOuterClass.Request.Type.REQUEST)
-                                                            .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
-                                                                    .setUserId(userId)
-                                                                    .build())
-                                                            .build())
-                                                    .build();
+                                            List<DatabaseModification> mod = QueryCart.cleanCart(userId);
 
-                                            Req
+                                            assert mod != null;
+                                            SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
                                         }
                                     };
-                                    Timer timer = new Timer("Timer");
-
-                                    long delay = 1000L;
-                                    timer.schedule(task, delay);*/
+                                    new Timer("Timer").schedule(task, Server.TMAX);
 
                                 }
 

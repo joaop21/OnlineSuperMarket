@@ -5,13 +5,16 @@ import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
+import org.w3c.dom.CDATASection;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
 import spread.SpreadMessage;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ServerMessageListener implements AdvancedMessageListener {
@@ -22,6 +25,8 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private final ConcurrentQueue<Triplet<Boolean, Long, Message>> replication_queue = new ConcurrentQueue<>();
     private final AtomicLong request_counter = new AtomicLong();
     private final AtomicLong replication_counter = new AtomicLong();
+
+    private final ConcurrentHashMap<Integer, LocalDateTime> tmax_timestamps = new ConcurrentHashMap<>();
 
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
@@ -164,4 +169,12 @@ public class ServerMessageListener implements AdvancedMessageListener {
     public Triplet<Boolean, Long, Message> getNextRequest() { return this.request_queue.poll(); }
 
     public Triplet<Boolean,Long,Message> getNextReplication() { return this.replication_queue.poll(); }
+
+    // TMAX Management
+
+    public void addTimestampTMAX (int userID, LocalDateTime date) { this.tmax_timestamps.put(userID, date); }
+
+    public void remTimestampTMAX (int userID) {this.tmax_timestamps.remove(userID); }
+
+    public void getTimestampTMAX (int userID) {this.tmax_timestamps.get(userID); }
 }

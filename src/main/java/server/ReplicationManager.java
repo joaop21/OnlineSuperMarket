@@ -12,6 +12,7 @@ import middleware.server.ServerMessageListener;
 import middleware.server.Triplet;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +35,13 @@ public class ReplicationManager implements Runnable {
 
         Triplet<Boolean,Long,Message> msg;
 
-        while((msg = messageListener.getNextReplication()) != null){
+        while((msg = messageListener.getNextReplication()) != null) {
 
             Replication repl = msg.getThird().getReplication();
-            Pair<String,String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
+            Pair<String, String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
             RequestManager.putResponse(pair, msg.getThird());
 
-            if(!msg.getFirst()) {
+            if (!msg.getFirst()) {
 
                 // System.out.println(repl);
                 // System.out.println("It misses update the db");
@@ -50,12 +51,21 @@ public class ReplicationManager implements Runnable {
 
             }
 
-            // Checking for creation of a cart
-            for (ReplicationOuterClass.DatabaseModifications.Modification mod: repl.getModifications().getModificationsList())
-                if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART"))
+            // Checking for cart operations
+            for (ReplicationOuterClass.DatabaseModifications.Modification mod : repl.getModifications().getModificationsList())
+                // Detecting cart creation
+                if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART")) {
                     for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
                         if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
-                            System.out.println("A CART WAS CREATED! (detected from replication message)");
+                            for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
+                                if (f.getField().toUpperCase().equals("CUSTOMERID"))
+                                    messageListener.addTimestampTMAX(f.getValueInt(), LocalDateTime.now());
+
+                    // Detecting cart deletion
+                } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1){
+
+
+                }
 
         }
 
