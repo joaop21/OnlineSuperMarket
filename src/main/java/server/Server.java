@@ -17,8 +17,6 @@ public class Server {
         // Getting server port from args[0]
         int port = Integer.parseInt(args[0]);
 
-        // DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + port + "/onlinesupermarket");
-
         // Setting socket info
         SocketInfo serverInfo = new SocketInfo("localhost", port);
 
