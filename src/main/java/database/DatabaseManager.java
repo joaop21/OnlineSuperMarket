@@ -113,13 +113,13 @@ public class DatabaseManager {
             ps4.setString(1, "Máscara");
             ps4.setString(2, "Máscara contra o COVID-19");
             ps4.setFloat(3, 50);
-            ps4.setInt(4, 5);
+            ps4.setInt(4, 10000);
             ps4.executeUpdate();
             PreparedStatement ps5 = conn.prepareStatement(item);
             ps5.setString(1, "Papel Higiénico");
             ps5.setString(2, "Papel Higiénico contra o COVID-19");
             ps5.setFloat(3, 100);
-            ps5.setInt(4, 2);
+            ps5.setInt(4, 10000);
             ps5.executeUpdate();
 
             // Populate Customers' Carts

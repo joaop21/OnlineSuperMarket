@@ -80,6 +80,8 @@ public class ClientBot extends Thread{
 
         int userID = login();
 
+        System.out.println("userID: "+userID);
+
         while(!terminated()) {
             Random rand = new Random();
             int op = rand.nextInt(6);
@@ -134,15 +136,17 @@ public class ClientBot extends Thread{
         for (ClientBot bot : list)
             bot.start();
 
+        System.out.println("Warming up...");
         Thread.sleep(5000); // warm up
-
+        System.out.println("Timer started");
         startBench();
-
+        System.out.println("Measuring performance...");
         Thread.sleep(time*1000);  // measures
-
+        System.out.println("Stopped timer");
         stopBench(times, throughputs);
 
         // wait for threads to die
+        System.out.println("Waiting for bots to die...");
         for (ClientBot bot : list)
             bot.join();
     }
@@ -186,14 +190,16 @@ public class ClientBot extends Thread{
 
 
     public static void main(String[] args) throws Exception {
+
+        int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987};
+
         System.out.println("Benchmarking starting...");
 
         List<Integer> labels = new ArrayList<>();
         List<Double> times = new ArrayList<>();
         List<Double> throughputs = new ArrayList<>();
 
-        for (String arg : args) {
-            int clients = Integer.parseInt(arg);
+        for (int clients : numbers) {
             System.out.println(clients + " clients running...");
             labels.add(clients);
             runBots(clients, times, throughputs);
