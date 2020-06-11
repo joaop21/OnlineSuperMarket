@@ -7,6 +7,7 @@ import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 import server.RecoveryManager;
+import server.RequestManager;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
@@ -282,8 +283,9 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
                 String member = info.getJoined().toString();
 
-                // Wait for the replication queue to be empty
-                waitToEmpty();
+                // Wait for the replication and request queue to be empty
+                waitToEmptyReplication();
+                waitToEmptyRequest();
 
                 // Checkpointing current DB
                 RecoveryManager.checkpointing();
@@ -310,8 +312,9 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             String member = info.getDisconnected().toString();
 
-            // Wait for the replication queue to be empty
-            waitToEmpty();
+            // Wait for the replication and request queue to be empty
+            waitToEmptyReplication();
+            waitToEmptyRequest();
 
             // make a backup
             RecoveryManager.backup(member);
@@ -337,9 +340,16 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
 
         return this.replication_queue.poll();
+
     }
 
-    private void waitToEmpty() {
+    private void waitToEmptyRequest() {
+
+        RequestManager.waitToEmpty();
+
+    }
+
+    private void waitToEmptyReplication() {
 
         try {
 
