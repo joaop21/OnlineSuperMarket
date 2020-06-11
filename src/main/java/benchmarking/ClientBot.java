@@ -1,7 +1,5 @@
 package benchmarking;
 
-import client.ClientStub;
-
 import java.io.*;
 
 import org.jfree.chart.JFreeChart;
@@ -19,7 +17,7 @@ public class ClientBot extends Thread{
     private static boolean started, stopped;
     private static int n;
     private static long total;
-    private static final long time = 30;
+    private static final long time = 10;
 
     private synchronized static void registerTime(long tr) {
         if (started && !stopped) {
@@ -72,7 +70,7 @@ public class ClientBot extends Thread{
                 break;
         }
 
-        return new ClientStub().login(username, pass);
+        return new Stub().login(username, pass);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class ClientBot extends Thread{
 
         int userID = login();
 
-        System.out.println("userID: "+userID);
+        // System.out.println("userID: "+userID);
 
         while(!terminated()) {
             Random rand = new Random();
@@ -93,27 +91,27 @@ public class ClientBot extends Thread{
             switch (op) {
                 case 0:
                     // System.out.println("Show Catalog");
-                    new ClientStub().getItems();
+                    new Stub().getItems();
                     break;
                 case 1:
                     // System.out.println("Search Item");
-                    new ClientStub().getItem(itemId);
+                    new Stub().getItem(itemId);
                     break;
                 case 2:
                     // System.out.println("Add Item");
-                    new ClientStub().addItemToCart(userID, itemId);
+                    new Stub().addItemToCart(userID, itemId);
                     break;
                 case 3:
                     // System.out.println("Remove Item");
-                    new ClientStub().removeItemFromCart(userID, itemId);
+                    new Stub().removeItemFromCart(userID, itemId);
                     break;
                 case 4:
                     // System.out.println("Show Cart");
-                    new ClientStub().getCartItems(userID);
+                    new Stub().getCartItems(userID);
                     break;
                 case 5:
                     // System.out.println("Order");
-                    new ClientStub().order(userID);
+                    new Stub().order(userID);
                     break;
             }
 
@@ -126,15 +124,15 @@ public class ClientBot extends Thread{
     }
 
     private static void runBots(int clients, List<Double> times, List<Double> throughputs) throws Exception {
-        ClientBot[] list = new ClientBot[clients];
+        Thread[] list = new Thread[clients];
 
         // create instances of this object
         for(int i=0; i < list.length; i++)
-            list[i] = new ClientBot();
+            list[i] = new Thread(new ClientBot());
 
         // Start testing threads
-        for (ClientBot bot : list)
-            bot.start();
+        for (Thread t : list)
+            t.start();
 
         System.out.println("Warming up...");
         Thread.sleep(5000); // warm up
@@ -147,14 +145,18 @@ public class ClientBot extends Thread{
 
         // wait for threads to die
         System.out.println("Waiting for bots to die...");
-        for (ClientBot bot : list)
-            bot.join();
+        for (Thread t : list)
+            t.join();
+
+        stopped = false;
+        n = 0;
+        total = 0;
     }
 
     private static void drawTimeChart(List<Integer> labels, List<Double> times) throws IOException {
         DefaultCategoryDataset line_chart_dataset = new DefaultCategoryDataset();
         for (int i = 0; i < labels.size(); i++){
-            line_chart_dataset.addValue(labels.get(i), "Time", times.get(i));
+            line_chart_dataset.addValue(times.get(i), "Time", labels.get(i));
         }
 
         JFreeChart lineChartObject = ChartFactory.createLineChart(
@@ -172,7 +174,7 @@ public class ClientBot extends Thread{
     private static void drawThroughputChart(List<Integer> labels, List<Double> throughputs) throws IOException {
         DefaultCategoryDataset line_chart_dataset = new DefaultCategoryDataset();
         for (int i = 0; i < labels.size(); i++){
-            line_chart_dataset.addValue(labels.get(i), "Throughput", throughputs.get(i));
+            line_chart_dataset.addValue(throughputs.get(i), "Throughput", labels.get(i));
         }
 
         JFreeChart lineChartObject = ChartFactory.createLineChart(
@@ -191,7 +193,8 @@ public class ClientBot extends Thread{
 
     public static void main(String[] args) throws Exception {
 
-        int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987};
+        // int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987};
+        int[] numbers = new int[]{1, 2, 3, 5, 8};
 
         System.out.println("Benchmarking starting...");
 
@@ -200,6 +203,10 @@ public class ClientBot extends Thread{
         List<Double> throughputs = new ArrayList<>();
 
         for (int clients : numbers) {
+            stopped = false;
+            started = false;
+            n = 0;
+            total = 0;
             System.out.println(clients + " clients running...");
             labels.add(clients);
             runBots(clients, times, throughputs);
