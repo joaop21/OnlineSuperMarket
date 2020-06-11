@@ -19,36 +19,25 @@ public final class RecoveryOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.middleware.proto.Recovery.Type type = 1;</code>
-     * @return The enum numeric value on the wire for type.
-     */
-    int getTypeValue();
-    /**
-     * <code>.middleware.proto.Recovery.Type type = 1;</code>
-     * @return The type.
-     */
-    middleware.proto.RecoveryOuterClass.Recovery.Type getType();
-
-    /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line> 
         getLinesList();
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     middleware.proto.RecoveryOuterClass.Recovery.Line getLines(int index);
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     int getLinesCount();
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     java.util.List<? extends middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder> 
         getLinesOrBuilderList();
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder getLinesOrBuilder(
         int index);
@@ -66,7 +55,6 @@ public final class RecoveryOuterClass {
       super(builder);
     }
     private Recovery() {
-      type_ = 0;
       lines_ = java.util.Collections.emptyList();
     }
 
@@ -101,13 +89,7 @@ public final class RecoveryOuterClass {
             case 0:
               done = true;
               break;
-            case 8: {
-              int rawValue = input.readEnum();
-
-              type_ = rawValue;
-              break;
-            }
-            case 18: {
+            case 10: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 lines_ = new java.util.ArrayList<middleware.proto.RecoveryOuterClass.Recovery.Line>();
                 mutable_bitField0_ |= 0x00000001;
@@ -149,110 +131,6 @@ public final class RecoveryOuterClass {
       return middleware.proto.RecoveryOuterClass.internal_static_middleware_proto_Recovery_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               middleware.proto.RecoveryOuterClass.Recovery.class, middleware.proto.RecoveryOuterClass.Recovery.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code middleware.proto.Recovery.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>INITIAL_DB = 0;</code>
-       */
-      INITIAL_DB(0),
-      /**
-       * <code>BACKUP = 1;</code>
-       */
-      BACKUP(1),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>INITIAL_DB = 0;</code>
-       */
-      public static final int INITIAL_DB_VALUE = 0;
-      /**
-       * <code>BACKUP = 1;</code>
-       */
-      public static final int BACKUP_VALUE = 1;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static Type valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static Type forNumber(int value) {
-        switch (value) {
-          case 0: return INITIAL_DB;
-          case 1: return BACKUP;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return middleware.proto.RecoveryOuterClass.Recovery.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private Type(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:middleware.proto.Recovery.Type)
     }
 
     public interface LineOrBuilder extends
@@ -889,54 +767,35 @@ public final class RecoveryOuterClass {
 
     }
 
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private int type_;
-    /**
-     * <code>.middleware.proto.Recovery.Type type = 1;</code>
-     * @return The enum numeric value on the wire for type.
-     */
-    public int getTypeValue() {
-      return type_;
-    }
-    /**
-     * <code>.middleware.proto.Recovery.Type type = 1;</code>
-     * @return The type.
-     */
-    public middleware.proto.RecoveryOuterClass.Recovery.Type getType() {
-      @SuppressWarnings("deprecation")
-      middleware.proto.RecoveryOuterClass.Recovery.Type result = middleware.proto.RecoveryOuterClass.Recovery.Type.valueOf(type_);
-      return result == null ? middleware.proto.RecoveryOuterClass.Recovery.Type.UNRECOGNIZED : result;
-    }
-
-    public static final int LINES_FIELD_NUMBER = 2;
+    public static final int LINES_FIELD_NUMBER = 1;
     private java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line> lines_;
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     public java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line> getLinesList() {
       return lines_;
     }
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     public java.util.List<? extends middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder> 
         getLinesOrBuilderList() {
       return lines_;
     }
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     public int getLinesCount() {
       return lines_.size();
     }
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     public middleware.proto.RecoveryOuterClass.Recovery.Line getLines(int index) {
       return lines_.get(index);
     }
     /**
-     * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+     * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
      */
     public middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder getLinesOrBuilder(
         int index) {
@@ -957,11 +816,8 @@ public final class RecoveryOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.INITIAL_DB.getNumber()) {
-        output.writeEnum(1, type_);
-      }
       for (int i = 0; i < lines_.size(); i++) {
-        output.writeMessage(2, lines_.get(i));
+        output.writeMessage(1, lines_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -972,13 +828,9 @@ public final class RecoveryOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (type_ != middleware.proto.RecoveryOuterClass.Recovery.Type.INITIAL_DB.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, type_);
-      }
       for (int i = 0; i < lines_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, lines_.get(i));
+          .computeMessageSize(1, lines_.get(i));
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -995,7 +847,6 @@ public final class RecoveryOuterClass {
       }
       middleware.proto.RecoveryOuterClass.Recovery other = (middleware.proto.RecoveryOuterClass.Recovery) obj;
 
-      if (type_ != other.type_) return false;
       if (!getLinesList()
           .equals(other.getLinesList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -1009,8 +860,6 @@ public final class RecoveryOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + type_;
       if (getLinesCount() > 0) {
         hash = (37 * hash) + LINES_FIELD_NUMBER;
         hash = (53 * hash) + getLinesList().hashCode();
@@ -1149,8 +998,6 @@ public final class RecoveryOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        type_ = 0;
-
         if (linesBuilder_ == null) {
           lines_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
@@ -1184,7 +1031,6 @@ public final class RecoveryOuterClass {
       public middleware.proto.RecoveryOuterClass.Recovery buildPartial() {
         middleware.proto.RecoveryOuterClass.Recovery result = new middleware.proto.RecoveryOuterClass.Recovery(this);
         int from_bitField0_ = bitField0_;
-        result.type_ = type_;
         if (linesBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0)) {
             lines_ = java.util.Collections.unmodifiableList(lines_);
@@ -1242,9 +1088,6 @@ public final class RecoveryOuterClass {
 
       public Builder mergeFrom(middleware.proto.RecoveryOuterClass.Recovery other) {
         if (other == middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance()) return this;
-        if (other.type_ != 0) {
-          setTypeValue(other.getTypeValue());
-        }
         if (linesBuilder_ == null) {
           if (!other.lines_.isEmpty()) {
             if (lines_.isEmpty()) {
@@ -1301,58 +1144,6 @@ public final class RecoveryOuterClass {
       }
       private int bitField0_;
 
-      private int type_ = 0;
-      /**
-       * <code>.middleware.proto.Recovery.Type type = 1;</code>
-       * @return The enum numeric value on the wire for type.
-       */
-      public int getTypeValue() {
-        return type_;
-      }
-      /**
-       * <code>.middleware.proto.Recovery.Type type = 1;</code>
-       * @param value The enum numeric value on the wire for type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTypeValue(int value) {
-        type_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Recovery.Type type = 1;</code>
-       * @return The type.
-       */
-      public middleware.proto.RecoveryOuterClass.Recovery.Type getType() {
-        @SuppressWarnings("deprecation")
-        middleware.proto.RecoveryOuterClass.Recovery.Type result = middleware.proto.RecoveryOuterClass.Recovery.Type.valueOf(type_);
-        return result == null ? middleware.proto.RecoveryOuterClass.Recovery.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.middleware.proto.Recovery.Type type = 1;</code>
-       * @param value The type to set.
-       * @return This builder for chaining.
-       */
-      public Builder setType(middleware.proto.RecoveryOuterClass.Recovery.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        
-        type_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.middleware.proto.Recovery.Type type = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearType() {
-        
-        type_ = 0;
-        onChanged();
-        return this;
-      }
-
       private java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line> lines_ =
         java.util.Collections.emptyList();
       private void ensureLinesIsMutable() {
@@ -1366,7 +1157,7 @@ public final class RecoveryOuterClass {
           middleware.proto.RecoveryOuterClass.Recovery.Line, middleware.proto.RecoveryOuterClass.Recovery.Line.Builder, middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder> linesBuilder_;
 
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line> getLinesList() {
         if (linesBuilder_ == null) {
@@ -1376,7 +1167,7 @@ public final class RecoveryOuterClass {
         }
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public int getLinesCount() {
         if (linesBuilder_ == null) {
@@ -1386,7 +1177,7 @@ public final class RecoveryOuterClass {
         }
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public middleware.proto.RecoveryOuterClass.Recovery.Line getLines(int index) {
         if (linesBuilder_ == null) {
@@ -1396,7 +1187,7 @@ public final class RecoveryOuterClass {
         }
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder setLines(
           int index, middleware.proto.RecoveryOuterClass.Recovery.Line value) {
@@ -1413,7 +1204,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder setLines(
           int index, middleware.proto.RecoveryOuterClass.Recovery.Line.Builder builderForValue) {
@@ -1427,7 +1218,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder addLines(middleware.proto.RecoveryOuterClass.Recovery.Line value) {
         if (linesBuilder_ == null) {
@@ -1443,7 +1234,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder addLines(
           int index, middleware.proto.RecoveryOuterClass.Recovery.Line value) {
@@ -1460,7 +1251,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder addLines(
           middleware.proto.RecoveryOuterClass.Recovery.Line.Builder builderForValue) {
@@ -1474,7 +1265,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder addLines(
           int index, middleware.proto.RecoveryOuterClass.Recovery.Line.Builder builderForValue) {
@@ -1488,7 +1279,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder addAllLines(
           java.lang.Iterable<? extends middleware.proto.RecoveryOuterClass.Recovery.Line> values) {
@@ -1503,7 +1294,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder clearLines() {
         if (linesBuilder_ == null) {
@@ -1516,7 +1307,7 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public Builder removeLines(int index) {
         if (linesBuilder_ == null) {
@@ -1529,14 +1320,14 @@ public final class RecoveryOuterClass {
         return this;
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public middleware.proto.RecoveryOuterClass.Recovery.Line.Builder getLinesBuilder(
           int index) {
         return getLinesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder getLinesOrBuilder(
           int index) {
@@ -1546,7 +1337,7 @@ public final class RecoveryOuterClass {
         }
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public java.util.List<? extends middleware.proto.RecoveryOuterClass.Recovery.LineOrBuilder> 
            getLinesOrBuilderList() {
@@ -1557,14 +1348,14 @@ public final class RecoveryOuterClass {
         }
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public middleware.proto.RecoveryOuterClass.Recovery.Line.Builder addLinesBuilder() {
         return getLinesFieldBuilder().addBuilder(
             middleware.proto.RecoveryOuterClass.Recovery.Line.getDefaultInstance());
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public middleware.proto.RecoveryOuterClass.Recovery.Line.Builder addLinesBuilder(
           int index) {
@@ -1572,7 +1363,7 @@ public final class RecoveryOuterClass {
             index, middleware.proto.RecoveryOuterClass.Recovery.Line.getDefaultInstance());
       }
       /**
-       * <code>repeated .middleware.proto.Recovery.Line lines = 2;</code>
+       * <code>repeated .middleware.proto.Recovery.Line lines = 1;</code>
        */
       public java.util.List<middleware.proto.RecoveryOuterClass.Recovery.Line.Builder> 
            getLinesBuilderList() {
@@ -1664,12 +1455,10 @@ public final class RecoveryOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016recovery.proto\022\020middleware.proto\"\263\001\n\010R" +
-      "ecovery\022-\n\004type\030\001 \001(\0162\037.middleware.proto" +
-      ".Recovery.Type\022.\n\005lines\030\002 \003(\0132\037.middlewa" +
-      "re.proto.Recovery.Line\032$\n\004Line\022\016\n\006number" +
-      "\030\001 \001(\005\022\014\n\004data\030\002 \001(\t\"\"\n\004Type\022\016\n\nINITIAL_" +
-      "DB\020\000\022\n\n\006BACKUP\020\001b\006proto3"
+      "\n\016recovery.proto\022\020middleware.proto\"`\n\010Re" +
+      "covery\022.\n\005lines\030\001 \003(\0132\037.middleware.proto" +
+      ".Recovery.Line\032$\n\004Line\022\016\n\006number\030\001 \001(\005\022\014" +
+      "\n\004data\030\002 \001(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1680,7 +1469,7 @@ public final class RecoveryOuterClass {
     internal_static_middleware_proto_Recovery_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Recovery_descriptor,
-        new java.lang.String[] { "Type", "Lines", });
+        new java.lang.String[] { "Lines", });
     internal_static_middleware_proto_Recovery_Line_descriptor =
       internal_static_middleware_proto_Recovery_descriptor.getNestedTypes().get(0);
     internal_static_middleware_proto_Recovery_Line_fieldAccessorTable = new

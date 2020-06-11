@@ -131,36 +131,14 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
         if (this.recovery && !spreadMessage.getSender().toString().equals(this.myself)){
 
-            switch (message.getRecovery().getType()) {
+            // Create patch file
+            RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
 
-                case INITIAL_DB:
-                    System.out.println("\nRECOVER FROM THE BEGINNING\n");
-                    // Create patch file
-                    RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
+            // shutdown DB and patch
+            RecoveryManager.shutdown();
+            RecoveryManager.patchingInitialBackup(this.serverInfo.getPort());
 
-                    // shutdown and patch
-                    RecoveryManager.shutdown();
-                    RecoveryManager.patchingInitial(this.serverInfo.getPort());
-
-                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
-
-                    break;
-
-                case BACKUP:
-                    System.out.println("\nRECOVER FROM A BACKUP\n");
-
-                    // Create patch file
-                    RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
-
-                    // shutdown and patch
-                    RecoveryManager.shutdown();
-                    RecoveryManager.patchingBackup(this.serverInfo.getPort());
-
-                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
-
-                    break;
-
-            }
+            DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
             this.recovery_lock.lock();
             this.recovery = false;
@@ -168,7 +146,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
             this.recovery_lock.unlock();
 
         }
-
 
     }
 
@@ -253,9 +230,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
                     // Open DB makes an automatic checkpoint
                     DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
-                    // INSPECT LOG OF MODIFICATIONS
-                    // INSPECT DATABASE LOG
-
                 }
 
             }
@@ -265,7 +239,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
                 this.first_message = false;
 
-                // Create a database
+                // Create or open a database
                 DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
                 // Make a backup
@@ -281,8 +255,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
             // there is somebody that needs recovery
             else {
 
-                String member = info.getJoined().toString();
-
                 // Wait for the replication and request queue to be empty
                 waitToEmptyReplication();
                 waitToEmptyRequest();
@@ -290,34 +262,11 @@ public class ServerMessageListener implements AdvancedMessageListener {
                 // Checkpointing current DB
                 RecoveryManager.checkpointing();
 
-                if(RecoveryManager.checkIfBackupExists(this.serverInfo.getPort(), member)){
-
-                    // Compare and send differences
-                    RecoveryManager.compareBackupAndSend(this.serverInfo.getPort(), info.getJoined());
-
-                    // Delete backup
-                    RecoveryManager.deleteBackup(this.serverInfo.getPort(), member);
-
-                } else {
-
-                    // Backup doesnt exist
-                    // Send changes in DB from the start
-                    RecoveryManager.compareInitialAndSend(this.serverInfo.getPort(), info.getJoined());
-
-                }
+                // Send changes in DB from the start
+                RecoveryManager.compareInitialBackupAndSend(this.serverInfo.getPort(), info.getJoined());
 
             }
 
-        } else if (info.isCausedByDisconnect()){
-
-            String member = info.getDisconnected().toString();
-
-            // Wait for the replication and request queue to be empty
-            waitToEmptyReplication();
-            waitToEmptyRequest();
-
-            // make a backup
-            RecoveryManager.backup(member);
         }
 
     }

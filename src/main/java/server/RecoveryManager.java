@@ -8,13 +8,11 @@ import com.github.difflib.patch.PatchFailedException;
 import database.DatabaseManager;
 import middleware.proto.MessageOuterClass;
 import middleware.proto.RecoveryOuterClass;
-import middleware.server.Pair;
 import middleware.spread.SpreadConnector;
 import org.apache.commons.io.FileUtils;
 import spread.SpreadGroup;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,71 +20,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RecoveryManager {
 
-    /**
-     * Static method for checkpointing the DB and returning the DB size in lines
-     *
-     * @param port Port of the server for construct path string to db.
-     *
-     * @return Integer Number of lines of the DB.
-     * */
-    public static int getCurrentSize(int port) {
-
-        // Checkpointing the DB
-        if(!checkpointing())
-            return 0;
-
-        // Counting size of file based on its lines
-        int lines = 0;
-
-        try {
-
-            BufferedReader reader = new BufferedReader(new FileReader("databases/" + port + "/onlinesupermarket.script"));
-            while (reader.readLine() != null) lines++;
-            reader.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return lines;
-
-    }
-
-    /**
-     * Static method for retrieving the lines to recover
-     *
-     * @param port Port of the server for construct path string to db.
-     * @param min Line number that a determined server has.
-     * @param max Line number this server had when the new joined.
-     *
-     * @return List<Pair<Integer,String>> Lines to recover the new server
-     * */
-    public static List<Pair<Integer,String>> getRecoveryLines(int port, int min, int max) {
-
-        List<Pair<Integer,String>> res = new ArrayList<>();
-
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("databases/" + port + "/onlinesupermarket.script"), StandardCharsets.UTF_8)) {
-            List<String> lines = reader.lines().skip(min).limit(max-min).collect(Collectors.toList());
-
-            int counter = min+1;
-            for(String line : lines) {
-                res.add(new Pair<>(counter, line));
-                counter++;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return res;
-
-    }
-
-    public static boolean checkpointing() {
+    public static void checkpointing() {
 
         Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
 
@@ -94,7 +31,7 @@ public class RecoveryManager {
 
             if (conn == null) {
                 System.out.println("No DB connection.");
-                return false;
+                return;
             }
 
             PreparedStatement ps = conn.prepareStatement("CHECKPOINT");
@@ -108,7 +45,6 @@ public class RecoveryManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     // also does checkpoint
@@ -136,49 +72,14 @@ public class RecoveryManager {
 
     }
 
-    public static void deleteBackup(int port, String member) {
-
-        try {
-
-            FileUtils.deleteDirectory(new File("databases/" + port + "/backup/" + member + "/"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static boolean checkIfBackupExists(int port, String member) {
-
-        Path path = Paths.get("databases/" + port + "/backup/" + member + "/");
-
-        return Files.exists(path);
-
-    }
-
-    public static void compareBackupAndSend(int port, SpreadGroup member){
-
-        try {
-
-            List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/" + member.toString() + "/onlinesupermarket.script").toPath());
-            List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
-
-            compareAndSend(original, revised, member, RecoveryOuterClass.Recovery.Type.BACKUP);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static void compareInitialAndSend(int port, SpreadGroup member){
+    public static void compareInitialBackupAndSend(int port, SpreadGroup member){
 
         try {
 
             List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/initial/onlinesupermarket.script").toPath());
             List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
 
-            compareAndSend(original, revised, member, RecoveryOuterClass.Recovery.Type.INITIAL_DB);
+            compareAndSend(original, revised, member);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,7 +87,7 @@ public class RecoveryManager {
 
     }
 
-    private static void compareAndSend(List<String> original, List<String> revised, SpreadGroup member, RecoveryOuterClass.Recovery.Type type) {
+    private static void compareAndSend(List<String> original, List<String> revised, SpreadGroup member) {
 
         // COMPARING
         List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
@@ -209,7 +110,6 @@ public class RecoveryManager {
         // SENDING
         MessageOuterClass.Message msg = MessageOuterClass.Message.newBuilder()
                 .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
-                        .setType(type)
                         .addAllLines(lines)
                         .build())
                 .build();
@@ -245,13 +145,7 @@ public class RecoveryManager {
 
     }
 
-    public static void patchingBackup(int port) {
-
-        patching(port);
-
-    }
-
-    public static void patchingInitial(int port) {
+    public static void patchingInitialBackup(int port) {
 
         try {
 

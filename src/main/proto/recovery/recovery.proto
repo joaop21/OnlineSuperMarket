@@ -4,15 +4,7 @@ package middleware.proto;
 
 message Recovery {
 
-    Type type = 1;
-    repeated Line lines = 2;
-
-    enum Type {
-
-        INITIAL_DB = 0;
-        BACKUP = 1;
-
-    }
+    repeated Line lines = 1;
 
     message Line {
 
