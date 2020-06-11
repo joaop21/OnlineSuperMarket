@@ -1,5 +1,10 @@
 package server;
 
+import com.github.difflib.DiffUtils;
+import com.github.difflib.UnifiedDiffUtils;
+import com.github.difflib.algorithm.DiffException;
+import com.github.difflib.patch.Patch;
+import com.github.difflib.patch.PatchFailedException;
 import database.DatabaseManager;
 import middleware.proto.MessageOuterClass;
 import middleware.proto.RecoveryOuterClass;
@@ -153,45 +158,51 @@ public class RecoveryManager {
 
     public static void compareBackupAndSend(int port, SpreadGroup member){
 
-        String command = "diff databases/" + port + "/backup/" + member.toString() +
-                "/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
+        try {
 
-        compareAndSend(command, member, RecoveryOuterClass.Recovery.Type.BACKUP);
+            List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/" + member.toString() + "/onlinesupermarket.script").toPath());
+            List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
+
+            compareAndSend(original, revised, member, RecoveryOuterClass.Recovery.Type.BACKUP);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public static void compareInitialAndSend(int port, SpreadGroup member){
 
-        String command = "diff databases/" + port + "/backup/initial/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
+        try {
 
-        compareAndSend(command, member, RecoveryOuterClass.Recovery.Type.INITIAL_DB);
+            List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/initial/onlinesupermarket.script").toPath());
+            List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
+
+            compareAndSend(original, revised, member, RecoveryOuterClass.Recovery.Type.INITIAL_DB);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private static void compareAndSend(String command, SpreadGroup member, RecoveryOuterClass.Recovery.Type type) {
+    private static void compareAndSend(List<String> original, List<String> revised, SpreadGroup member, RecoveryOuterClass.Recovery.Type type) {
 
         // COMPARING
         List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
 
         try {
 
-            Process p = Runtime.getRuntime().exec(command);
+            Patch<String> diff = DiffUtils.diff(original, revised);
+            List<String> unifiedDiff = UnifiedDiffUtils.generateUnifiedDiff(null, null, original, diff, 0);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            int index = 1;
-            String s;
-            while ((s = br.readLine()) != null) {
-
-                lines.add(RecoveryOuterClass.Recovery.Line.newBuilder().setNumber(index).setData(s).build());
-
+            int index = 0;
+            for(String line : unifiedDiff) {
+                lines.add(RecoveryOuterClass.Recovery.Line.newBuilder().setNumber(index).setData(line).build());
                 index++;
             }
 
-            p.waitFor();
-            p.destroy();
-
-        } catch (InterruptedException | IOException e) {
+        } catch (DiffException e) {
             e.printStackTrace();
         }
 
@@ -236,32 +247,44 @@ public class RecoveryManager {
 
     public static void patchingBackup(int port) {
 
-        String command = "patch databases/" + port + "/onlinesupermarket.script recovery/" + port + "/recovery.patch";
-
-        exec(command);
+        patching(port);
 
     }
 
     public static void patchingInitial(int port) {
 
-        String command1 = "cp databases/" + port + "/backup/initial/onlinesupermarket.script databases/" + port + "/onlinesupermarket.script";
-        exec(command1);
+        try {
 
-        String command2 = "patch databases/" + port + "/onlinesupermarket.script recovery/" + port + "/recovery.patch";
-        exec(command2);
+            FileUtils.copyFile(new File("databases/" + port + "/backup/initial/onlinesupermarket.script"),
+                    new File("databases/" + port + "/onlinesupermarket.script"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        patching(port);
 
     }
 
-    private static void exec(String command) {
+    private static void patching(int port) {
 
         try {
 
-            Process p = Runtime.getRuntime().exec(command);
+            List<String> original = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
+            List<String> patched = Files.readAllLines(new File("recovery/" + port + "/recovery.patch").toPath());
 
-            p.waitFor();
-            p.destroy();
+            Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patched);
+            List<String> result = DiffUtils.patch(original, patch);
 
-        } catch (InterruptedException | IOException e) {
+            BufferedWriter br = new BufferedWriter(new FileWriter(new File("databases/" + port + "/onlinesupermarket.script")));
+            for (String line : result) {
+                br.write(line);
+                br.newLine();
+            }
+            br.flush();
+            br.close();
+
+        } catch (IOException | PatchFailedException e) {
             e.printStackTrace();
         }
 
@@ -296,12 +319,6 @@ public class RecoveryManager {
 
         return Files.exists(Paths.get(path));
 
-    }
-
-    public static void main(String[] args) {
-        List<Pair<Integer,String>> lines = getRecoveryLines(9998, 50, 60);
-        for(Pair<Integer,String> line : lines)
-            System.out.println(line.getFirst() + ": '" + line.getSecond() + "'");
     }
 
 }
