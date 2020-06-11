@@ -9,6 +9,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class ClientBot extends Thread{
     private static boolean started, stopped;
     private static int n;
     private static long total;
-    private static final long time = 10;
+    private static final long time = 30;
 
     private synchronized static void registerTime(long tr) {
         if (started && !stopped) {
@@ -78,6 +79,8 @@ public class ClientBot extends Thread{
 
         int userID = login();
 
+        Stub s = new Stub();
+
         // System.out.println("userID: "+userID);
 
         while(!terminated()) {
@@ -91,27 +94,27 @@ public class ClientBot extends Thread{
             switch (op) {
                 case 0:
                     // System.out.println("Show Catalog");
-                    new Stub().getItems();
+                    s.getItems();
                     break;
                 case 1:
                     // System.out.println("Search Item");
-                    new Stub().getItem(itemId);
+                    s.getItem(itemId);
                     break;
                 case 2:
                     // System.out.println("Add Item");
-                    new Stub().addItemToCart(userID, itemId);
+                    s.addItemToCart(userID, itemId);
                     break;
                 case 3:
                     // System.out.println("Remove Item");
-                    new Stub().removeItemFromCart(userID, itemId);
+                    s.removeItemFromCart(userID, itemId);
                     break;
                 case 4:
                     // System.out.println("Show Cart");
-                    new Stub().getCartItems(userID);
+                    s.getCartItems(userID);
                     break;
                 case 5:
                     // System.out.println("Order");
-                    new Stub().order(userID);
+                    s.order(userID);
                     break;
             }
 
@@ -193,8 +196,7 @@ public class ClientBot extends Thread{
 
     public static void main(String[] args) throws Exception {
 
-        // int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987};
-        int[] numbers = new int[]{1, 2, 3, 5, 8};
+        int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377/*, 610, 987*/};
 
         System.out.println("Benchmarking starting...");
 
@@ -216,8 +218,10 @@ public class ClientBot extends Thread{
         System.out.println("Benchmarking finished !");
 
         System.out.println("Drawing Time Chart...");
+        System.out.println(Arrays.toString(times.toArray()));
         drawTimeChart(labels, times);
         System.out.println("Drawing Throughput Chart...");
+        System.out.println(Arrays.toString(throughputs.toArray()));
         drawThroughputChart(labels, throughputs);
 
         System.out.println("GreaTF Success!");

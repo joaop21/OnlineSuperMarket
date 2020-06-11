@@ -19,7 +19,7 @@ public class Driver {
     private Socket serverSocket;
     private SocketIO serverSocketIO;
 
-    Driver(){
+    protected Driver(){
         this.loadBalancerWaitTime = 1000;
         this.serverWaitTime = 1000;
         this.loadBalancerPort = 10000;
