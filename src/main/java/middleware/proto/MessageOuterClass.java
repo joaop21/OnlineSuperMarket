@@ -49,19 +49,34 @@ public final class MessageOuterClass {
     middleware.proto.RequestOuterClass.RequestOrBuilder getRequestOrBuilder();
 
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      * @return Whether the replication field is set.
      */
     boolean hasReplication();
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      * @return The replication.
      */
     middleware.proto.ReplicationOuterClass.Replication getReplication();
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      */
     middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder();
+
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     * @return Whether the recovery field is set.
+     */
+    boolean hasRecovery();
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     * @return The recovery.
+     */
+    middleware.proto.RecoveryOuterClass.Recovery getRecovery();
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     */
+    middleware.proto.RecoveryOuterClass.RecoveryOrBuilder getRecoveryOrBuilder();
 
     public middleware.proto.MessageOuterClass.Message.TypeCase getTypeCase();
   }
@@ -138,15 +153,29 @@ public final class MessageOuterClass {
               typeCase_ = 2;
               break;
             }
-            case 34: {
+            case 26: {
               middleware.proto.ReplicationOuterClass.Replication.Builder subBuilder = null;
-              if (typeCase_ == 4) {
+              if (typeCase_ == 3) {
                 subBuilder = ((middleware.proto.ReplicationOuterClass.Replication) type_).toBuilder();
               }
               type_ =
                   input.readMessage(middleware.proto.ReplicationOuterClass.Replication.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom((middleware.proto.ReplicationOuterClass.Replication) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 3;
+              break;
+            }
+            case 34: {
+              middleware.proto.RecoveryOuterClass.Recovery.Builder subBuilder = null;
+              if (typeCase_ == 4) {
+                subBuilder = ((middleware.proto.RecoveryOuterClass.Recovery) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.RecoveryOuterClass.Recovery.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.RecoveryOuterClass.Recovery) type_);
                 type_ = subBuilder.buildPartial();
               }
               typeCase_ = 4;
@@ -191,7 +220,8 @@ public final class MessageOuterClass {
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
       ASSIGNMENT(1),
       REQUEST(2),
-      REPLICATION(4),
+      REPLICATION(3),
+      RECOVERY(4),
       TYPE_NOT_SET(0);
       private final int value;
       private TypeCase(int value) {
@@ -211,7 +241,8 @@ public final class MessageOuterClass {
         switch (value) {
           case 1: return ASSIGNMENT;
           case 2: return REQUEST;
-          case 4: return REPLICATION;
+          case 3: return REPLICATION;
+          case 4: return RECOVERY;
           case 0: return TYPE_NOT_SET;
           default: return null;
         }
@@ -283,32 +314,60 @@ public final class MessageOuterClass {
       return middleware.proto.RequestOuterClass.Request.getDefaultInstance();
     }
 
-    public static final int REPLICATION_FIELD_NUMBER = 4;
+    public static final int REPLICATION_FIELD_NUMBER = 3;
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      * @return Whether the replication field is set.
      */
     public boolean hasReplication() {
-      return typeCase_ == 4;
+      return typeCase_ == 3;
     }
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      * @return The replication.
      */
     public middleware.proto.ReplicationOuterClass.Replication getReplication() {
-      if (typeCase_ == 4) {
+      if (typeCase_ == 3) {
          return (middleware.proto.ReplicationOuterClass.Replication) type_;
       }
       return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
     }
     /**
-     * <code>.middleware.proto.Replication replication = 4;</code>
+     * <code>.middleware.proto.Replication replication = 3;</code>
      */
     public middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder() {
-      if (typeCase_ == 4) {
+      if (typeCase_ == 3) {
          return (middleware.proto.ReplicationOuterClass.Replication) type_;
       }
       return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
+    }
+
+    public static final int RECOVERY_FIELD_NUMBER = 4;
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     * @return Whether the recovery field is set.
+     */
+    public boolean hasRecovery() {
+      return typeCase_ == 4;
+    }
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     * @return The recovery.
+     */
+    public middleware.proto.RecoveryOuterClass.Recovery getRecovery() {
+      if (typeCase_ == 4) {
+         return (middleware.proto.RecoveryOuterClass.Recovery) type_;
+      }
+      return middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.Recovery recovery = 4;</code>
+     */
+    public middleware.proto.RecoveryOuterClass.RecoveryOrBuilder getRecoveryOrBuilder() {
+      if (typeCase_ == 4) {
+         return (middleware.proto.RecoveryOuterClass.Recovery) type_;
+      }
+      return middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -331,8 +390,11 @@ public final class MessageOuterClass {
       if (typeCase_ == 2) {
         output.writeMessage(2, (middleware.proto.RequestOuterClass.Request) type_);
       }
+      if (typeCase_ == 3) {
+        output.writeMessage(3, (middleware.proto.ReplicationOuterClass.Replication) type_);
+      }
       if (typeCase_ == 4) {
-        output.writeMessage(4, (middleware.proto.ReplicationOuterClass.Replication) type_);
+        output.writeMessage(4, (middleware.proto.RecoveryOuterClass.Recovery) type_);
       }
       unknownFields.writeTo(output);
     }
@@ -351,9 +413,13 @@ public final class MessageOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, (middleware.proto.RequestOuterClass.Request) type_);
       }
+      if (typeCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (middleware.proto.ReplicationOuterClass.Replication) type_);
+      }
       if (typeCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (middleware.proto.ReplicationOuterClass.Replication) type_);
+          .computeMessageSize(4, (middleware.proto.RecoveryOuterClass.Recovery) type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -380,9 +446,13 @@ public final class MessageOuterClass {
           if (!getRequest()
               .equals(other.getRequest())) return false;
           break;
-        case 4:
+        case 3:
           if (!getReplication()
               .equals(other.getReplication())) return false;
+          break;
+        case 4:
+          if (!getRecovery()
+              .equals(other.getRecovery())) return false;
           break;
         case 0:
         default:
@@ -407,9 +477,13 @@ public final class MessageOuterClass {
           hash = (37 * hash) + REQUEST_FIELD_NUMBER;
           hash = (53 * hash) + getRequest().hashCode();
           break;
-        case 4:
+        case 3:
           hash = (37 * hash) + REPLICATION_FIELD_NUMBER;
           hash = (53 * hash) + getReplication().hashCode();
+          break;
+        case 4:
+          hash = (37 * hash) + RECOVERY_FIELD_NUMBER;
+          hash = (53 * hash) + getRecovery().hashCode();
           break;
         case 0:
         default:
@@ -589,11 +663,18 @@ public final class MessageOuterClass {
             result.type_ = requestBuilder_.build();
           }
         }
-        if (typeCase_ == 4) {
+        if (typeCase_ == 3) {
           if (replicationBuilder_ == null) {
             result.type_ = type_;
           } else {
             result.type_ = replicationBuilder_.build();
+          }
+        }
+        if (typeCase_ == 4) {
+          if (recoveryBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = recoveryBuilder_.build();
           }
         }
         result.typeCase_ = typeCase_;
@@ -656,6 +737,10 @@ public final class MessageOuterClass {
           }
           case REPLICATION: {
             mergeReplication(other.getReplication());
+            break;
+          }
+          case RECOVERY: {
+            mergeRecovery(other.getRecovery());
             break;
           }
           case TYPE_NOT_SET: {
@@ -985,31 +1070,31 @@ public final class MessageOuterClass {
       private com.google.protobuf.SingleFieldBuilderV3<
           middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder> replicationBuilder_;
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Replication replication = 3;</code>
        * @return Whether the replication field is set.
        */
       public boolean hasReplication() {
-        return typeCase_ == 4;
+        return typeCase_ == 3;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Replication replication = 3;</code>
        * @return The replication.
        */
       public middleware.proto.ReplicationOuterClass.Replication getReplication() {
         if (replicationBuilder_ == null) {
-          if (typeCase_ == 4) {
+          if (typeCase_ == 3) {
             return (middleware.proto.ReplicationOuterClass.Replication) type_;
           }
           return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
         } else {
-          if (typeCase_ == 4) {
+          if (typeCase_ == 3) {
             return replicationBuilder_.getMessage();
           }
           return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Replication replication = 3;</code>
        */
       public Builder setReplication(middleware.proto.ReplicationOuterClass.Replication value) {
         if (replicationBuilder_ == null) {
@@ -1021,11 +1106,11 @@ public final class MessageOuterClass {
         } else {
           replicationBuilder_.setMessage(value);
         }
-        typeCase_ = 4;
+        typeCase_ = 3;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Replication replication = 3;</code>
        */
       public Builder setReplication(
           middleware.proto.ReplicationOuterClass.Replication.Builder builderForValue) {
@@ -1035,15 +1120,15 @@ public final class MessageOuterClass {
         } else {
           replicationBuilder_.setMessage(builderForValue.build());
         }
-        typeCase_ = 4;
+        typeCase_ = 3;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Replication replication = 3;</code>
        */
       public Builder mergeReplication(middleware.proto.ReplicationOuterClass.Replication value) {
         if (replicationBuilder_ == null) {
-          if (typeCase_ == 4 &&
+          if (typeCase_ == 3 &&
               type_ != middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance()) {
             type_ = middleware.proto.ReplicationOuterClass.Replication.newBuilder((middleware.proto.ReplicationOuterClass.Replication) type_)
                 .mergeFrom(value).buildPartial();
@@ -1052,19 +1137,157 @@ public final class MessageOuterClass {
           }
           onChanged();
         } else {
-          if (typeCase_ == 4) {
+          if (typeCase_ == 3) {
             replicationBuilder_.mergeFrom(value);
           }
           replicationBuilder_.setMessage(value);
+        }
+        typeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Replication replication = 3;</code>
+       */
+      public Builder clearReplication() {
+        if (replicationBuilder_ == null) {
+          if (typeCase_ == 3) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 3) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          replicationBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Replication replication = 3;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.Replication.Builder getReplicationBuilder() {
+        return getReplicationFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.Replication replication = 3;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder() {
+        if ((typeCase_ == 3) && (replicationBuilder_ != null)) {
+          return replicationBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 3) {
+            return (middleware.proto.ReplicationOuterClass.Replication) type_;
+          }
+          return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.Replication replication = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder> 
+          getReplicationFieldBuilder() {
+        if (replicationBuilder_ == null) {
+          if (!(typeCase_ == 3)) {
+            type_ = middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
+          }
+          replicationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder>(
+                  (middleware.proto.ReplicationOuterClass.Replication) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 3;
+        onChanged();;
+        return replicationBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.RecoveryOuterClass.Recovery, middleware.proto.RecoveryOuterClass.Recovery.Builder, middleware.proto.RecoveryOuterClass.RecoveryOrBuilder> recoveryBuilder_;
+      /**
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
+       * @return Whether the recovery field is set.
+       */
+      public boolean hasRecovery() {
+        return typeCase_ == 4;
+      }
+      /**
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
+       * @return The recovery.
+       */
+      public middleware.proto.RecoveryOuterClass.Recovery getRecovery() {
+        if (recoveryBuilder_ == null) {
+          if (typeCase_ == 4) {
+            return (middleware.proto.RecoveryOuterClass.Recovery) type_;
+          }
+          return middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
+        } else {
+          if (typeCase_ == 4) {
+            return recoveryBuilder_.getMessage();
+          }
+          return middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
+       */
+      public Builder setRecovery(middleware.proto.RecoveryOuterClass.Recovery value) {
+        if (recoveryBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          recoveryBuilder_.setMessage(value);
         }
         typeCase_ = 4;
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
        */
-      public Builder clearReplication() {
-        if (replicationBuilder_ == null) {
+      public Builder setRecovery(
+          middleware.proto.RecoveryOuterClass.Recovery.Builder builderForValue) {
+        if (recoveryBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          recoveryBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
+       */
+      public Builder mergeRecovery(middleware.proto.RecoveryOuterClass.Recovery value) {
+        if (recoveryBuilder_ == null) {
+          if (typeCase_ == 4 &&
+              type_ != middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance()) {
+            type_ = middleware.proto.RecoveryOuterClass.Recovery.newBuilder((middleware.proto.RecoveryOuterClass.Recovery) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 4) {
+            recoveryBuilder_.mergeFrom(value);
+          }
+          recoveryBuilder_.setMessage(value);
+        }
+        typeCase_ = 4;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
+       */
+      public Builder clearRecovery() {
+        if (recoveryBuilder_ == null) {
           if (typeCase_ == 4) {
             typeCase_ = 0;
             type_ = null;
@@ -1075,49 +1298,49 @@ public final class MessageOuterClass {
             typeCase_ = 0;
             type_ = null;
           }
-          replicationBuilder_.clear();
+          recoveryBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
        */
-      public middleware.proto.ReplicationOuterClass.Replication.Builder getReplicationBuilder() {
-        return getReplicationFieldBuilder().getBuilder();
+      public middleware.proto.RecoveryOuterClass.Recovery.Builder getRecoveryBuilder() {
+        return getRecoveryFieldBuilder().getBuilder();
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
        */
-      public middleware.proto.ReplicationOuterClass.ReplicationOrBuilder getReplicationOrBuilder() {
-        if ((typeCase_ == 4) && (replicationBuilder_ != null)) {
-          return replicationBuilder_.getMessageOrBuilder();
+      public middleware.proto.RecoveryOuterClass.RecoveryOrBuilder getRecoveryOrBuilder() {
+        if ((typeCase_ == 4) && (recoveryBuilder_ != null)) {
+          return recoveryBuilder_.getMessageOrBuilder();
         } else {
           if (typeCase_ == 4) {
-            return (middleware.proto.ReplicationOuterClass.Replication) type_;
+            return (middleware.proto.RecoveryOuterClass.Recovery) type_;
           }
-          return middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
+          return middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
         }
       }
       /**
-       * <code>.middleware.proto.Replication replication = 4;</code>
+       * <code>.middleware.proto.Recovery recovery = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder> 
-          getReplicationFieldBuilder() {
-        if (replicationBuilder_ == null) {
+          middleware.proto.RecoveryOuterClass.Recovery, middleware.proto.RecoveryOuterClass.Recovery.Builder, middleware.proto.RecoveryOuterClass.RecoveryOrBuilder> 
+          getRecoveryFieldBuilder() {
+        if (recoveryBuilder_ == null) {
           if (!(typeCase_ == 4)) {
-            type_ = middleware.proto.ReplicationOuterClass.Replication.getDefaultInstance();
+            type_ = middleware.proto.RecoveryOuterClass.Recovery.getDefaultInstance();
           }
-          replicationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              middleware.proto.ReplicationOuterClass.Replication, middleware.proto.ReplicationOuterClass.Replication.Builder, middleware.proto.ReplicationOuterClass.ReplicationOrBuilder>(
-                  (middleware.proto.ReplicationOuterClass.Replication) type_,
+          recoveryBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.RecoveryOuterClass.Recovery, middleware.proto.RecoveryOuterClass.Recovery.Builder, middleware.proto.RecoveryOuterClass.RecoveryOrBuilder>(
+                  (middleware.proto.RecoveryOuterClass.Recovery) type_,
                   getParentForChildren(),
                   isClean());
           type_ = null;
         }
         typeCase_ = 4;
         onChanged();;
-        return replicationBuilder_;
+        return recoveryBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -1188,12 +1411,14 @@ public final class MessageOuterClass {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\020middleware.proto\032\033assig" +
       "nment/assignment.proto\032\025request/request." +
-      "proto\032\035replication/replication.proto\"\251\001\n" +
-      "\007Message\0222\n\nassignment\030\001 \001(\0132\034.middlewar" +
-      "e.proto.AssignmentH\000\022,\n\007request\030\002 \001(\0132\031." +
-      "middleware.proto.RequestH\000\0224\n\013replicatio" +
-      "n\030\004 \001(\0132\035.middleware.proto.ReplicationH\000" +
-      "B\006\n\004typeb\006proto3"
+      "proto\032\035replication/replication.proto\032\027re" +
+      "covery/recovery.proto\"\331\001\n\007Message\0222\n\nass" +
+      "ignment\030\001 \001(\0132\034.middleware.proto.Assignm" +
+      "entH\000\022,\n\007request\030\002 \001(\0132\031.middleware.prot" +
+      "o.RequestH\000\0224\n\013replication\030\003 \001(\0132\035.middl" +
+      "eware.proto.ReplicationH\000\022.\n\010recovery\030\004 " +
+      "\001(\0132\032.middleware.proto.RecoveryH\000B\006\n\004typ" +
+      "eb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1201,16 +1426,18 @@ public final class MessageOuterClass {
           middleware.proto.AssignmentOuterClass.getDescriptor(),
           middleware.proto.RequestOuterClass.getDescriptor(),
           middleware.proto.ReplicationOuterClass.getDescriptor(),
+          middleware.proto.RecoveryOuterClass.getDescriptor(),
         });
     internal_static_middleware_proto_Message_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_middleware_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Message_descriptor,
-        new java.lang.String[] { "Assignment", "Request", "Replication", "Type", });
+        new java.lang.String[] { "Assignment", "Request", "Replication", "Recovery", "Type", });
     middleware.proto.AssignmentOuterClass.getDescriptor();
     middleware.proto.RequestOuterClass.getDescriptor();
     middleware.proto.ReplicationOuterClass.getDescriptor();
+    middleware.proto.RecoveryOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

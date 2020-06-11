@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package middleware.proto;
+
+message Recovery {
+
+    repeated Line lines = 1;
+
+    message Line {
+
+        int32 number = 1;
+        string data = 2;
+
+    }
+
+}

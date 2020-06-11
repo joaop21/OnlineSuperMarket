@@ -6,12 +6,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class SpreadConnector {
 
     private static SpreadConnection spreadConn = null;
     private static String connName = null;
+    private static int port = 0;
 
     private static HashSet<String> groups = new HashSet<>();
     private static AdvancedMessageListener messageListener = null;
@@ -75,14 +75,14 @@ public class SpreadConnector {
 
     }
 
-    public static void initialize() throws UnknownHostException, SpreadException {
+    public static void initialize(int port) throws UnknownHostException, SpreadException {
 
         if (SpreadConnector.spreadConn == null || SpreadConnector.connName == null) {
 
             // Creating connection
             SpreadConnector.spreadConn = new SpreadConnection();
             // Getting unique ID for the connection
-            SpreadConnector.connName = UUID.randomUUID().toString();
+            SpreadConnector.connName = String.valueOf(port);
             // Connecting
             SpreadConnector.spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
 
@@ -106,7 +106,7 @@ public class SpreadConnector {
 
         try {
 
-            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize(port);
             SpreadConnector.spreadConn.multicast(m);
 
         } catch (SpreadException | UnknownHostException e) {
@@ -127,7 +127,7 @@ public class SpreadConnector {
 
         try {
 
-            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize(port);
             SpreadConnector.spreadConn.multicast(m);
 
         } catch (SpreadException | UnknownHostException e) {
@@ -147,7 +147,7 @@ public class SpreadConnector {
 
         try {
 
-            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize();
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize(port);
             SpreadConnector.spreadConn.multicast(m);
 
         } catch (SpreadException | UnknownHostException e) {
