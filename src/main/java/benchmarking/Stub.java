@@ -2,6 +2,7 @@ package benchmarking;
 
 import application.Item;
 import application.OnlineSuperMarket;
+import client.ClientDriver;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.RequestOuterClass;
 import middleware.proto.RequestOuterClass.*;
@@ -84,6 +85,24 @@ public class Stub implements OnlineSuperMarket {
         message = this.clientDriver.request(message);
 
         return message.getRequest().getRemoveItemFromCart().getAnswer();
+    }
+
+    @Override
+    public boolean cleanCart(int userId) {
+
+        Message message = Message.newBuilder()
+                .setRequest(Request.newBuilder()
+                        .setType(Request.Type.REQUEST)
+                        .setCleanCart(CleanCart.newBuilder()
+                                .setUserId(userId)
+                                .build())
+                        .build())
+                .build();
+
+        message = this.clientDriver.request(message);
+
+        return message.getRequest().getCleanCart().getAnswer();
+
     }
 
     @Override

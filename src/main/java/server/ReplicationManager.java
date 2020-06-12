@@ -46,9 +46,6 @@ public class ReplicationManager implements Runnable {
 
                 if (!msg.getFirst()) {
 
-                    // System.out.println(repl);
-                    // System.out.println("It misses update the db");
-
                     List<DatabaseModification> modifs = constructModification(repl.getModifications());
                     DatabaseManager.loadModifications(modifs);
 

@@ -1,10 +1,7 @@
 package middleware.server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.MapEntry;
 import database.DatabaseManager;
-import database.DatabaseModification;
-import database.QueryCart;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.RecoveryOuterClass;
@@ -13,11 +10,8 @@ import middleware.proto.RequestOuterClass;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 
-import org.w3c.dom.CDATASection;
-
 import server.RequestManager;
 
-import server.Server;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
