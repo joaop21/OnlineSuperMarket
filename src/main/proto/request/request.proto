@@ -19,14 +19,15 @@ message Request {
         GetItem getItem = 3;
         AddItemToCart addItemToCart = 4;
         RemoveItemFromCart removeItemFromCart = 5;
-        GetCartItems getCartItems = 6;
-        Order order = 7;
-        Login login = 8;
+        CleanCart cleanCart = 6;
+        GetCartItems getCartItems = 7;
+        Order order = 8;
+        Login login = 9;
 
     }
 
-    string uuid = 9;
-    string sender = 10;
+    string uuid = 10;
+    string sender = 11;
 }
 
 message Item {
@@ -75,6 +76,16 @@ message RemoveItemFromCart {
 
     // Reply
     bool answer = 3;
+}
+
+message CleanCart {
+
+    // Request
+    int32 userId = 1;
+
+    // Reply
+    bool answer = 2;
+
 }
 
 message GetCartItems {

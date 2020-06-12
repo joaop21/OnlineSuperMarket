@@ -56,11 +56,16 @@ public class ClientManager extends Skeleton {
                         socketIO.write(getRemItemFromCart(msg, response_message2.getReplication().getModifications().getStatus()).toByteArray());
                         break;
 
+                    case CLEANCART:
+                        Message response_message3 = RequestManager.publishRequest(msg);
+                        socketIO.write(getCleanCart(msg, response_message3.getReplication().getModifications().getStatus()).toByteArray());
+                        break;
+
                     case ORDER:
                         // erroneous behaviour
-                        Message response_message3 = RequestManager.publishRequest(msg);
+                        Message response_message4 = RequestManager.publishRequest(msg);
                         socketIO.write(
-                                getOrderResponse(msg, response_message3.getReplication().getModifications().getStatus()).toByteArray());
+                                getOrderResponse(msg, response_message4.getReplication().getModifications().getStatus()).toByteArray());
                         break;
 
                     case GETCARTITEMS:
@@ -147,6 +152,19 @@ public class ClientManager extends Skeleton {
                                 .build())
                         .build())
                 .build();
+
+    }
+
+    private Message getCleanCart (Message msg, boolean cleanCart) {
+
+        return Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setType(RequestOuterClass.Request.Type.REPLY)
+                            .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
+                                    .setAnswer(cleanCart)
+                                    .build())
+                            .build())
+                    .build();
 
     }
 

@@ -85,6 +85,23 @@ public class ClientStub implements OnlineSuperMarket {
     }
 
     @Override
+    public boolean cleanCart(int userId) {
+
+        Message message = Message.newBuilder()
+                .setRequest(Request.newBuilder()
+                        .setType(Request.Type.REQUEST)
+                        .setCleanCart(CleanCart.newBuilder()
+                                .setUserId(userId)
+                                .build())
+                        .build())
+                .build();
+
+        message = ClientDriver.request(message);
+
+        return message.getRequest().getCleanCart().getAnswer();
+    }
+
+    @Override
     public List<Item> getCartItems(int userId) {
 
         Message message = Message.newBuilder()

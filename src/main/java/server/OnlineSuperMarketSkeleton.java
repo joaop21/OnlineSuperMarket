@@ -5,12 +5,11 @@ import application.OnlineSuperMarket;
 import database.*;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.proto.ReplicationOuterClass;
+import middleware.proto.RequestOuterClass;
 import middleware.spread.SpreadConnector;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
@@ -34,6 +33,13 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
     @Override
     public boolean removeItemFromCart(int userId, int itemId) {
         List<DatabaseModification> mods = QueryCart.removeItemFromCart(userId, itemId);
+        // DatabaseManager.loadModifications(mods);
+        return mods != null && !mods.isEmpty();
+    }
+
+    @Override
+    public boolean cleanCart(int userId) {
+        List<DatabaseModification> mods = QueryCart.cleanCart(userId);
         // DatabaseManager.loadModifications(mods);
         return mods != null && !mods.isEmpty();
     }
@@ -66,6 +72,10 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     List<DatabaseModification> mods1 = QueryCart.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
                             msg.getRequest().getAddItemToCart().getItemId());
 
+                    assert mods1 != null;
+
+                    handleCartCreation(mods1, msg);
+
                     SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
                     break;
 
@@ -76,14 +86,48 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
                     break;
 
-                case ORDER:
-                    List<DatabaseModification> mods3 = QueryCart.order(msg.getRequest().getOrder().getUserId());
+                case CLEANCART:
+                    List<DatabaseModification> mods3 = QueryCart.cleanCart(msg.getRequest().getCleanCart().getUserId());
 
                     SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
                     break;
 
+                case ORDER:
+                    List<DatabaseModification> mods4 = QueryCart.order(msg.getRequest().getOrder().getUserId());
+
+                    assert mods4 != null;
+                    SpreadConnector.cast(constructFromModifications(msg, mods4).toByteArray(), Set.of("Servers"));
+                    break;
+
             }
         }
+    }
+
+    // Detects cart creation and starts a timer for it
+    private void handleCartCreation(List<DatabaseModification> mods1, Message msg) {
+
+        // Checking for creating of a cart
+        for (DatabaseModification dbm : mods1)
+            if (dbm.getType() == 1 /* UPDATE */ && dbm.getTable().toUpperCase().equals("CART"))
+                for (FieldValue fv : dbm.getMods())
+                    if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
+                        System.out.println("Creating timer on item addition");
+                        // Creating timer for deleting cart items
+                        final int userId = msg.getRequest().getAddItemToCart().getUserId();
+                        final Message message = msg;
+                        TimerTask task = new TimerTask() {
+                            public void run() {
+
+                                List<DatabaseModification> mod = QueryCart.cleanCart(userId);
+
+                                assert mod != null;
+                                SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
+                            }
+                        };
+                        new Timer("Timer").schedule(task, (Server.TMAX >= 0) ? Server.TMAX * 1000 : 0);
+
+                    }
+
     }
 
     public Message constructFromModifications(Message msg, List<DatabaseModification> mods){
