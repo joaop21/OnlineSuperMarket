@@ -23,13 +23,23 @@ import java.util.List;
 
 public class RecoveryManager {
 
-    public static void recoverSomeone(int port, SpreadGroup member) {
+    public static MessageOuterClass.Message getRecoverInfo(int port, SpreadGroup member) {
 
         // Checkpointing current DB
         RecoveryManager.checkpointing();
 
+        // Builds a message containing the difference
+        return RecoveryManager.compareInitialBackup(port, member);
+
+    }
+
+    public static void recoverSomeone(int port, SpreadGroup member) {
+
+        MessageOuterClass.Message msg = getRecoverInfo(port, member);
+
         // Send changes in DB from the start
-        RecoveryManager.compareInitialBackupAndSend(port, member);
+        assert msg != null;
+        SpreadConnector.unicast(msg.toByteArray(), member.toString());
 
     }
 
@@ -124,24 +134,29 @@ public class RecoveryManager {
         }
     }
 
-    private static void compareInitialBackupAndSend(int port, SpreadGroup member){
+    private static MessageOuterClass.Message compareInitialBackup(int port, SpreadGroup member){
 
         try {
 
             List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/initial/onlinesupermarket.script").toPath());
             List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
 
-            compareAndSend(original, revised, member);
+            return compare(original, revised);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return MessageOuterClass.Message.newBuilder()
+                .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                        .setType(RecoveryOuterClass.Recovery.Type.FAILED)
+                        .build())
+                .build();
+
     }
 
-    private static void compareAndSend(List<String> original, List<String> revised, SpreadGroup member) {
+    private static MessageOuterClass.Message compare(List<String> original, List<String> revised) {
 
-        // COMPARING
         List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
 
         try {
@@ -159,15 +174,12 @@ public class RecoveryManager {
             e.printStackTrace();
         }
 
-        // SENDING
-        MessageOuterClass.Message msg = MessageOuterClass.Message.newBuilder()
+        return MessageOuterClass.Message.newBuilder()
                 .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                        .setType(RecoveryOuterClass.Recovery.Type.RECOVER)
                         .addAllLines(lines)
                         .build())
                 .build();
-
-        SpreadConnector.send(msg.toByteArray(), member);
-
     }
 
     private static void createPatchFile(int port, MessageOuterClass.Message message) {

@@ -4,7 +4,16 @@ package middleware.proto;
 
 message Recovery {
 
-    repeated Line lines = 1;
+    Type type = 1;
+    repeated Line lines = 2;
+
+    enum Type {
+
+        RECOVER = 0;
+        ACK = 1;
+        FAILED = 2;
+
+    }
 
     message Line {
 
