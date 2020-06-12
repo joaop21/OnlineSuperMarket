@@ -67,6 +67,7 @@ public class ClientInterface {
             System.out.println("# 5 - Clean Cart");;
             System.out.println("# 6 - Show Cart");;
             System.out.println("# 7 - Complete order");;
+            System.out.println("# 8 - Logout");;
 
             System.out.println("#####################################################");
 
@@ -97,6 +98,9 @@ public class ClientInterface {
                     return;
                 case 7:
                     orderScreen();
+                    return;
+                case 8:
+                    loginScreen();
                     return;
                 default:
                     errorScreen("# Please choose one of the menu options.");
