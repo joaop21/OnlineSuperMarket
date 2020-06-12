@@ -237,8 +237,13 @@ public class ServerMessageListener implements AdvancedMessageListener {
         // check if i am the primary server
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
 
+            // if I became primary after a primary failure,
+            // it's important to run the previous replications before beginning handle requests
+            waitToEmptyReplication();
+
             this.primary = true;
 
+            // recover the probably non-recovered servers, if the previous primary failed during a recovery process
             recoverTheUnrecovered();
 
             startTimers();
@@ -408,9 +413,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
         this.tmax_timestamps.remove(userID);
 
     }
-
-    public Pair<LocalDateTime, Long> getTimestampTMAX (int userID) {return this.tmax_timestamps.get(userID); }
-
 
     public Triplet<Boolean,Long,Message> getNextReplication() {
 
