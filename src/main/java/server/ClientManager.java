@@ -26,7 +26,7 @@ public class ClientManager extends Skeleton {
     @Override
     public void run() {
 
-        informLoadBalancer();
+        informLoadBalancer(ClientInfo.State.CONNECTED);
 
         OnlineSuperMarket osm = new OnlineSuperMarketSkeleton();
 
@@ -81,8 +81,14 @@ public class ClientManager extends Skeleton {
                 }
 
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+
+                System.out.println("Client Disconnected!");
+
+                informLoadBalancer(ClientInfo.State.DISCONNECTED);
+
                 return;
+
+
             }
         }
     }
@@ -218,7 +224,7 @@ public class ClientManager extends Skeleton {
 
     }
 
-    public void informLoadBalancer(){
+    public void informLoadBalancer(ClientInfo.State state){
 
         // Creating client-server info message
         Message message = Message.newBuilder()
@@ -226,7 +232,7 @@ public class ClientManager extends Skeleton {
                         .setClientInfo(ClientInfo.newBuilder()
                                 .setAddress(((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().getHostAddress())
                                 .setPort(((InetSocketAddress) socket.getRemoteSocketAddress()).getPort())
-                                .setState(ClientInfo.State.CONNECTED)
+                                .setState(state)
                                 .build())
                         .build())
                 .build();

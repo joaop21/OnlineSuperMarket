@@ -44,6 +44,17 @@ public class Balancer {
 
     }
 
+    public boolean dec (Object key) {
+
+        if (!counters.containsKey(key)) return false;
+
+        // Incrementing
+        counters.put(key, counters.get(key) - 1);
+
+        return true;
+
+    }
+
     public Object min () {
 
         Map.Entry<Object, Integer> chosen_entry = null;

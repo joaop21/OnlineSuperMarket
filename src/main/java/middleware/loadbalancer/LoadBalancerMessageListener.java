@@ -115,10 +115,18 @@ public class LoadBalancerMessageListener implements AdvancedMessageListener  {
 
                 SpreadGroup server_spread = spreadMessage.getSender();
 
-                System.out.println("Socket Info to increment: " + server_info.get(server_spread).getAddress() + " - " + server_info.get(server_spread).getPort() );
+                switch (message.getAssignment().getClientInfo().getState()) {
 
-                // Incrementing the load of this server
-                Balancer.Balancer().inc(server_info.get(server_spread));
+                    case CONNECTED:
+                        Balancer.Balancer().inc(server_info.get(server_spread));
+                        break;
+                    case DISCONNECTED:
+                        Balancer.Balancer().dec(server_info.get(server_spread));
+                        break;
+
+                }
+
+                System.out.println("Socket Info to change: " + server_info.get(server_spread).getAddress() + " - " + server_info.get(server_spread).getPort() );
 
             }
 
