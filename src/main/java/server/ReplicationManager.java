@@ -54,28 +54,8 @@ public class ReplicationManager implements Runnable {
 
                 }
 
-                // Checking for cart operations
-                for (ReplicationOuterClass.DatabaseModifications.Modification mod : repl.getModifications().getModificationsList())
-                    // Detecting cart creation
-                    if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART")) {
-                        for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
-                            if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
-                                for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
-                                    if (f.getField().toUpperCase().equals("CUSTOMERID")) {
+                handleCartOperations(repl);
 
-                                        System.out.println("Adding Timestamp on cart creation!");
-                                        messageListener.addTimestampTMAX(f.getValueInt(), new Pair<>(LocalDateTime.now(), Server.TMAX));
-
-                                    }
-
-                        // Detecting cart deletion
-                    } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1) {
-
-                        System.out.println("Removing Timestamp on cart deletion!");
-
-                        messageListener.remTimestampTMAX(mod.getWhere(0).getValueInt());
-
-                    }
 
             } else if (repl.hasPeriodics()) {
 
@@ -92,6 +72,34 @@ public class ReplicationManager implements Runnable {
             }
 
         }
+
+    }
+
+    // Handles timestamps for cart creation and deletion
+    private void handleCartOperations(Replication repl) {
+
+        // Checking for cart operations
+        for (ReplicationOuterClass.DatabaseModifications.Modification mod : repl.getModifications().getModificationsList())
+            // Detecting cart creation
+            if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART")) {
+                for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
+                    if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
+                        for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
+                            if (f.getField().toUpperCase().equals("CUSTOMERID")) {
+
+                                System.out.println("Adding Timestamp on cart creation!");
+                                messageListener.addTimestampTMAX(f.getValueInt(), new Pair<>(LocalDateTime.now(), Server.TMAX));
+
+                            }
+
+                // Detecting cart deletion
+            } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1) {
+
+                System.out.println("Removing Timestamp on cart deletion!");
+
+                messageListener.remTimestampTMAX(mod.getWhere(0).getValueInt());
+
+            }
 
     }
 

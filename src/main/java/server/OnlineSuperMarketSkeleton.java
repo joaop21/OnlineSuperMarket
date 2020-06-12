@@ -74,27 +74,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
                     assert mods1 != null;
 
-                    // Checking for creating of a cart
-                    for (DatabaseModification dbm : mods1)
-                        if (dbm.getType() == 1 /* UPDATE */ && dbm.getTable().toUpperCase().equals("CART"))
-                            for (FieldValue fv : dbm.getMods())
-                                if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
-                                    System.out.println("Creating timer on item addition");
-                                    // Creating timer for deleting cart items
-                                    final int userId = msg.getRequest().getAddItemToCart().getUserId();
-                                    final Message message = msg;
-                                    TimerTask task = new TimerTask() {
-                                        public void run() {
-
-                                            List<DatabaseModification> mod = QueryCart.cleanCart(userId);
-
-                                            assert mod != null;
-                                            SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
-                                        }
-                                    };
-                                    new Timer("Timer").schedule(task, (Server.TMAX >= 0) ? Server.TMAX * 1000 : 0);
-
-                                }
+                    handleCartCreation(mods1, msg);
 
                     SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
                     break;
@@ -121,6 +101,33 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
 
             }
         }
+    }
+
+    // Detects cart creation and starts a timer for it
+    private void handleCartCreation(List<DatabaseModification> mods1, Message msg) {
+
+        // Checking for creating of a cart
+        for (DatabaseModification dbm : mods1)
+            if (dbm.getType() == 1 /* UPDATE */ && dbm.getTable().toUpperCase().equals("CART"))
+                for (FieldValue fv : dbm.getMods())
+                    if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
+                        System.out.println("Creating timer on item addition");
+                        // Creating timer for deleting cart items
+                        final int userId = msg.getRequest().getAddItemToCart().getUserId();
+                        final Message message = msg;
+                        TimerTask task = new TimerTask() {
+                            public void run() {
+
+                                List<DatabaseModification> mod = QueryCart.cleanCart(userId);
+
+                                assert mod != null;
+                                SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
+                            }
+                        };
+                        new Timer("Timer").schedule(task, (Server.TMAX >= 0) ? Server.TMAX * 1000 : 0);
+
+                    }
+
     }
 
     public Message constructFromModifications(Message msg, List<DatabaseModification> mods){

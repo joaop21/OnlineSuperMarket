@@ -247,34 +247,42 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             recoverTheUnrecovered();
 
-            System.out.println("Starting the timers!");
-            // Start timers
-            for (Map.Entry<Integer, Pair<LocalDateTime, Long>> timestamp: tmax_timestamps.entrySet()) {
+            startTimers();
 
-                int userId = timestamp.getKey();
-                long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
+        }
 
-                Message msg = Message.newBuilder()
-                        .setRequest(RequestOuterClass.Request.newBuilder()
-                                .setType(RequestOuterClass.Request.Type.REQUEST)
-                                .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
-                                        .setUserId(userId)
-                                        .build())
-                                .build())
-                        .build();
+    }
 
-                System.out.println("Timer of " + userId + " and delay " + delay);
+    // Starts Timers
+    private void startTimers() {
 
-                TimerTask task = new TimerTask() {
-                    public void run() {
+        System.out.println("Starting the timers!");
+        // Start timers
+        for (Map.Entry<Integer, Pair<LocalDateTime, Long>> timestamp: tmax_timestamps.entrySet()) {
 
-                        request_queue.add(new Triplet<>(true, request_counter.incrementAndGet(), msg));
+            int userId = timestamp.getKey();
+            long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
 
-                    }
-                };
-                new Timer("Timer").schedule(task, (delay >= 0) ? delay * 1000 : 0);
+            Message msg = Message.newBuilder()
+                    .setRequest(RequestOuterClass.Request.newBuilder()
+                            .setType(RequestOuterClass.Request.Type.REQUEST)
+                            .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
+                                    .setUserId(userId)
+                                    .build())
+                            .build())
+                    .build();
 
-            }
+            System.out.println("Timer of " + userId + " and delay " + delay);
+
+            TimerTask task = new TimerTask() {
+                public void run() {
+
+                    request_queue.add(new Triplet<>(true, request_counter.incrementAndGet(), msg));
+
+                }
+            };
+            new Timer("Timer").schedule(task, (delay >= 0) ? delay * 1000 : 0);
+
         }
 
     }
@@ -338,30 +346,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
                     // Recover the new server
                     RecoveryManager.recoverSomeone(this.serverInfo.getPort(), info.getJoined());
 
-                    System.out.println("Sending timers to new server!");
-                    // Recover timed actions
-                    List<ReplicationOuterClass.PeriodicActions.CleanCartInfo> cleanCartInfoList =
-                            tmax_timestamps.entrySet().stream().map(timestamp -> {
-                                int userId = timestamp.getKey();
-                                long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
-
-                                System.out.println("Timer of " + userId + " and delay " + delay);
-
-                                return ReplicationOuterClass.PeriodicActions.CleanCartInfo.newBuilder()
-                                        .setUserId(userId)
-                                        .setDelay(delay)
-                                        .build();
-                            }).collect(Collectors.toList());
-
-                    Message msg = Message.newBuilder()
-                            .setReplication(ReplicationOuterClass.Replication.newBuilder()
-                                    .setPeriodics(ReplicationOuterClass.PeriodicActions.newBuilder()
-                                            .addAllCleanCartInfo(cleanCartInfoList)
-                                            .build())
-                                    .build())
-                            .build();
-
-                    SpreadConnector.send(msg.toByteArray(), info.getJoined());
+                    recoverTimers(info);
 
                 } else {
 
@@ -374,6 +359,35 @@ public class ServerMessageListener implements AdvancedMessageListener {
             }
 
         }
+
+    }
+
+    private void recoverTimers(MembershipInfo info) {
+
+        System.out.println("Sending timers to new server!");
+        // Recover timed actions
+        List<ReplicationOuterClass.PeriodicActions.CleanCartInfo> cleanCartInfoList =
+                tmax_timestamps.entrySet().stream().map(timestamp -> {
+                    int userId = timestamp.getKey();
+                    long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
+
+                    System.out.println("Timer of " + userId + " and delay " + delay);
+
+                    return ReplicationOuterClass.PeriodicActions.CleanCartInfo.newBuilder()
+                            .setUserId(userId)
+                            .setDelay(delay)
+                            .build();
+                }).collect(Collectors.toList());
+
+        Message msg = Message.newBuilder()
+                .setReplication(ReplicationOuterClass.Replication.newBuilder()
+                        .setPeriodics(ReplicationOuterClass.PeriodicActions.newBuilder()
+                                .addAllCleanCartInfo(cleanCartInfoList)
+                                .build())
+                        .build())
+                .build();
+
+        SpreadConnector.send(msg.toByteArray(), info.getJoined());
 
     }
 
