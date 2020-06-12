@@ -67,6 +67,7 @@ public class QueryItem {
                 Item item = new Item(id, name, description, price, stock);
                 res.add(item);
             }
+            conn.close();
         }
         catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");

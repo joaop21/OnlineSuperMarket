@@ -32,4 +32,13 @@ public class ConcurrentQueue<T> {
         notify();
     }
 
+    /**
+     * Method for getting the current size of the queue.
+     *
+     * @return int that reflects the queue size.
+     * */
+    public synchronized int size(){
+        return this.queue.size();
+    }
+
 }

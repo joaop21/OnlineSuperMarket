@@ -66,7 +66,6 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     List<DatabaseModification> mods1 = QueryCart.addItemToCart(msg.getRequest().getAddItemToCart().getUserId(),
                             msg.getRequest().getAddItemToCart().getItemId());
 
-                    assert mods1 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods1).toByteArray(), Set.of("Servers"));
                     break;
 
@@ -74,14 +73,12 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     List<DatabaseModification> mods2 = QueryCart.removeItemFromCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
                             msg.getRequest().getAddItemToCart().getItemId());
 
-                    assert mods2 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
                     break;
 
                 case ORDER:
                     List<DatabaseModification> mods3 = QueryCart.order(msg.getRequest().getOrder().getUserId());
 
-                    assert mods3 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
                     break;
 
