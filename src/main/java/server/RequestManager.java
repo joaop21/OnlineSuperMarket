@@ -76,12 +76,16 @@ public class RequestManager implements Runnable {
 
     public static void putResponse(Pair<String,String> request_key, Message msg){
 
-        WaitingRoom wr = waiting_requests.get(request_key);
+        try {
 
-        if(wr.isActive())
-            wr.putMessage(msg);
-        else
-            waiting_requests.remove(request_key);
+            WaitingRoom wr = waiting_requests.get(request_key);
+
+            if(wr.isActive())
+                wr.putMessage(msg);
+            else
+                waiting_requests.remove(request_key);
+
+        } catch (NullPointerException e) {}
 
     }
 

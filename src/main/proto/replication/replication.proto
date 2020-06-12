@@ -8,6 +8,7 @@ message Replication {
 
         ServerLoads loads = 1;
         DatabaseModifications modifications = 2;
+        PeriodicActions periodics = 3;
 
     }
 
@@ -72,6 +73,19 @@ message DatabaseModifications{
             NULL = 4;
 
         }
+
+    }
+
+}
+
+message PeriodicActions {
+
+    repeated CleanCartInfo cleanCartInfo = 1;
+
+    message CleanCartInfo {
+
+        int64 delay = 1;
+        int32 userId = 2;
 
     }
 

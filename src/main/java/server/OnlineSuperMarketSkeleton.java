@@ -79,7 +79,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                         if (dbm.getType() == 1 /* UPDATE */ && dbm.getTable().toUpperCase().equals("CART"))
                             for (FieldValue fv : dbm.getMods())
                                 if (fv.getField().toUpperCase().equals("ACTIVE") && fv.getType() == ValueType.BOOLEAN && (boolean) fv.getValue()) {
-                                    System.out.println("A CART WAS CREATED! (detected from changes to DB in primary)");
+                                    System.out.println("Creating timer on item addition");
                                     // Creating timer for deleting cart items
                                     final int userId = msg.getRequest().getAddItemToCart().getUserId();
                                     final Message message = msg;
@@ -92,7 +92,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                                             SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
                                         }
                                     };
-                                    new Timer("Timer").schedule(task, Server.TMAX * 1000);
+                                    new Timer("Timer").schedule(task, (Server.TMAX >= 0) ? Server.TMAX * 1000 : 0);
 
                                 }
 

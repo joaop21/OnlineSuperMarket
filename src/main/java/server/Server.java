@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Server {
 
-    public static final int TMAX = 10; // Time to delete a cart in seconds
+    public static final long TMAX = 20; // Time to delete a cart in seconds
 
     public static void main(String[] args) throws SpreadException, UnknownHostException, InterruptedException {
 

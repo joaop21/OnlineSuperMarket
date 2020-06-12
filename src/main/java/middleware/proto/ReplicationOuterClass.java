@@ -48,6 +48,21 @@ public final class ReplicationOuterClass {
      */
     middleware.proto.ReplicationOuterClass.DatabaseModificationsOrBuilder getModificationsOrBuilder();
 
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     * @return Whether the periodics field is set.
+     */
+    boolean hasPeriodics();
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     * @return The periodics.
+     */
+    middleware.proto.ReplicationOuterClass.PeriodicActions getPeriodics();
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     */
+    middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder getPeriodicsOrBuilder();
+
     public middleware.proto.ReplicationOuterClass.Replication.TypeCase getTypeCase();
   }
   /**
@@ -123,6 +138,20 @@ public final class ReplicationOuterClass {
               typeCase_ = 2;
               break;
             }
+            case 26: {
+              middleware.proto.ReplicationOuterClass.PeriodicActions.Builder subBuilder = null;
+              if (typeCase_ == 3) {
+                subBuilder = ((middleware.proto.ReplicationOuterClass.PeriodicActions) type_).toBuilder();
+              }
+              type_ =
+                  input.readMessage(middleware.proto.ReplicationOuterClass.PeriodicActions.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((middleware.proto.ReplicationOuterClass.PeriodicActions) type_);
+                type_ = subBuilder.buildPartial();
+              }
+              typeCase_ = 3;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -162,6 +191,7 @@ public final class ReplicationOuterClass {
             com.google.protobuf.AbstractMessage.InternalOneOfEnum {
       LOADS(1),
       MODIFICATIONS(2),
+      PERIODICS(3),
       TYPE_NOT_SET(0);
       private final int value;
       private TypeCase(int value) {
@@ -181,6 +211,7 @@ public final class ReplicationOuterClass {
         switch (value) {
           case 1: return LOADS;
           case 2: return MODIFICATIONS;
+          case 3: return PERIODICS;
           case 0: return TYPE_NOT_SET;
           default: return null;
         }
@@ -252,6 +283,34 @@ public final class ReplicationOuterClass {
       return middleware.proto.ReplicationOuterClass.DatabaseModifications.getDefaultInstance();
     }
 
+    public static final int PERIODICS_FIELD_NUMBER = 3;
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     * @return Whether the periodics field is set.
+     */
+    public boolean hasPeriodics() {
+      return typeCase_ == 3;
+    }
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     * @return The periodics.
+     */
+    public middleware.proto.ReplicationOuterClass.PeriodicActions getPeriodics() {
+      if (typeCase_ == 3) {
+         return (middleware.proto.ReplicationOuterClass.PeriodicActions) type_;
+      }
+      return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+    }
+    /**
+     * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder getPeriodicsOrBuilder() {
+      if (typeCase_ == 3) {
+         return (middleware.proto.ReplicationOuterClass.PeriodicActions) type_;
+      }
+      return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -272,6 +331,9 @@ public final class ReplicationOuterClass {
       if (typeCase_ == 2) {
         output.writeMessage(2, (middleware.proto.ReplicationOuterClass.DatabaseModifications) type_);
       }
+      if (typeCase_ == 3) {
+        output.writeMessage(3, (middleware.proto.ReplicationOuterClass.PeriodicActions) type_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -288,6 +350,10 @@ public final class ReplicationOuterClass {
       if (typeCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, (middleware.proto.ReplicationOuterClass.DatabaseModifications) type_);
+      }
+      if (typeCase_ == 3) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, (middleware.proto.ReplicationOuterClass.PeriodicActions) type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -314,6 +380,10 @@ public final class ReplicationOuterClass {
           if (!getModifications()
               .equals(other.getModifications())) return false;
           break;
+        case 3:
+          if (!getPeriodics()
+              .equals(other.getPeriodics())) return false;
+          break;
         case 0:
         default:
       }
@@ -336,6 +406,10 @@ public final class ReplicationOuterClass {
         case 2:
           hash = (37 * hash) + MODIFICATIONS_FIELD_NUMBER;
           hash = (53 * hash) + getModifications().hashCode();
+          break;
+        case 3:
+          hash = (37 * hash) + PERIODICS_FIELD_NUMBER;
+          hash = (53 * hash) + getPeriodics().hashCode();
           break;
         case 0:
         default:
@@ -515,6 +589,13 @@ public final class ReplicationOuterClass {
             result.type_ = modificationsBuilder_.build();
           }
         }
+        if (typeCase_ == 3) {
+          if (periodicsBuilder_ == null) {
+            result.type_ = type_;
+          } else {
+            result.type_ = periodicsBuilder_.build();
+          }
+        }
         result.typeCase_ = typeCase_;
         onBuilt();
         return result;
@@ -571,6 +652,10 @@ public final class ReplicationOuterClass {
           }
           case MODIFICATIONS: {
             mergeModifications(other.getModifications());
+            break;
+          }
+          case PERIODICS: {
+            mergePeriodics(other.getPeriodics());
             break;
           }
           case TYPE_NOT_SET: {
@@ -895,6 +980,144 @@ public final class ReplicationOuterClass {
         typeCase_ = 2;
         onChanged();;
         return modificationsBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.PeriodicActions, middleware.proto.ReplicationOuterClass.PeriodicActions.Builder, middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder> periodicsBuilder_;
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       * @return Whether the periodics field is set.
+       */
+      public boolean hasPeriodics() {
+        return typeCase_ == 3;
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       * @return The periodics.
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions getPeriodics() {
+        if (periodicsBuilder_ == null) {
+          if (typeCase_ == 3) {
+            return (middleware.proto.ReplicationOuterClass.PeriodicActions) type_;
+          }
+          return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+        } else {
+          if (typeCase_ == 3) {
+            return periodicsBuilder_.getMessage();
+          }
+          return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public Builder setPeriodics(middleware.proto.ReplicationOuterClass.PeriodicActions value) {
+        if (periodicsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          type_ = value;
+          onChanged();
+        } else {
+          periodicsBuilder_.setMessage(value);
+        }
+        typeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public Builder setPeriodics(
+          middleware.proto.ReplicationOuterClass.PeriodicActions.Builder builderForValue) {
+        if (periodicsBuilder_ == null) {
+          type_ = builderForValue.build();
+          onChanged();
+        } else {
+          periodicsBuilder_.setMessage(builderForValue.build());
+        }
+        typeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public Builder mergePeriodics(middleware.proto.ReplicationOuterClass.PeriodicActions value) {
+        if (periodicsBuilder_ == null) {
+          if (typeCase_ == 3 &&
+              type_ != middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance()) {
+            type_ = middleware.proto.ReplicationOuterClass.PeriodicActions.newBuilder((middleware.proto.ReplicationOuterClass.PeriodicActions) type_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            type_ = value;
+          }
+          onChanged();
+        } else {
+          if (typeCase_ == 3) {
+            periodicsBuilder_.mergeFrom(value);
+          }
+          periodicsBuilder_.setMessage(value);
+        }
+        typeCase_ = 3;
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public Builder clearPeriodics() {
+        if (periodicsBuilder_ == null) {
+          if (typeCase_ == 3) {
+            typeCase_ = 0;
+            type_ = null;
+            onChanged();
+          }
+        } else {
+          if (typeCase_ == 3) {
+            typeCase_ = 0;
+            type_ = null;
+          }
+          periodicsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.Builder getPeriodicsBuilder() {
+        return getPeriodicsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder getPeriodicsOrBuilder() {
+        if ((typeCase_ == 3) && (periodicsBuilder_ != null)) {
+          return periodicsBuilder_.getMessageOrBuilder();
+        } else {
+          if (typeCase_ == 3) {
+            return (middleware.proto.ReplicationOuterClass.PeriodicActions) type_;
+          }
+          return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>.middleware.proto.PeriodicActions periodics = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.PeriodicActions, middleware.proto.ReplicationOuterClass.PeriodicActions.Builder, middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder> 
+          getPeriodicsFieldBuilder() {
+        if (periodicsBuilder_ == null) {
+          if (!(typeCase_ == 3)) {
+            type_ = middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+          }
+          periodicsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              middleware.proto.ReplicationOuterClass.PeriodicActions, middleware.proto.ReplicationOuterClass.PeriodicActions.Builder, middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder>(
+                  (middleware.proto.ReplicationOuterClass.PeriodicActions) type_,
+                  getParentForChildren(),
+                  isClean());
+          type_ = null;
+        }
+        typeCase_ = 3;
+        onChanged();;
+        return periodicsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -6880,6 +7103,1349 @@ public final class ReplicationOuterClass {
 
   }
 
+  public interface PeriodicActionsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:middleware.proto.PeriodicActions)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> 
+        getCleanCartInfoList();
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getCleanCartInfo(int index);
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    int getCleanCartInfoCount();
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    java.util.List<? extends middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder> 
+        getCleanCartInfoOrBuilderList();
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder getCleanCartInfoOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code middleware.proto.PeriodicActions}
+   */
+  public  static final class PeriodicActions extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:middleware.proto.PeriodicActions)
+      PeriodicActionsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PeriodicActions.newBuilder() to construct.
+    private PeriodicActions(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PeriodicActions() {
+      cleanCartInfo_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new PeriodicActions();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private PeriodicActions(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                cleanCartInfo_ = new java.util.ArrayList<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              cleanCartInfo_.add(
+                  input.readMessage(middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          cleanCartInfo_ = java.util.Collections.unmodifiableList(cleanCartInfo_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              middleware.proto.ReplicationOuterClass.PeriodicActions.class, middleware.proto.ReplicationOuterClass.PeriodicActions.Builder.class);
+    }
+
+    public interface CleanCartInfoOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:middleware.proto.PeriodicActions.CleanCartInfo)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>int64 delay = 1;</code>
+       * @return The delay.
+       */
+      long getDelay();
+
+      /**
+       * <code>int32 userId = 2;</code>
+       * @return The userId.
+       */
+      int getUserId();
+    }
+    /**
+     * Protobuf type {@code middleware.proto.PeriodicActions.CleanCartInfo}
+     */
+    public  static final class CleanCartInfo extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:middleware.proto.PeriodicActions.CleanCartInfo)
+        CleanCartInfoOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use CleanCartInfo.newBuilder() to construct.
+      private CleanCartInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private CleanCartInfo() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new CleanCartInfo();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private CleanCartInfo(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+
+                delay_ = input.readInt64();
+                break;
+              }
+              case 16: {
+
+                userId_ = input.readInt32();
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_CleanCartInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.class, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder.class);
+      }
+
+      public static final int DELAY_FIELD_NUMBER = 1;
+      private long delay_;
+      /**
+       * <code>int64 delay = 1;</code>
+       * @return The delay.
+       */
+      public long getDelay() {
+        return delay_;
+      }
+
+      public static final int USERID_FIELD_NUMBER = 2;
+      private int userId_;
+      /**
+       * <code>int32 userId = 2;</code>
+       * @return The userId.
+       */
+      public int getUserId() {
+        return userId_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (delay_ != 0L) {
+          output.writeInt64(1, delay_);
+        }
+        if (userId_ != 0) {
+          output.writeInt32(2, userId_);
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (delay_ != 0L) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt64Size(1, delay_);
+        }
+        if (userId_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt32Size(2, userId_);
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo)) {
+          return super.equals(obj);
+        }
+        middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo other = (middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo) obj;
+
+        if (getDelay()
+            != other.getDelay()) return false;
+        if (getUserId()
+            != other.getUserId()) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + DELAY_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getDelay());
+        hash = (37 * hash) + USERID_FIELD_NUMBER;
+        hash = (53 * hash) + getUserId();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code middleware.proto.PeriodicActions.CleanCartInfo}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:middleware.proto.PeriodicActions.CleanCartInfo)
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_CleanCartInfo_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.class, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder.class);
+        }
+
+        // Construct using middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          delay_ = 0L;
+
+          userId_ = 0;
+
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor;
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getDefaultInstanceForType() {
+          return middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo build() {
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo buildPartial() {
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo result = new middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo(this);
+          result.delay_ = delay_;
+          result.userId_ = userId_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo) {
+            return mergeFrom((middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo other) {
+          if (other == middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.getDefaultInstance()) return this;
+          if (other.getDelay() != 0L) {
+            setDelay(other.getDelay());
+          }
+          if (other.getUserId() != 0) {
+            setUserId(other.getUserId());
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private long delay_ ;
+        /**
+         * <code>int64 delay = 1;</code>
+         * @return The delay.
+         */
+        public long getDelay() {
+          return delay_;
+        }
+        /**
+         * <code>int64 delay = 1;</code>
+         * @param value The delay to set.
+         * @return This builder for chaining.
+         */
+        public Builder setDelay(long value) {
+          
+          delay_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>int64 delay = 1;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearDelay() {
+          
+          delay_ = 0L;
+          onChanged();
+          return this;
+        }
+
+        private int userId_ ;
+        /**
+         * <code>int32 userId = 2;</code>
+         * @return The userId.
+         */
+        public int getUserId() {
+          return userId_;
+        }
+        /**
+         * <code>int32 userId = 2;</code>
+         * @param value The userId to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUserId(int value) {
+          
+          userId_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>int32 userId = 2;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearUserId() {
+          
+          userId_ = 0;
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:middleware.proto.PeriodicActions.CleanCartInfo)
+      }
+
+      // @@protoc_insertion_point(class_scope:middleware.proto.PeriodicActions.CleanCartInfo)
+      private static final middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo();
+      }
+
+      public static middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<CleanCartInfo>
+          PARSER = new com.google.protobuf.AbstractParser<CleanCartInfo>() {
+        @java.lang.Override
+        public CleanCartInfo parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new CleanCartInfo(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<CleanCartInfo> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<CleanCartInfo> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public static final int CLEANCARTINFO_FIELD_NUMBER = 1;
+    private java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> cleanCartInfo_;
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    public java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> getCleanCartInfoList() {
+      return cleanCartInfo_;
+    }
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    public java.util.List<? extends middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder> 
+        getCleanCartInfoOrBuilderList() {
+      return cleanCartInfo_;
+    }
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    public int getCleanCartInfoCount() {
+      return cleanCartInfo_.size();
+    }
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getCleanCartInfo(int index) {
+      return cleanCartInfo_.get(index);
+    }
+    /**
+     * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+     */
+    public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder getCleanCartInfoOrBuilder(
+        int index) {
+      return cleanCartInfo_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < cleanCartInfo_.size(); i++) {
+        output.writeMessage(1, cleanCartInfo_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < cleanCartInfo_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, cleanCartInfo_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof middleware.proto.ReplicationOuterClass.PeriodicActions)) {
+        return super.equals(obj);
+      }
+      middleware.proto.ReplicationOuterClass.PeriodicActions other = (middleware.proto.ReplicationOuterClass.PeriodicActions) obj;
+
+      if (!getCleanCartInfoList()
+          .equals(other.getCleanCartInfoList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getCleanCartInfoCount() > 0) {
+        hash = (37 * hash) + CLEANCARTINFO_FIELD_NUMBER;
+        hash = (53 * hash) + getCleanCartInfoList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(middleware.proto.ReplicationOuterClass.PeriodicActions prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code middleware.proto.PeriodicActions}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:middleware.proto.PeriodicActions)
+        middleware.proto.ReplicationOuterClass.PeriodicActionsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                middleware.proto.ReplicationOuterClass.PeriodicActions.class, middleware.proto.ReplicationOuterClass.PeriodicActions.Builder.class);
+      }
+
+      // Construct using middleware.proto.ReplicationOuterClass.PeriodicActions.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getCleanCartInfoFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (cleanCartInfoBuilder_ == null) {
+          cleanCartInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          cleanCartInfoBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return middleware.proto.ReplicationOuterClass.internal_static_middleware_proto_PeriodicActions_descriptor;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.PeriodicActions getDefaultInstanceForType() {
+        return middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.PeriodicActions build() {
+        middleware.proto.ReplicationOuterClass.PeriodicActions result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public middleware.proto.ReplicationOuterClass.PeriodicActions buildPartial() {
+        middleware.proto.ReplicationOuterClass.PeriodicActions result = new middleware.proto.ReplicationOuterClass.PeriodicActions(this);
+        int from_bitField0_ = bitField0_;
+        if (cleanCartInfoBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            cleanCartInfo_ = java.util.Collections.unmodifiableList(cleanCartInfo_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.cleanCartInfo_ = cleanCartInfo_;
+        } else {
+          result.cleanCartInfo_ = cleanCartInfoBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof middleware.proto.ReplicationOuterClass.PeriodicActions) {
+          return mergeFrom((middleware.proto.ReplicationOuterClass.PeriodicActions)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(middleware.proto.ReplicationOuterClass.PeriodicActions other) {
+        if (other == middleware.proto.ReplicationOuterClass.PeriodicActions.getDefaultInstance()) return this;
+        if (cleanCartInfoBuilder_ == null) {
+          if (!other.cleanCartInfo_.isEmpty()) {
+            if (cleanCartInfo_.isEmpty()) {
+              cleanCartInfo_ = other.cleanCartInfo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureCleanCartInfoIsMutable();
+              cleanCartInfo_.addAll(other.cleanCartInfo_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.cleanCartInfo_.isEmpty()) {
+            if (cleanCartInfoBuilder_.isEmpty()) {
+              cleanCartInfoBuilder_.dispose();
+              cleanCartInfoBuilder_ = null;
+              cleanCartInfo_ = other.cleanCartInfo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              cleanCartInfoBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getCleanCartInfoFieldBuilder() : null;
+            } else {
+              cleanCartInfoBuilder_.addAllMessages(other.cleanCartInfo_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        middleware.proto.ReplicationOuterClass.PeriodicActions parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (middleware.proto.ReplicationOuterClass.PeriodicActions) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> cleanCartInfo_ =
+        java.util.Collections.emptyList();
+      private void ensureCleanCartInfoIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          cleanCartInfo_ = new java.util.ArrayList<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo>(cleanCartInfo_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder> cleanCartInfoBuilder_;
+
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> getCleanCartInfoList() {
+        if (cleanCartInfoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(cleanCartInfo_);
+        } else {
+          return cleanCartInfoBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public int getCleanCartInfoCount() {
+        if (cleanCartInfoBuilder_ == null) {
+          return cleanCartInfo_.size();
+        } else {
+          return cleanCartInfoBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo getCleanCartInfo(int index) {
+        if (cleanCartInfoBuilder_ == null) {
+          return cleanCartInfo_.get(index);
+        } else {
+          return cleanCartInfoBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder setCleanCartInfo(
+          int index, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo value) {
+        if (cleanCartInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.set(index, value);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder setCleanCartInfo(
+          int index, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder builderForValue) {
+        if (cleanCartInfoBuilder_ == null) {
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder addCleanCartInfo(middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo value) {
+        if (cleanCartInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.add(value);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder addCleanCartInfo(
+          int index, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo value) {
+        if (cleanCartInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.add(index, value);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder addCleanCartInfo(
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder builderForValue) {
+        if (cleanCartInfoBuilder_ == null) {
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.add(builderForValue.build());
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder addCleanCartInfo(
+          int index, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder builderForValue) {
+        if (cleanCartInfoBuilder_ == null) {
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder addAllCleanCartInfo(
+          java.lang.Iterable<? extends middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo> values) {
+        if (cleanCartInfoBuilder_ == null) {
+          ensureCleanCartInfoIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, cleanCartInfo_);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder clearCleanCartInfo() {
+        if (cleanCartInfoBuilder_ == null) {
+          cleanCartInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public Builder removeCleanCartInfo(int index) {
+        if (cleanCartInfoBuilder_ == null) {
+          ensureCleanCartInfoIsMutable();
+          cleanCartInfo_.remove(index);
+          onChanged();
+        } else {
+          cleanCartInfoBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder getCleanCartInfoBuilder(
+          int index) {
+        return getCleanCartInfoFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder getCleanCartInfoOrBuilder(
+          int index) {
+        if (cleanCartInfoBuilder_ == null) {
+          return cleanCartInfo_.get(index);  } else {
+          return cleanCartInfoBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public java.util.List<? extends middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder> 
+           getCleanCartInfoOrBuilderList() {
+        if (cleanCartInfoBuilder_ != null) {
+          return cleanCartInfoBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(cleanCartInfo_);
+        }
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder addCleanCartInfoBuilder() {
+        return getCleanCartInfoFieldBuilder().addBuilder(
+            middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder addCleanCartInfoBuilder(
+          int index) {
+        return getCleanCartInfoFieldBuilder().addBuilder(
+            index, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .middleware.proto.PeriodicActions.CleanCartInfo cleanCartInfo = 1;</code>
+       */
+      public java.util.List<middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder> 
+           getCleanCartInfoBuilderList() {
+        return getCleanCartInfoFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder> 
+          getCleanCartInfoFieldBuilder() {
+        if (cleanCartInfoBuilder_ == null) {
+          cleanCartInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfo.Builder, middleware.proto.ReplicationOuterClass.PeriodicActions.CleanCartInfoOrBuilder>(
+                  cleanCartInfo_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          cleanCartInfo_ = null;
+        }
+        return cleanCartInfoBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:middleware.proto.PeriodicActions)
+    }
+
+    // @@protoc_insertion_point(class_scope:middleware.proto.PeriodicActions)
+    private static final middleware.proto.ReplicationOuterClass.PeriodicActions DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new middleware.proto.ReplicationOuterClass.PeriodicActions();
+    }
+
+    public static middleware.proto.ReplicationOuterClass.PeriodicActions getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PeriodicActions>
+        PARSER = new com.google.protobuf.AbstractParser<PeriodicActions>() {
+      @java.lang.Override
+      public PeriodicActions parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new PeriodicActions(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PeriodicActions> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PeriodicActions> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public middleware.proto.ReplicationOuterClass.PeriodicActions getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_middleware_proto_Replication_descriptor;
   private static final 
@@ -6915,6 +8481,16 @@ public final class ReplicationOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_middleware_proto_DatabaseModifications_Modification_FieldValue_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_PeriodicActions_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_PeriodicActions_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_middleware_proto_PeriodicActions_CleanCartInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6925,32 +8501,37 @@ public final class ReplicationOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\035replication/replication.proto\022\020middlew" +
-      "are.proto\"\207\001\n\013Replication\022.\n\005loads\030\001 \001(\013" +
+      "are.proto\"\277\001\n\013Replication\022.\n\005loads\030\001 \001(\013" +
       "2\035.middleware.proto.ServerLoadsH\000\022@\n\rmod" +
       "ifications\030\002 \001(\0132\'.middleware.proto.Data" +
-      "baseModificationsH\000B\006\n\004type\"\322\001\n\013ServerLo" +
-      "ads\0226\n\007counter\030\001 \003(\0132%.middleware.proto." +
-      "ServerLoads.Counter\032\212\001\n\007Counter\022D\n\nserve" +
-      "rInfo\030\001 \001(\01320.middleware.proto.ServerLoa" +
-      "ds.Counter.ServerInfo\022\014\n\004load\030\002 \001(\005\032+\n\nS" +
-      "erverInfo\022\017\n\007address\030\001 \001(\t\022\014\n\004port\030\002 \001(\005" +
-      "\"\373\004\n\025DatabaseModifications\022\016\n\006status\030\001 \001" +
-      "(\010\022K\n\rmodifications\030\002 \003(\01324.middleware.p" +
-      "roto.DatabaseModifications.Modification\022" +
-      "\016\n\006sender\030\003 \001(\t\022\023\n\013requestUuid\030\004 \001(\t\032\337\003\n" +
-      "\014Modification\022\014\n\004type\030\001 \001(\005\022\r\n\005table\030\002 \001" +
-      "(\t\022M\n\004mods\030\003 \003(\0132?.middleware.proto.Data" +
-      "baseModifications.Modification.FieldValu" +
-      "e\022N\n\005where\030\004 \003(\0132?.middleware.proto.Data" +
-      "baseModifications.Modification.FieldValu" +
-      "e\032\313\001\n\nFieldValue\022\r\n\005field\030\001 \001(\t\022G\n\004type\030" +
-      "\002 \001(\01629.middleware.proto.DatabaseModific" +
-      "ations.Modification.Type\022\022\n\010valueInt\030\003 \001" +
-      "(\005H\000\022\025\n\013valueString\030\004 \001(\tH\000\022\030\n\016valueTime" +
-      "stamp\030\005 \001(\003H\000\022\023\n\tvalueBool\030\006 \001(\010H\000B\013\n\tva" +
-      "lueType\"E\n\004Type\022\013\n\007INTEGER\020\000\022\n\n\006STRING\020\001" +
-      "\022\r\n\tTIMESTAMP\020\002\022\013\n\007BOOLEAN\020\003\022\010\n\004NULL\020\004b\006" +
-      "proto3"
+      "baseModificationsH\000\0226\n\tperiodics\030\003 \001(\0132!" +
+      ".middleware.proto.PeriodicActionsH\000B\006\n\004t" +
+      "ype\"\322\001\n\013ServerLoads\0226\n\007counter\030\001 \003(\0132%.m" +
+      "iddleware.proto.ServerLoads.Counter\032\212\001\n\007" +
+      "Counter\022D\n\nserverInfo\030\001 \001(\01320.middleware" +
+      ".proto.ServerLoads.Counter.ServerInfo\022\014\n" +
+      "\004load\030\002 \001(\005\032+\n\nServerInfo\022\017\n\007address\030\001 \001" +
+      "(\t\022\014\n\004port\030\002 \001(\005\"\373\004\n\025DatabaseModificatio" +
+      "ns\022\016\n\006status\030\001 \001(\010\022K\n\rmodifications\030\002 \003(" +
+      "\01324.middleware.proto.DatabaseModificatio" +
+      "ns.Modification\022\016\n\006sender\030\003 \001(\t\022\023\n\013reque" +
+      "stUuid\030\004 \001(\t\032\337\003\n\014Modification\022\014\n\004type\030\001 " +
+      "\001(\005\022\r\n\005table\030\002 \001(\t\022M\n\004mods\030\003 \003(\0132?.middl" +
+      "eware.proto.DatabaseModifications.Modifi" +
+      "cation.FieldValue\022N\n\005where\030\004 \003(\0132?.middl" +
+      "eware.proto.DatabaseModifications.Modifi" +
+      "cation.FieldValue\032\313\001\n\nFieldValue\022\r\n\005fiel" +
+      "d\030\001 \001(\t\022G\n\004type\030\002 \001(\01629.middleware.proto" +
+      ".DatabaseModifications.Modification.Type" +
+      "\022\022\n\010valueInt\030\003 \001(\005H\000\022\025\n\013valueString\030\004 \001(" +
+      "\tH\000\022\030\n\016valueTimestamp\030\005 \001(\003H\000\022\023\n\tvalueBo" +
+      "ol\030\006 \001(\010H\000B\013\n\tvalueType\"E\n\004Type\022\013\n\007INTEG" +
+      "ER\020\000\022\n\n\006STRING\020\001\022\r\n\tTIMESTAMP\020\002\022\013\n\007BOOLE" +
+      "AN\020\003\022\010\n\004NULL\020\004\"\211\001\n\017PeriodicActions\022F\n\rcl" +
+      "eanCartInfo\030\001 \003(\0132/.middleware.proto.Per" +
+      "iodicActions.CleanCartInfo\032.\n\rCleanCartI" +
+      "nfo\022\r\n\005delay\030\001 \001(\003\022\016\n\006userId\030\002 \001(\005b\006prot" +
+      "o3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -6961,7 +8542,7 @@ public final class ReplicationOuterClass {
     internal_static_middleware_proto_Replication_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_Replication_descriptor,
-        new java.lang.String[] { "Loads", "Modifications", "Type", });
+        new java.lang.String[] { "Loads", "Modifications", "Periodics", "Type", });
     internal_static_middleware_proto_ServerLoads_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_middleware_proto_ServerLoads_fieldAccessorTable = new
@@ -6998,6 +8579,18 @@ public final class ReplicationOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_middleware_proto_DatabaseModifications_Modification_FieldValue_descriptor,
         new java.lang.String[] { "Field", "Type", "ValueInt", "ValueString", "ValueTimestamp", "ValueBool", "ValueType", });
+    internal_static_middleware_proto_PeriodicActions_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_middleware_proto_PeriodicActions_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_PeriodicActions_descriptor,
+        new java.lang.String[] { "CleanCartInfo", });
+    internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor =
+      internal_static_middleware_proto_PeriodicActions_descriptor.getNestedTypes().get(0);
+    internal_static_middleware_proto_PeriodicActions_CleanCartInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_middleware_proto_PeriodicActions_CleanCartInfo_descriptor,
+        new java.lang.String[] { "Delay", "UserId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -1,10 +1,15 @@
 package middleware.server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MapEntry;
 import database.DatabaseManager;
+import database.DatabaseModification;
+import database.QueryCart;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.RecoveryOuterClass;
+import middleware.proto.ReplicationOuterClass;
+import middleware.proto.RequestOuterClass;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 
@@ -12,12 +17,14 @@ import org.w3c.dom.CDATASection;
 
 import server.RequestManager;
 
+import server.Server;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
 import spread.SpreadMessage;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,6 +33,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 public class ServerMessageListener implements AdvancedMessageListener {
 
@@ -42,7 +50,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private final Lock replication_lock = new ReentrantLock();
     private final Condition empty_replication_queue = this.replication_lock.newCondition();
 
-    private final ConcurrentHashMap<Integer, Pair<LocalDateTime, Integer>> tmax_timestamps = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, Pair<LocalDateTime, Long>> tmax_timestamps = new ConcurrentHashMap<>();
 
     /* Info for primary selection */
     private List<String> leader_fifo = new LinkedList<>();
@@ -54,7 +62,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private boolean recovery = true;
     private final Lock recovery_lock = new ReentrantLock();
     private final Condition recovered = this.recovery_lock.newCondition();
-    private Map<String,Message> nedd_recover = new HashMap<>();
+    private Map<String,Message> need_recover = new HashMap<>();
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -171,7 +179,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
             case ACK:
 
-                this.nedd_recover.remove(spreadMessage.getSender().toString());
+                this.need_recover.remove(spreadMessage.getSender().toString());
 
                 break;
 
@@ -236,7 +244,37 @@ public class ServerMessageListener implements AdvancedMessageListener {
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
 
             this.primary = true;
+
             recoverTheUnrecovered();
+
+            System.out.println("Starting the timers!");
+            // Start timers
+            for (Map.Entry<Integer, Pair<LocalDateTime, Long>> timestamp: tmax_timestamps.entrySet()) {
+
+                int userId = timestamp.getKey();
+                long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
+
+                Message msg = Message.newBuilder()
+                        .setRequest(RequestOuterClass.Request.newBuilder()
+                                .setType(RequestOuterClass.Request.Type.REQUEST)
+                                .setCleanCart(RequestOuterClass.CleanCart.newBuilder()
+                                        .setUserId(userId)
+                                        .build())
+                                .build())
+                        .build();
+
+                System.out.println("Timer of " + userId + " and delay " + delay);
+
+                TimerTask task = new TimerTask() {
+                    public void run() {
+
+                        request_queue.add(new Triplet<>(true, request_counter.incrementAndGet(), msg));
+
+                    }
+                };
+                new Timer("Timer").schedule(task, (delay >= 0) ? delay * 1000 : 0);
+
+            }
         }
 
     }
@@ -300,11 +338,36 @@ public class ServerMessageListener implements AdvancedMessageListener {
                     // Recover the new server
                     RecoveryManager.recoverSomeone(this.serverInfo.getPort(), info.getJoined());
 
+                    System.out.println("Sending timers to new server!");
+                    // Recover timed actions
+                    List<ReplicationOuterClass.PeriodicActions.CleanCartInfo> cleanCartInfoList =
+                            tmax_timestamps.entrySet().stream().map(timestamp -> {
+                                int userId = timestamp.getKey();
+                                long delay = timestamp.getValue().getSecond() - ( timestamp.getValue().getFirst().until(LocalDateTime.now(), ChronoUnit.SECONDS) );
+
+                                System.out.println("Timer of " + userId + " and delay " + delay);
+
+                                return ReplicationOuterClass.PeriodicActions.CleanCartInfo.newBuilder()
+                                        .setUserId(userId)
+                                        .setDelay(delay)
+                                        .build();
+                            }).collect(Collectors.toList());
+
+                    Message msg = Message.newBuilder()
+                            .setReplication(ReplicationOuterClass.Replication.newBuilder()
+                                    .setPeriodics(ReplicationOuterClass.PeriodicActions.newBuilder()
+                                            .addAllCleanCartInfo(cleanCartInfoList)
+                                            .build())
+                                    .build())
+                            .build();
+
+                    SpreadConnector.send(msg.toByteArray(), info.getJoined());
+
                 } else {
 
                     // store info
                     Message msg = RecoveryManager.getRecoverInfo(this.serverInfo.getPort(), info.getJoined());
-                    this.nedd_recover.put(info.getJoined().toString(), msg);
+                    this.need_recover.put(info.getJoined().toString(), msg);
 
                 }
 
@@ -322,11 +385,23 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     // TMAX Management
 
-    public void addTimestampTMAX (int userID, Pair<LocalDateTime,Integer> timerInfo) { this.tmax_timestamps.put(userID, timerInfo); }
+    public void addTimestampTMAX (int userID, Pair<LocalDateTime, Long> timerInfo) {
 
-    public void remTimestampTMAX (int userID) {this.tmax_timestamps.remove(userID); }
+        System.out.println("Adding timestamp of " + userID + " with delay " + timerInfo.getSecond());
 
-    public Pair<LocalDateTime, Integer> getTimestampTMAX (int userID) {return this.tmax_timestamps.get(userID); }
+        this.tmax_timestamps.put(userID, timerInfo);
+
+    }
+
+    public void remTimestampTMAX (int userID) {
+
+        System.out.println("Removing timestamp of " + userID);
+
+        this.tmax_timestamps.remove(userID);
+
+    }
+
+    public Pair<LocalDateTime, Long> getTimestampTMAX (int userID) {return this.tmax_timestamps.get(userID); }
 
 
     public Triplet<Boolean,Long,Message> getNextReplication() {
@@ -392,11 +467,11 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private void recoverTheUnrecovered() {
 
         // send recover messages to the non-recovered
-        for(Map.Entry<String,Message> info : this.nedd_recover.entrySet()) {
+        for(Map.Entry<String,Message> info : this.need_recover.entrySet()) {
 
             SpreadConnector.unicast(info.getValue().toByteArray(), info.getKey());
 
-            this.nedd_recover.remove(info.getKey());
+            this.need_recover.remove(info.getKey());
 
         }
 

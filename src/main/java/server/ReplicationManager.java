@@ -38,32 +38,58 @@ public class ReplicationManager implements Runnable {
         while((msg = messageListener.getNextReplication()) != null) {
 
             Replication repl = msg.getThird().getReplication();
-            Pair<String, String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
-            RequestManager.putResponse(pair, msg.getThird());
 
-            if (!msg.getFirst()) {
+            if (repl.hasModifications()) {
 
-                // System.out.println(repl);
-                // System.out.println("It misses update the db");
+                Pair<String, String> pair = new Pair<>(repl.getModifications().getSender(), repl.getModifications().getRequestUuid());
+                RequestManager.putResponse(pair, msg.getThird());
 
-                List<DatabaseModification> modifs = constructModification(repl.getModifications());
-                DatabaseManager.loadModifications(modifs);
+                if (!msg.getFirst()) {
+
+                    // System.out.println(repl);
+                    // System.out.println("It misses update the db");
+
+                    List<DatabaseModification> modifs = constructModification(repl.getModifications());
+                    DatabaseManager.loadModifications(modifs);
+
+                }
+
+                // Checking for cart operations
+                for (ReplicationOuterClass.DatabaseModifications.Modification mod : repl.getModifications().getModificationsList())
+                    // Detecting cart creation
+                    if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART")) {
+                        for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
+                            if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
+                                for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
+                                    if (f.getField().toUpperCase().equals("CUSTOMERID")) {
+
+                                        System.out.println("Adding Timestamp on cart creation!");
+                                        messageListener.addTimestampTMAX(f.getValueInt(), new Pair<>(LocalDateTime.now(), Server.TMAX));
+
+                                    }
+
+                        // Detecting cart deletion
+                    } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1) {
+
+                        System.out.println("Removing Timestamp on cart deletion!");
+
+                        messageListener.remTimestampTMAX(mod.getWhere(0).getValueInt());
+
+                    }
+
+            } else if (repl.hasPeriodics()) {
+
+                System.out.println("Saving Timestamps sent by primary!");
+
+                for (ReplicationOuterClass.PeriodicActions.CleanCartInfo info : repl.getPeriodics().getCleanCartInfoList()) {
+
+                    System.out.println("Saving Timestamp of " + info.getUserId() + " and delay of " + info.getDelay());
+
+                    messageListener.addTimestampTMAX(info.getUserId(), new Pair<>(LocalDateTime.now(), info.getDelay()));
+
+                }
 
             }
-
-            // Checking for cart operations
-            for (ReplicationOuterClass.DatabaseModifications.Modification mod : repl.getModifications().getModificationsList())
-                // Detecting cart creation
-                if (mod.getType() == 1 /* UPDATE */ && mod.getTable().toUpperCase().equals("CART")) {
-                    for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue fv : mod.getModsList())
-                        if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
-                            for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
-                                if (f.getField().toUpperCase().equals("CUSTOMERID"))
-                                    messageListener.addTimestampTMAX(f.getValueInt(), new Pair<>(LocalDateTime.now(), Server.TMAX));
-
-                    // Detecting cart deletion
-                } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1)
-                    messageListener.remTimestampTMAX(mod.getWhere(0).getValueInt());
 
         }
 
