@@ -107,19 +107,35 @@ public class DatabaseManager {
             ps3.setString(1, "miguel");
             ps3.setString(2, "miguel");
             ps3.executeUpdate();
+            // 100 customers
+            for (int i = 0; i < 100; i++){
+                PreparedStatement ps = conn.prepareStatement(customer);
+                ps.setString(1, "user"+i);
+                ps.setString(2, "user"+i);
+                ps.executeUpdate();
+            }
 
             // Populate items
+            // 100 items
+            for (int i = 0; i < 100; i++){
+                PreparedStatement ps = conn.prepareStatement(item);
+                ps.setString(1, "Product " + i );
+                ps.setString(2, "Description - "+i );
+                ps.setFloat(3, 1);
+                ps.setInt(4, 1000);
+                ps.executeUpdate();
+            }
             PreparedStatement ps4 = conn.prepareStatement(item);
             ps4.setString(1, "Máscara");
             ps4.setString(2, "Máscara contra o COVID-19");
             ps4.setFloat(3, 50);
-            ps4.setInt(4, 5);
+            ps4.setInt(4, 10000);
             ps4.executeUpdate();
             PreparedStatement ps5 = conn.prepareStatement(item);
             ps5.setString(1, "Papel Higiénico");
             ps5.setString(2, "Papel Higiénico contra o COVID-19");
             ps5.setFloat(3, 100);
-            ps5.setInt(4, 2);
+            ps5.setInt(4, 10000);
             ps5.executeUpdate();
 
             // Populate Customers' Carts
@@ -138,6 +154,14 @@ public class DatabaseManager {
             ps8.setTimestamp(2, null);
             ps8.setBoolean(3, false);
             ps8.executeUpdate();
+            // 100 Customers Carts
+            for (int i = 0; i < 100; i++){
+                PreparedStatement ps = conn.prepareStatement(cart);
+                ps.setInt(1, i+3);
+                ps.setTimestamp(2, null);
+                ps.setBoolean(3, false);
+                ps.executeUpdate();
+            }
 
             System.out.println("Loaded successfully.");
         }

@@ -24,7 +24,7 @@ public class QueryCart {
             pstat.setInt(1, userId);
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID.");
+                System.out.println("There is no Customer with that ID: " + userId);
                 pstat.close();
                 rs.close();
                 conn.close();
@@ -58,11 +58,11 @@ public class QueryCart {
                 return new ArrayList<>();
             }
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT active FROM Cart WHERE customerid=?");
+                    "SELECT active FROM Cart WHERE Customerid=?");
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID.");
+                System.out.println("There is no Customer with that ID: " + userId);
                 ps.close();
                 rs.close();
                 conn.close();
@@ -73,19 +73,19 @@ public class QueryCart {
                     boolean active = rs.getBoolean("active");
                     if (!active) {
                         PreparedStatement ps1 = conn.prepareStatement(
-                                "UPDATE Cart SET begin=?, active=? WHERE customerid=?");
+                                "UPDATE Cart SET begin=?, active=? WHERE Customerid=?");
                         Timestamp time = new Timestamp(System.currentTimeMillis());
                         ps1.setTimestamp(1, time);
                         ps1.setBoolean(2, true);
                         ps1.setInt(3, userId);
-                        System.out.println(ps1.toString());
+                        // System.out.println(ps1.toString());
                         int updated = ps1.executeUpdate();
                         if (updated > 0){
                             List<FieldValue> vals = new ArrayList<>();
                             vals.add(new FieldValue("begin", time, ValueType.TIMESTAMP));
                             vals.add(new FieldValue("active", true, ValueType.BOOLEAN));
                             List<FieldValue> where = new ArrayList<>();
-                            where.add(new FieldValue("customerid", userId, ValueType.INTEGER));
+                            where.add(new FieldValue("Customerid", userId, ValueType.INTEGER));
                             DatabaseModification mod = new DatabaseModification(1, "Cart", vals, where);
                             modifications.add(mod);
                         }
@@ -167,7 +167,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID.");
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
                 ps.close();
                 rs.close();
                 conn.close();
@@ -205,7 +205,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID.");
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
 
                 ps.close();
                 rs.close();
@@ -271,7 +271,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID.");
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
 
                 ps.close();
                 rs.close();
