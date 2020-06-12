@@ -167,7 +167,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID: " + userId);
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
                 ps.close();
                 rs.close();
                 conn.close();
@@ -205,7 +205,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID: " + userId);
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
 
                 ps.close();
                 rs.close();
@@ -271,7 +271,7 @@ public class QueryCart {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("There is no Customer with that ID: " + userId);
+                System.out.println("There are no items in the Cart or the Cart doesn't exist: " + userId);
 
                 ps.close();
                 rs.close();

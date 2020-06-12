@@ -18,7 +18,7 @@ public class ClientBot extends Thread{
     private static boolean started, stopped;
     private static int n;
     private static long total;
-    private static final long time = 30;
+    private static final long time = 15;
 
     private synchronized static void registerTime(long tr) {
         if (started && !stopped) {
@@ -53,23 +53,11 @@ public class ClientBot extends Thread{
 
     private int login(){
         Random rand = new Random();
-        int num = rand.nextInt(3);
+        int num = rand.nextInt(100);
         String username = "";
         String pass = "";
-        switch (num){
-            case 0:
-                username = "henrique";
-                pass = "henrique";
-                break;
-            case 1:
-                username = "joao";
-                pass = "joao";
-                break;
-            case 2:
-                username = "miguel";
-                pass = "miguel";
-                break;
-        }
+        username = "user" + num;
+        pass = "user" + num;
 
         return new Stub().login(username, pass);
     }
@@ -89,7 +77,7 @@ public class ClientBot extends Thread{
 
             long before = System.nanoTime();
 
-            int itemId = rand.nextInt(2);
+            int itemId = rand.nextInt(100);
 
             switch (op) {
                 case 0:
@@ -196,7 +184,7 @@ public class ClientBot extends Thread{
 
     public static void main(String[] args) throws Exception {
 
-        int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377/*, 610, 987*/};
+        int[] numbers = new int[]{1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987};
 
         System.out.println("Benchmarking starting...");
 
