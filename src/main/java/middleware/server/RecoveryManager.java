@@ -1,4 +1,4 @@
-package server;
+package middleware.server;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
@@ -23,28 +23,35 @@ import java.util.List;
 
 public class RecoveryManager {
 
-    public static void checkpointing() {
+    public static MessageOuterClass.Message getRecoverInfo(int port, SpreadGroup member) {
 
-        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+        // Checkpointing current DB
+        RecoveryManager.checkpointing();
 
-        try {
+        // Builds a message containing the difference
+        return RecoveryManager.compareInitialBackup(port, member);
 
-            if (conn == null) {
-                System.out.println("No DB connection.");
-                return;
-            }
+    }
 
-            PreparedStatement ps = conn.prepareStatement("CHECKPOINT");
-            ps.executeUpdate();
+    public static void recoverSomeone(int port, SpreadGroup member) {
 
-            conn.commit();
+        MessageOuterClass.Message msg = getRecoverInfo(port, member);
 
-            ps.close();
-            conn.close();
+        // Send changes in DB from the start
+        assert msg != null;
+        SpreadConnector.unicast(msg.toByteArray(), member.toString());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+
+    public static void recoverMe(int port, MessageOuterClass.Message message) {
+
+        // Create patch file
+        RecoveryManager.createPatchFile(port, message);
+
+        // shutdown DB and patch
+        RecoveryManager.shutdown();
+        RecoveryManager.patchingInitialBackup(port);
+
     }
 
     // also does checkpoint
@@ -72,24 +79,84 @@ public class RecoveryManager {
 
     }
 
-    public static void compareInitialBackupAndSend(int port, SpreadGroup member){
+    public static void shutdown() {
+
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("SHUTDOWN");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static boolean directoryExists(String path){
+
+        return Files.exists(Paths.get(path));
+
+    }
+
+    private static void checkpointing() {
+
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("CHECKPOINT");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static MessageOuterClass.Message compareInitialBackup(int port, SpreadGroup member){
 
         try {
 
             List<String> original = Files.readAllLines(new File("databases/" + port + "/backup/initial/onlinesupermarket.script").toPath());
             List<String> revised = Files.readAllLines(new File("databases/" + port + "/onlinesupermarket.script").toPath());
 
-            compareAndSend(original, revised, member);
+            return compare(original, revised);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return MessageOuterClass.Message.newBuilder()
+                .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                        .setType(RecoveryOuterClass.Recovery.Type.FAILED)
+                        .build())
+                .build();
+
     }
 
-    private static void compareAndSend(List<String> original, List<String> revised, SpreadGroup member) {
+    private static MessageOuterClass.Message compare(List<String> original, List<String> revised) {
 
-        // COMPARING
         List<RecoveryOuterClass.Recovery.Line> lines = new ArrayList<>();
 
         try {
@@ -107,18 +174,15 @@ public class RecoveryManager {
             e.printStackTrace();
         }
 
-        // SENDING
-        MessageOuterClass.Message msg = MessageOuterClass.Message.newBuilder()
+        return MessageOuterClass.Message.newBuilder()
                 .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                        .setType(RecoveryOuterClass.Recovery.Type.RECOVER)
                         .addAllLines(lines)
                         .build())
                 .build();
-
-        SpreadConnector.send(msg.toByteArray(), member);
-
     }
 
-    public static void createPatchFile(int port, MessageOuterClass.Message message) {
+    private static void createPatchFile(int port, MessageOuterClass.Message message) {
 
         try {
 
@@ -145,7 +209,7 @@ public class RecoveryManager {
 
     }
 
-    public static void patchingInitialBackup(int port) {
+    private static void patchingInitialBackup(int port) {
 
         try {
 
@@ -181,37 +245,6 @@ public class RecoveryManager {
         } catch (IOException | PatchFailedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void shutdown() {
-
-        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
-
-        try {
-
-            if (conn == null) {
-                System.out.println("No DB connection.");
-                return;
-            }
-
-            PreparedStatement ps = conn.prepareStatement("SHUTDOWN");
-            ps.executeUpdate();
-
-            conn.commit();
-
-            ps.close();
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static boolean directoryExists(String path){
-
-        return Files.exists(Paths.get(path));
 
     }
 

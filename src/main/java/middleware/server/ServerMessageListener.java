@@ -4,9 +4,9 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import database.DatabaseManager;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
+import middleware.proto.RecoveryOuterClass;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
-import server.RecoveryManager;
 import server.RequestManager;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
@@ -44,6 +44,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private boolean recovery = true;
     private final Lock recovery_lock = new ReentrantLock();
     private final Condition recovered = this.recovery_lock.newCondition();
+    private Map<String,Message> nedd_recover = new HashMap<>();
 
     public ServerMessageListener (SocketInfo serverInfo) { this.serverInfo = serverInfo; }
 
@@ -129,21 +130,40 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     private void handleRecoveryMessage(SpreadMessage spreadMessage, Message message) {
 
-        if (this.recovery && !spreadMessage.getSender().toString().equals(this.myself)){
+        switch (message.getRecovery().getType()) {
 
-            // Create patch file
-            RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
+            case RECOVER:
 
-            // shutdown DB and patch
-            RecoveryManager.shutdown();
-            RecoveryManager.patchingInitialBackup(this.serverInfo.getPort());
+                if (this.recovery){
 
-            DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+                    // Make me recover
+                    RecoveryManager.recoverMe(this.serverInfo.getPort(), message);
 
-            this.recovery_lock.lock();
-            this.recovery = false;
-            this.recovered.signal();
-            this.recovery_lock.unlock();
+                    // Open database
+                    DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
+
+                    Message msg = Message.newBuilder()
+                            .setRecovery(RecoveryOuterClass.Recovery.newBuilder()
+                                    .setType(RecoveryOuterClass.Recovery.Type.ACK)
+                                    .build())
+                            .build();
+
+                    SpreadConnector.cast(msg.toByteArray(), Set.of("Servers"));
+
+                    this.recovery_lock.lock();
+                    this.recovery = false;
+                    this.recovered.signal();
+                    this.recovery_lock.unlock();
+
+                }
+
+                break;
+
+            case ACK:
+
+                this.nedd_recover.remove(spreadMessage.getSender().toString());
+
+                break;
 
         }
 
@@ -203,8 +223,11 @@ public class ServerMessageListener implements AdvancedMessageListener {
             this.leader_fifo.removeIf(member -> member.equals(info.getLeft().toString()));
 
         // check if i am the primary server
-        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary)
+        if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
+
             this.primary = true;
+            recoverTheUnrecovered();
+        }
 
     }
 
@@ -213,10 +236,12 @@ public class ServerMessageListener implements AdvancedMessageListener {
         // check if i need recovery or to recover someone
         if (info.isCausedByJoin()) {
 
+            // it was me that joined, and i need recover
             if (!this.primary && this.first_message && this.recovery) {
 
                 this.first_message = false;
 
+                // check if a DB already exists
                 if(!RecoveryManager.directoryExists("databases/" + this.serverInfo.getPort() + "/")) {
 
                     // create a database
@@ -227,14 +252,14 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
                 } else {
 
-                    // Open DB makes an automatic checkpoint
+                    // Open DB makes an automatic checkpoint and cleans the log file
                     DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
                 }
 
             }
 
-            // it was me that joined, and i'm primary, nobody needs recovery
+            // it was me that joined, and i'm primary, nobody needs recover
             else if (this.primary && this.first_message) {
 
                 this.first_message = false;
@@ -252,18 +277,26 @@ public class ServerMessageListener implements AdvancedMessageListener {
                 this.recovery_lock.unlock();
             }
 
-            // there is somebody that needs recovery
+            // there is somebody that needs recover
             else {
 
                 // Wait for the replication and request queue to be empty
                 waitToEmptyReplication();
                 waitToEmptyRequest();
 
-                // Checkpointing current DB
-                RecoveryManager.checkpointing();
+                // only the primary recovers the new server, secondaries store the message just in case its needed
+                if(this.primary) {
 
-                // Send changes in DB from the start
-                RecoveryManager.compareInitialBackupAndSend(this.serverInfo.getPort(), info.getJoined());
+                    // Recover the new server
+                    RecoveryManager.recoverSomeone(this.serverInfo.getPort(), info.getJoined());
+
+                } else {
+
+                    // store info
+                    Message msg = RecoveryManager.getRecoverInfo(this.serverInfo.getPort(), info.getJoined());
+                    this.nedd_recover.put(info.getJoined().toString(), msg);
+
+                }
 
             }
 
@@ -334,6 +367,20 @@ public class ServerMessageListener implements AdvancedMessageListener {
             this.recovery_lock.unlock();
 
         }
+
+    }
+
+    private void recoverTheUnrecovered() {
+
+        // send recover messages to the non-recovered
+        for(Map.Entry<String,Message> info : this.nedd_recover.entrySet()) {
+
+            SpreadConnector.unicast(info.getValue().toByteArray(), info.getKey());
+
+            this.nedd_recover.remove(info.getKey());
+
+        }
+
 
     }
 

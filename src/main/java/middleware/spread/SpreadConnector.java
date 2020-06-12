@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class SpreadConnector {
 
@@ -77,12 +78,24 @@ public class SpreadConnector {
 
     public static void initialize(int port) throws UnknownHostException, SpreadException {
 
+        initialization(String.valueOf(port));
+
+    }
+
+    public static void initialize() throws UnknownHostException, SpreadException {
+
+        initialization(UUID.randomUUID().toString());
+
+    }
+
+    private static void initialization(String connName) throws UnknownHostException, SpreadException {
+
         if (SpreadConnector.spreadConn == null || SpreadConnector.connName == null) {
 
             // Creating connection
             SpreadConnector.spreadConn = new SpreadConnection();
             // Getting unique ID for the connection
-            SpreadConnector.connName = String.valueOf(port);
+            SpreadConnector.connName = connName;
             // Connecting
             SpreadConnector.spreadConn.connect(InetAddress.getByName("localhost"), 4803, connName, false, true);
 
@@ -144,6 +157,26 @@ public class SpreadConnector {
         m.addGroup(group);
         m.setData(message);
         m.setSafe();
+
+        try {
+
+            if(SpreadConnector.spreadConn == null) SpreadConnector.initialize(port);
+            SpreadConnector.spreadConn.multicast(m);
+
+        } catch (SpreadException | UnknownHostException e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    // Unicast to specific member
+    public static void unicast (byte[] message, String member){
+
+        SpreadMessage m = new SpreadMessage();
+        m.addGroup(member);
+        m.setData(message);
+        m.setReliable();
 
         try {
 

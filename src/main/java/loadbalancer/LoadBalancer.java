@@ -28,7 +28,7 @@ public class LoadBalancer {
 
         System.out.println("Initializing Connector!");
         // Initializing connector
-        SpreadConnector.initialize(port);
+        SpreadConnector.initialize();
 
         System.out.println("Initialized Connector!");
 
