@@ -73,7 +73,7 @@ public class ClientBot extends Thread{
 
         while(!terminated()) {
             Random rand = new Random();
-            int op = rand.nextInt(6);
+            int op = rand.nextInt(7);
 
             long before = System.nanoTime();
 
@@ -103,6 +103,11 @@ public class ClientBot extends Thread{
                 case 5:
                     // System.out.println("Order");
                     s.order(userID);
+                    break;
+
+                case 6:
+                    // System.out.println("Clean Cart");
+                    s.cleanCart(userID);
                     break;
             }
 

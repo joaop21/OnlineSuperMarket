@@ -1,10 +1,7 @@
 package middleware.server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.MapEntry;
 import database.DatabaseManager;
-import database.DatabaseModification;
-import database.QueryCart;
 import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.proto.RecoveryOuterClass;
@@ -13,11 +10,8 @@ import middleware.proto.RequestOuterClass;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
 
-import org.w3c.dom.CDATASection;
-
 import server.RequestManager;
 
-import server.Server;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
 import spread.SpreadGroup;
@@ -243,8 +237,13 @@ public class ServerMessageListener implements AdvancedMessageListener {
         // check if i am the primary server
         if (this.leader_fifo.get(0).equals(this.myself) && !this.primary) {
 
+            // if I became primary after a primary failure,
+            // it's important to run the previous replications before beginning handle requests
+            waitToEmptyReplication();
+
             this.primary = true;
 
+            // recover the probably non-recovered servers, if the previous primary failed during a recovery process
             recoverTheUnrecovered();
 
             startTimers();
@@ -414,9 +413,6 @@ public class ServerMessageListener implements AdvancedMessageListener {
         this.tmax_timestamps.remove(userID);
 
     }
-
-    public Pair<LocalDateTime, Long> getTimestampTMAX (int userID) {return this.tmax_timestamps.get(userID); }
-
 
     public Triplet<Boolean,Long,Message> getNextReplication() {
 

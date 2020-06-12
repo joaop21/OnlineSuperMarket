@@ -99,7 +99,7 @@ public class Stub implements OnlineSuperMarket {
                         .build())
                 .build();
 
-        message = ClientDriver.request(message);
+        message = this.clientDriver.request(message);
 
         return message.getRequest().getCleanCart().getAnswer();
 

@@ -7,9 +7,7 @@ import middleware.server.Triplet;
 import middleware.proto.MessageOuterClass.Message;
 import middleware.spread.SpreadConnector;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -18,8 +16,12 @@ import java.util.concurrent.locks.ReentrantLock;
 public class RequestManager implements Runnable {
     private static RequestManager instance = null;
     private static ServerMessageListener messageListener = null;
+    /* Map of waiting rooms where clientManager threads are waiting for their request to be responded */
     private static Map<Pair<String,String>, WaitingRoom> waiting_requests = null;
+    /* requests for primary to respond */
     private static ConcurrentQueue<Message> sorted_requests = null;
+    /* Requests are stored in case primary goes down and three is requests to be attended */
+    private static Map<Pair<String,String>, Pair<Long,Message>> secondary_backup = null;
     private static final Lock lock = new ReentrantLock();
     private static final Condition empty = lock.newCondition();
 
@@ -27,6 +29,7 @@ public class RequestManager implements Runnable {
         messageListener = serverMessageListener;
         waiting_requests = new ConcurrentHashMap<>();
         sorted_requests = new ConcurrentQueue<>();
+        secondary_backup = new ConcurrentHashMap<>();
     }
 
     public static RequestManager initialize(ServerMessageListener serverMessageListener){
@@ -43,13 +46,25 @@ public class RequestManager implements Runnable {
 
         while((message = messageListener.getNextRequest()) != null){
 
-            if (!message.getFirst()) {
-                Pair<String, String> pair = new Pair<>(message.getThird().getRequest().getSender(), message.getThird().getRequest().getUuid());
-                waiting_requests.put(pair,new WaitingRoom());
-            }
+            Pair<String, String> pair = new Pair<>(message.getThird().getRequest().getSender(), message.getThird().getRequest().getUuid());
 
-            if(messageListener.isPrimary())
+            // if i'm not the origin of the message
+            if (!message.getFirst())
+                waiting_requests.put(pair,new WaitingRoom());
+
+            // if i'm primary i handle it
+            if(messageListener.isPrimary()) {
+
+                if(secondary_backup.size() != 0)
+                    exchangeSecondaryBackupToSortedRequests();
+
                 sorted_requests.add(message.getThird());
+
+            } else {
+
+                secondary_backup.put(pair, new Pair<>(message.getSecond(), message.getThird()));
+
+            }
 
         }
     }
@@ -78,12 +93,16 @@ public class RequestManager implements Runnable {
 
         try {
 
+            // remove from waiting_requests
             WaitingRoom wr = waiting_requests.get(request_key);
 
             if(wr.isActive())
                 wr.putMessage(msg);
             else
                 waiting_requests.remove(request_key);
+
+            // remove from secondary_backup
+            secondary_backup.remove(request_key);
 
         } catch (NullPointerException e) {}
 
@@ -118,4 +137,22 @@ public class RequestManager implements Runnable {
         }
 
     }
+
+    private void exchangeSecondaryBackupToSortedRequests() {
+
+        List<Pair<Long,Message>> values = (List<Pair<Long, Message>>) secondary_backup.values();
+        values.sort(new PairComparator());
+        values.forEach(l -> sorted_requests.add(l.getSecond()));
+
+    }
+
+    static class PairComparator implements Comparator<Pair<Long,Message>> {
+
+        @Override
+        public int compare(Pair<Long, Message> pair1, Pair<Long, Message> pair2) {
+            return (int) (pair1.getFirst() - pair2.getFirst());
+        }
+
+    }
+
 }
