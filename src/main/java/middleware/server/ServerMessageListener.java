@@ -6,7 +6,6 @@ import middleware.proto.AssignmentOuterClass.*;
 import middleware.proto.MessageOuterClass.*;
 import middleware.socket.SocketInfo;
 import middleware.spread.SpreadConnector;
-import server.RecoveryManager;
 import server.RequestManager;
 import spread.AdvancedMessageListener;
 import spread.MembershipInfo;
@@ -129,15 +128,12 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     private void handleRecoveryMessage(SpreadMessage spreadMessage, Message message) {
 
-        if (this.recovery && !spreadMessage.getSender().toString().equals(this.myself)){
+        if (this.recovery){
 
-            // Create patch file
-            RecoveryManager.createPatchFile(this.serverInfo.getPort(), message);
+            // Make me recover
+            RecoveryManager.recoverMe(this.serverInfo.getPort(), message);
 
-            // shutdown DB and patch
-            RecoveryManager.shutdown();
-            RecoveryManager.patchingInitialBackup(this.serverInfo.getPort());
-
+            // Open database
             DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
             this.recovery_lock.lock();
@@ -217,6 +213,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
                 this.first_message = false;
 
+                // check if a DB already exists
                 if(!RecoveryManager.directoryExists("databases/" + this.serverInfo.getPort() + "/")) {
 
                     // create a database
@@ -227,7 +224,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
                 } else {
 
-                    // Open DB makes an automatic checkpoint
+                    // Open DB makes an automatic checkpoint and cleans the log file
                     DatabaseManager.createDatabase("jdbc:hsqldb:file:databases/" + this.serverInfo.getPort() + "/onlinesupermarket");
 
                 }
@@ -259,11 +256,8 @@ public class ServerMessageListener implements AdvancedMessageListener {
                 waitToEmptyReplication();
                 waitToEmptyRequest();
 
-                // Checkpointing current DB
-                RecoveryManager.checkpointing();
-
-                // Send changes in DB from the start
-                RecoveryManager.compareInitialBackupAndSend(this.serverInfo.getPort(), info.getJoined());
+                // Recover the new server
+                RecoveryManager.recoverSomeone(this.serverInfo.getPort(), info.getJoined());
 
             }
 

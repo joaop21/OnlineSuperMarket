@@ -1,4 +1,4 @@
-package server;
+package middleware.server;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
@@ -23,28 +23,25 @@ import java.util.List;
 
 public class RecoveryManager {
 
-    public static void checkpointing() {
+    public static void recoverSomeone(int port, SpreadGroup member) {
 
-        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+        // Checkpointing current DB
+        RecoveryManager.checkpointing();
 
-        try {
+        // Send changes in DB from the start
+        RecoveryManager.compareInitialBackupAndSend(port, member);
 
-            if (conn == null) {
-                System.out.println("No DB connection.");
-                return;
-            }
+    }
 
-            PreparedStatement ps = conn.prepareStatement("CHECKPOINT");
-            ps.executeUpdate();
+    public static void recoverMe(int port, MessageOuterClass.Message message) {
 
-            conn.commit();
+        // Create patch file
+        RecoveryManager.createPatchFile(port, message);
 
-            ps.close();
-            conn.close();
+        // shutdown DB and patch
+        RecoveryManager.shutdown();
+        RecoveryManager.patchingInitialBackup(port);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // also does checkpoint
@@ -72,7 +69,62 @@ public class RecoveryManager {
 
     }
 
-    public static void compareInitialBackupAndSend(int port, SpreadGroup member){
+    public static void shutdown() {
+
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("SHUTDOWN");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static boolean directoryExists(String path){
+
+        return Files.exists(Paths.get(path));
+
+    }
+
+    private static void checkpointing() {
+
+        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
+
+        try {
+
+            if (conn == null) {
+                System.out.println("No DB connection.");
+                return;
+            }
+
+            PreparedStatement ps = conn.prepareStatement("CHECKPOINT");
+            ps.executeUpdate();
+
+            conn.commit();
+
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void compareInitialBackupAndSend(int port, SpreadGroup member){
 
         try {
 
@@ -118,7 +170,7 @@ public class RecoveryManager {
 
     }
 
-    public static void createPatchFile(int port, MessageOuterClass.Message message) {
+    private static void createPatchFile(int port, MessageOuterClass.Message message) {
 
         try {
 
@@ -145,7 +197,7 @@ public class RecoveryManager {
 
     }
 
-    public static void patchingInitialBackup(int port) {
+    private static void patchingInitialBackup(int port) {
 
         try {
 
@@ -181,37 +233,6 @@ public class RecoveryManager {
         } catch (IOException | PatchFailedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void shutdown() {
-
-        Connection conn = DatabaseManager.getConnection(DatabaseManager.DB_URL);
-
-        try {
-
-            if (conn == null) {
-                System.out.println("No DB connection.");
-                return;
-            }
-
-            PreparedStatement ps = conn.prepareStatement("SHUTDOWN");
-            ps.executeUpdate();
-
-            conn.commit();
-
-            ps.close();
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static boolean directoryExists(String path){
-
-        return Files.exists(Paths.get(path));
 
     }
 
