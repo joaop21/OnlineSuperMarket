@@ -346,7 +346,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
                     // Recover the new server
                     RecoveryManager.recoverSomeone(this.serverInfo.getPort(), info.getJoined());
 
-                    recoverTimers(info);
+                    recoverTimers(info.getJoined().toString());
 
                 } else {
 
@@ -362,7 +362,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     }
 
-    private void recoverTimers(MembershipInfo info) {
+    private void recoverTimers(String toBeRecovered) {
 
         System.out.println("Sending timers to new server!");
         // Recover timed actions
@@ -387,7 +387,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
                         .build())
                 .build();
 
-        SpreadConnector.send(msg.toByteArray(), info.getJoined());
+        SpreadConnector.unicast(msg.toByteArray(), toBeRecovered);
 
     }
 
@@ -482,6 +482,8 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
         // send recover messages to the non-recovered
         for(Map.Entry<String,Message> info : this.need_recover.entrySet()) {
+
+            recoverTimers(info.getKey());
 
             SpreadConnector.unicast(info.getValue().toByteArray(), info.getKey());
 
