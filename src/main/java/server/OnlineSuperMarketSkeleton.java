@@ -103,14 +103,12 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                     List<DatabaseModification> mods2 = QueryCart.removeItemFromCart(msg.getRequest().getRemoveItemFromCart().getUserId(),
                             msg.getRequest().getAddItemToCart().getItemId());
 
-                    assert mods2 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods2).toByteArray(), Set.of("Servers"));
                     break;
 
                 case CLEANCART:
                     List<DatabaseModification> mods3 = QueryCart.cleanCart(msg.getRequest().getCleanCart().getUserId());
 
-                    assert mods3 != null;
                     SpreadConnector.cast(constructFromModifications(msg, mods3).toByteArray(), Set.of("Servers"));
                     break;
 

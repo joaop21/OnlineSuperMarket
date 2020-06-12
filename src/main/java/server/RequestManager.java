@@ -11,12 +11,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class RequestManager implements Runnable {
     private static RequestManager instance = null;
     private static ServerMessageListener messageListener = null;
     private static Map<Pair<String,String>, WaitingRoom> waiting_requests = null;
     private static ConcurrentQueue<Message> sorted_requests = null;
+    private static final Lock lock = new ReentrantLock();
+    private static final Condition empty = lock.newCondition();
 
     public RequestManager(ServerMessageListener serverMessageListener){
         messageListener = serverMessageListener;
@@ -81,6 +86,32 @@ public class RequestManager implements Runnable {
     }
 
     public static Message getNextRequest(){
+
+        lock.lock();
+
+        if(sorted_requests.size() == 0)
+            empty.signal();
+
+        lock.unlock();
+
         return sorted_requests.poll();
+
+    }
+
+    public static void waitToEmpty() {
+
+        try {
+
+            lock.lock();
+
+            while(sorted_requests.size() != 0)
+                empty.await();
+
+            lock.unlock();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

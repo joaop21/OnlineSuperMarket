@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package middleware.proto;
+
+message Recovery {
+
+    Type type = 1;
+    repeated Line lines = 2;
+
+    enum Type {
+
+        RECOVER = 0;
+        ACK = 1;
+        FAILED = 2;
+
+    }
+
+    message Line {
+
+        int32 number = 1;
+        string data = 2;
+
+    }
+
+}
