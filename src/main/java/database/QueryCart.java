@@ -159,27 +159,61 @@ public class QueryCart {
         Connection conn = DatabaseManager.getConnection(DB_URL);
         List<DatabaseModification> modifications = new ArrayList<>();
         try {
+
             if (conn == null) {
                 System.out.println("No DB connection.");
                 return new ArrayList<>();
             }
-            PreparedStatement ps = conn.prepareStatement(
+
+            PreparedStatement delete = conn.prepareStatement(
                     "DELETE FROM Cart_Item WHERE CartCustomerid=?");
-            ps.setInt(1, userId);
-            int deleted = ps.executeUpdate();
-
-            conn.commit();
-            ps.close();
-            conn.close();
-
+            delete.setInt(1, userId);
+            int deleted = delete.executeUpdate();
             if (deleted > 0) {
                 List<FieldValue> where = new ArrayList<>();
                 where.add(new FieldValue("CartCustomerid", userId, ValueType.INTEGER));
-                DatabaseModification mod = new DatabaseModification(2, "Cart_Item", new ArrayList<>(), where);
+                DatabaseModification mod = new DatabaseModification(2, "Cart_Item",  new ArrayList<>(), where);
                 modifications.add(mod);
+
+                PreparedStatement update = conn.prepareStatement(
+                        "UPDATE Cart SET active=?, begin=? WHERE Customerid=?");
+                update.setBoolean(1, false);
+                update.setTimestamp(2, null);
+                update.setInt(3, userId);
+                int updated = update.executeUpdate();
+                if (updated > 0){
+                    conn.commit();
+
+                    List<FieldValue> where1 = new ArrayList<>();
+                    where1.add(new FieldValue("Customerid", userId, ValueType.INTEGER));
+                    List<FieldValue> vals = new ArrayList<>();
+                    vals.add(new FieldValue("active", false, ValueType.BOOLEAN));
+                    vals.add(new FieldValue("begin", null, ValueType.NULL));
+                    DatabaseModification mod1 = new DatabaseModification(1, "Cart", vals, where1);
+                    modifications.add(mod1);
+
+                }
+                else {
+
+                    conn.commit();
+
+                    delete.close();
+                    update.close();
+                    conn.close();
+
+                    return new ArrayList<>();
+                }
             }
-        }
-        catch(SQLException e) {
+            else {
+
+                delete.close();
+                conn.close();
+                return new ArrayList<>();
+            }
+
+            conn.close();
+
+        } catch(SQLException e) {
             System.out.println("An error occurred while executing the SQL query.");
             e.printStackTrace();
             return new ArrayList<>();

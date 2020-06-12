@@ -92,7 +92,7 @@ public class OnlineSuperMarketSkeleton implements OnlineSuperMarket, Runnable {
                                             SpreadConnector.cast(constructFromModifications(message, mod).toByteArray(), Set.of("Servers"));
                                         }
                                     };
-                                    new Timer("Timer").schedule(task, Server.TMAX);
+                                    new Timer("Timer").schedule(task, Server.TMAX * 1000);
 
                                 }
 

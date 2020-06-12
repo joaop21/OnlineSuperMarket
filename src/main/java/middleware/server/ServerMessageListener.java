@@ -26,7 +26,7 @@ public class ServerMessageListener implements AdvancedMessageListener {
     private final AtomicLong request_counter = new AtomicLong();
     private final AtomicLong replication_counter = new AtomicLong();
 
-    private final ConcurrentHashMap<Integer, LocalDateTime> tmax_timestamps = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, Pair<LocalDateTime, Integer>> tmax_timestamps = new ConcurrentHashMap<>();
 
     private List<String> leader_fifo = new LinkedList<>();
     private String myself;
@@ -172,9 +172,9 @@ public class ServerMessageListener implements AdvancedMessageListener {
 
     // TMAX Management
 
-    public void addTimestampTMAX (int userID, LocalDateTime date) { this.tmax_timestamps.put(userID, date); }
+    public void addTimestampTMAX (int userID, Pair<LocalDateTime,Integer> timerInfo) { this.tmax_timestamps.put(userID, timerInfo); }
 
     public void remTimestampTMAX (int userID) {this.tmax_timestamps.remove(userID); }
 
-    public void getTimestampTMAX (int userID) {this.tmax_timestamps.get(userID); }
+    public Pair<LocalDateTime, Integer> getTimestampTMAX (int userID) {return this.tmax_timestamps.get(userID); }
 }

@@ -59,13 +59,11 @@ public class ReplicationManager implements Runnable {
                         if (fv.getField().toUpperCase().equals(("ACTIVE")) && fv.getType() == ReplicationOuterClass.DatabaseModifications.Modification.Type.BOOLEAN && fv.getValueBool())
                             for (ReplicationOuterClass.DatabaseModifications.Modification.FieldValue f : mod.getWhereList())
                                 if (f.getField().toUpperCase().equals("CUSTOMERID"))
-                                    messageListener.addTimestampTMAX(f.getValueInt(), LocalDateTime.now());
+                                    messageListener.addTimestampTMAX(f.getValueInt(), new Pair<>(LocalDateTime.now(), Server.TMAX));
 
                     // Detecting cart deletion
-                } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1){
-
-
-                }
+                } else if (mod.getType() == 2 /* DELETE */ && mod.getTable().toUpperCase().equals("CART_ITEM") && mod.getWhereCount() == 1)
+                    messageListener.remTimestampTMAX(mod.getWhere(0).getValueInt());
 
         }
 
