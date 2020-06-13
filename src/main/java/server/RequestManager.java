@@ -140,7 +140,8 @@ public class RequestManager implements Runnable {
 
     private void exchangeSecondaryBackupToSortedRequests() {
 
-        List<Pair<Long,Message>> values = (List<Pair<Long, Message>>) secondary_backup.values();
+        Collection<Pair<Long,Message>> collection = secondary_backup.values();
+        List<Pair<Long,Message>> values = new ArrayList<>(collection);
         values.sort(new PairComparator());
         values.forEach(l -> sorted_requests.add(l.getSecond()));
 
