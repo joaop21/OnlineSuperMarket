@@ -26,6 +26,8 @@ public class QueryItem {
             ResultSet rs = pstat.executeQuery();
             if (!rs.next()) {
                 System.out.println("There is no Item with that ID.");
+                rs.close();
+                conn.close();
                 return null;
             }
             else {
@@ -34,6 +36,8 @@ public class QueryItem {
                     String description = rs.getString("description");
                     float price = rs.getFloat("price");
                     int stock = rs.getInt("stock");
+                    rs.close();
+                    conn.close();
                     return new Item(id, name, description, price, stock);
                 }
                 while (rs.next());
@@ -67,6 +71,7 @@ public class QueryItem {
                 Item item = new Item(id, name, description, price, stock);
                 res.add(item);
             }
+            rs.close();
             conn.close();
         }
         catch(SQLException e) {
