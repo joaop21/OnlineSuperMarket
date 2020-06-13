@@ -43,12 +43,12 @@ public class ClientBot extends Thread{
         // Response time
         double response_time = total/(n*1e9d);
         times.add(response_time);
-        // System.out.println("Response Time = "+(response_time));
+        System.out.println("Response Time = "+(response_time));
 
         // Throughput
         double throughput = n/((double)time);
         throughputs.add(throughput);
-        // System.out.println("Throughput = "+(throughput));
+        System.out.println("Throughput = "+(throughput));
     }
 
     private int login(){
@@ -189,7 +189,7 @@ public class ClientBot extends Thread{
 
     public static void main(String[] args) throws Exception {
 
-        int[] numbers = new int[]{1, 2, 3, 5, 8/*, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987*/};
+        int[] numbers = new int[]{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024};
 
         System.out.println("Benchmarking starting...");
 
