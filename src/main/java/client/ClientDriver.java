@@ -123,8 +123,6 @@ public class ClientDriver {
 
         } catch (IOException e) {
 
-            e.printStackTrace();
-
             // Shutting down load balancer & server connection
             ClientDriver.shutdownLoadBalancerConnection();
             ClientDriver.shutdownServerConnection();
