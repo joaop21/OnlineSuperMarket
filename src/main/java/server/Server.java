@@ -9,6 +9,8 @@ import database.DatabaseManager;
 
 import java.net.UnknownHostException;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
 
@@ -43,6 +45,11 @@ public class Server {
         // Initializing Gateway that delivers connection to a ClientManager Thread
         new Gateway(port, ClientManager.class);
 
-        new Thread(new OnlineSuperMarketSkeleton()).run();
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 10; i++) {
+            Runnable worker = new OnlineSuperMarketSkeleton();
+            executor.execute(worker);
+        }
+
     }
 }
