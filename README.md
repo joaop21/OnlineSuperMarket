@@ -1,6 +1,14 @@
 # OnlineSuperMarket
 Fault Tolerance Project
 
+Replicated Online SuperMarket made for Fault Tolerance class.
+
+This project was implemented using Java and Spread toolkit, thus practicing group communication, software replication techniques and ensure some consistency criteria.
+
+Informally, the system can be described as similar to a cart system, which is replicated among servers, and after some server failure the system should recover it, sending the database operations that were missed and the timers to clean some old carts (physical time problem). Find out more in the [Report](https://github.com/joaop21/OnlineSuperMarket/blob/master/TF_TP.pdf)
+
+This project was carried out in the second semester of the fourth year of informatics engineering course at University of Minho. [2019-2020]
+
 ## Wiki
 * [System Architecture](https://github.com/joaop21/OnlineSuperMarket/wiki/System-Architecture)
 * [Database Architecture](https://github.com/joaop21/OnlineSuperMarket/wiki/Database-Architecture)
